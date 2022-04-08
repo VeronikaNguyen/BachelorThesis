@@ -1,0 +1,527 @@
+\chapter{Introduction}
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+In this chapter we deal with the preliminaries in order to prove G\"odels Incompleteness Theorems. In the first part we summarize the basic concepts from first-order logic and in the second part we emphasize important facts from computability theory. Lastly, in the third part we discuss the historical background of G\"odel's Incompleteness Theorems.
+\subsection{Basic Concepts of First-Order Logic}
+In the following we introduce the  basic concepts of first-order logic.
+\paragraph{Structures and Signatures}
+A \textit{structure} is a quadruple \[\mathcal{M} = (M; (R_i^\mathcal{M} | i \in I); (f_j^\mathcal{M}| j \in J); (c_k^\mathcal{M} | k \in K)) \] where $I, J, K$ are arbitrary (possibly empty or infinite) sets and the following holds:
+\begin{itemize}
+\item $M$ is a nonempty set (the \textit{universe of $\mathcal{M}$}; the elements of $M$ are called  \textit{individuals~of $\mathcal{M}$}), 
+\item for every $i \in I$, $R_i^\mathcal{M}$ is an $n_i$-ary relation on $M$ with $n_i \ge 1$, i.\,e.\@ $R_i^\mathcal{M} \subseteq M^{n_i}$ (the~\textit{relations of $\mathcal{M}$}),
+\item for every $j \in J$, $f_j^\mathcal{M}$ is an $m_j$-ary function with domain $M$ and $m_j \ge 0$, i.\,e.\@ $f_j^\mathcal{M} : M^{m_j} \rightarrow M$ (the \textit{functions of $\mathcal{M}$}) and
+\item for every $k \in K$, $c_k^\mathcal{M}$ is an element of $M$ (the \textit{constants  of $\mathcal{M}$}).
+\end{itemize}
+
+The signature of a structure $\mathcal{M}$ is determined by the number of relations, functions and constants of $\mathcal{M}$ along with the arity of the relations and functions of $\mathcal{M}$. 
+
+The structure $\mathcal{M} = (M; (R_i^\mathcal{M} | i \in I); (f_j^\mathcal{M}| j \in J); (c_k^\mathcal{M} | k \in K))$ has \textit{signature} \[ \sigma(\mathcal{M}) = ((n_i | i \in I); (m_j|j\in J); K) \]
+where for $i \in I$, $R_i^\mathcal{M}$ is $n_i$-ary and for $j \in J$, $f_j^\mathcal{M}$ is $m_j$-ary. (The signature $\mathcal{\sigma}$ is called the \textit{signature of }(\textit{the structure}) $\mathcal{M}$.) 
+
+For a structure $\mathcal{M} = (M; (R_i^\mathcal{M} | i \in I); (f_j^\mathcal{M}| j \in J); (c_k^\mathcal{M} | k \in K))$ with signature $\sigma(\mathcal{M}) = ((n_i | i \in I); (m_j|j\in J); K)$, we make the following assumptions:
+\begin{itemize}
+\item If the index sets $I, J, K$ are finite, then we assume that the index sets are initial parts of the natural numbers $\mathbb{N} \defeq\lbrace 0,1, \ldots \rbrace$. 
+\item If an index set is empty, then we omit the corresponding component in the description of the structure. We replace an empty index set by -- in the signature of $\mathcal{M}$,.
+\end{itemize}
+
+Henceforth, we assume that a structure $\mathcal{M}$ or a signature $\sigma$ is of the form $\mathcal{M} = (M; (R_i^\mathcal{M} | i \in I); (f_j^\mathcal{M}| j \in J); (c_k^\mathcal{M} | k \in K))$ or $\sigma = ((n_i | i \in I); (m_j|j\in J); K)$ if $\mathcal{M}$ or $\sigma$ is not further specified, respectively. 
+
+\paragraph{Languages}
+The \textit{language $\mathcal{L} = \mathcal{L}(\sigma)$ with signature $\sigma = ((n_i | i \in I); (m_j|j\in J); K)$} consists of \textit{symbols}. (The signature $\mathcal{\sigma}$ is called the \textit{signature of }(\textit{the language}) $\mathcal{L}(\sigma)$.) 
+ There are two types of \textit{symbols}:
+\begin{itemize}
+\item the \textit{logical symbols} (independent of $\sigma$) and
+\item the \textit{non-logical symbols} (dependent of $\sigma$). Hereby, the non-logical symbols are names for relations, functions and constants of a structure.
+\end{itemize}
+
+\textit{Logical symbols of $\mathcal{L}(\sigma)$} are the following:
+\begin{itemize}
+\item Countably many \textit{variables}, i.\,e.\@ $v_0, v_1, \ldots$  Moreover, we fix the following alphabetical order $v_0 <v_1 < \ldots$
+If the variables are not further specified we also denote variables with $x, y, z, x_0, x_1, \ldots, y_0, y_1, \ldots$
+\item The \textit{connectives} $\lnot$ (\textit{negation}) and $\vee$ (\textit{disjunction}). (The remaining common connectives $\wedge$ (conjunction), $\rightarrow$ (conditional), $\leftrightarrow$ (biconditional) will be introduced as 'abbreviations'.)
+\item The \textit{existential quantifier $\exists$}. (The universal quantifier $\forall$ will be introduced as an 'abbreviation'.)
+\item The \textit{equality sign} =.
+\item The \textit{brackets} ( and ).
+\item The \textit{comma} ,.
+\end{itemize}
+
+\textit{Non-logical symbols of $\mathcal{L}(\sigma)$} are the following:
+\begin{itemize}
+\item For every $i \in I$, the $n_i$-ary \textit{relation symbol} $R_i$.
+\item For every $j \in J$, the $m_j$-ary \textit{function symbol} $f_j$.
+\item For every $k \in K$, the \textit{constant symbol} $c_k$.
+\end{itemize}
+
+
+The set of all symbols of $\mathcal{L}$ is called the \textit{alphabet of $\mathcal{L}$}. A sequence of symbols of $\mathcal{L}$ is called a \textit{word over $\mathcal{L}$}. If the structure $\mathcal{M}$ and the language $\mathcal{L}$ have the same signature, then 
+\begin{itemize}
+\item $\mathcal{L}$ is called the \textit{language of $\mathcal{M}$} (and we also write $\mathcal{L}=\mathcal{L}(\mathcal{M})$), and
+\item $\mathcal{M}$ is called an \textit{$\mathcal{L}$-structure}.
+\end{itemize}
+
+Henceforth, we assume the signature of a language to be of the form $\sigma = ((n_i | i \in I); (m_j|j\in J); K)$ if $\sigma$ or $\mathcal{L}$ are not further specified. 
+
+\paragraph{Terms}
+Let $\mathcal{L}=\mathcal{L}(\sigma)$ be a language with signature $\sigma $. The set of ($\mathcal{L}$-)\textit{terms} is inductively defined as follows.
+\begin{enumerate}[label=({T\arabic*})]
+\item Every variable $v_n$ with $n \in \mathbb{N}$ and every constant $c_k$ with $k \in \mathbb{N}$ is a term.
+\item If $t_0, \ldots, t_{m_{j}-1 }$ are terms, then for $j \in J$, $f_j (t_0, \ldots, t_{m_{j}-1 } )$ is a term as well.
+\end{enumerate}
+
+Throughout this thesis we denote terms with $t,t_0,t_1\ldots$ Terms of the form (T1) are called \textit{atomic terms}. We denote the set of variables occurring in $t$ with $V(t)$. If $t$ does not contain any variables, i.\,e.\@ $V(t) = \emptyset$, then $t$ is called a \textit{constant term}. We also write $t(x_0, \ldots, x_{n})$ instead of $t$ if at most the variables $x_0, \ldots, x_n$ occur in $t$, i.\,e.\@ $V(t) \subseteq \lbrace x_0, \ldots, x_n \rbrace$.
+
+\paragraph{Interpretation of Terms}
+Let $\mathcal{M}$ be a structure with signature $\sigma$ and let $\mathcal{L}$ be the language of $\mathcal{M}$. For a constant $\mathcal{L}$-term $t$, its \textit{interpretation $t^\mathcal{M}$ in $\mathcal{M}$} is inductively defined by
+\begin{enumerate}
+\item for $k \in K$, $(c_k)^\mathcal{M} \defeq c_k^\mathcal{M}$,
+\item for $j \in J$, $(f_j(t_0, \ldots, t_{m_j-1}))^\mathcal{M} \defeq f_j^\mathcal{M}(t_0^\mathcal{M}, \ldots, t_{m_j-1}^\mathcal{M}).$
+\end{enumerate} 
+
+Let $V = \lbrace x_0, \ldots, x_n \rbrace$ be a set of variables and $\mathcal{M}$ an $\mathcal{L}$-structure. A $\text{(\textit{variable}-)}$\textit{valuation $B$ of $V$ in $\mathcal{M}$} is a function $B : V \rightarrow M$.
+
+Let $t \equiv t(x_0, \ldots, x_n)\equiv t(\overrightarrow{x}) $ be an $\mathcal{L}$-term and let $B : \lbrace x_0,\ldots, x_n \rbrace \rightarrow M $ be a valuation of those variables in the $\mathcal{L}$-structure $\mathcal{M}$. The \textit{value $t_B^\mathcal{M}$ of $t$ in $\mathcal{M}$} regarding the valuation $B$ is inductively defined by
+\begin{enumerate}
+\item for $i \in \lbrace 0, \ldots n \rbrace$, $(x_i)_B^\mathcal{M} \defeq B(x_i)$, and for $k \in K$, $(c_k)_B^\mathcal{M} \defeq c_k^\mathcal{M}$,
+\item for $j \in J$, $(f_j(t_0, \ldots, t_{m_j-1}))_B^\mathcal{M} \defeq f_j^\mathcal{M}((t_0)_B^\mathcal{M}, \ldots, (t_{m_j-1})_B^\mathcal{M}).$
+\end{enumerate}
+
+Let $B$ be a valuation of $V = \lbrace x_0, \ldots, x_n \rbrace$ in $\mathcal{M}$ with $B(x_i)=a_i$ for $i \in \lbrace 0, \ldots n \rbrace$. For $t \equiv t(x_0, \ldots, x_n)\equiv t(\overrightarrow{x}) $ instead of $t_B^\mathcal{M}$, we also write
+\[t_B^\mathcal{M} \equiv t^\mathcal{M}[B(x_0), \ldots, B(x_n) ] \equiv t^\mathcal{M}[a_0, \ldots, a_n] \equiv t^\mathcal{M}[\overrightarrow{a}]. \]
+
+Therefore the term $t \equiv t(x_0, \ldots, x_n)\equiv t(\overrightarrow{x})$ can be interpreted as an $n$-ary function in $\mathcal{M}$, i.\,e.\@
+\[ f_{t(\overrightarrow{x})}^\mathcal{M} : M^n \rightarrow M \text{ with } f_{t(\overrightarrow{x})}^\mathcal{M}(\overrightarrow{a}) = t^\mathcal{M}[\overrightarrow{a}]. \]
+
+
+
+\paragraph{Formulas}
+Let $\mathcal{L}=\mathcal{L}(\sigma)$ be a language with signature $\sigma$. The set of ($\mathcal{L}$-)\textit{formulas} is inductively defined as follows.
+\begin{enumerate}[label=({F\arabic*})]
+\item 
+\begin{enumerate}[label=(\alph*)]
+\item If $t_0, t_1$ are terms, then $t_0=t_1$ is a formula. 
+\item If $t_0, \ldots, t_{n_i-1}$  are terms, then for $i \in I$, $R_i(t_0, \ldots, t_{n_i-1})$ is a formula.
+\end{enumerate}
+\item If $\varphi$ is a formula, then $\lnot \varphi$ is a formula as well.
+\item If $\varphi_0, \varphi_1$ are formulas, then $(\varphi_0 \vee \varphi_1 )$ is a formula as well.
+\item If $\varphi$ is a formula and $x$ a variable, then $\exists x \varphi$ is a formula as well.
+\end{enumerate}
+
+Throughout this thesis we denote formulas with $\varphi, \psi, \gamma, \delta, \varphi_0, \varphi_1, \ldots, \psi_0, \psi_1, \ldots$ and sets of formulas with $\Phi, \Phi_0, \Phi_1, \ldots$ Formulas of the form (F1) are called \textit{atomic formulas}. 
+\\
+
+To improve readability, we introduce the following conventions:
+\begin{itemize}
+\item The connectives $\wedge$ (\textit{conjunction}), $\rightarrow$ (\textit{conditional}) and $\leftrightarrow$ (\textit{biconditional}) are abbreviations for $(\varphi_0 \wedge \varphi_1) \deffeq \lnot (\lnot \varphi_0 \vee  \lnot \varphi_1)$, $(\varphi_0 \rightarrow \varphi_1) \deffeq (\lnot \varphi_0 \vee \varphi_1)$ and $(\varphi_0 \leftrightarrow \varphi_1) \deffeq (\lnot(\lnot \varphi_0 \vee \varphi_1 ) \vee \lnot (\lnot \varphi_1 \vee \varphi_0))$.
+\item The \textit{universal quantifier $\forall$} is an abbreviation for $\forall x \varphi \deffeq \lnot \exists x \lnot \varphi$.
+\item Moreover, for $\lnot \varphi, \exists x \varphi, \forall x \varphi$, we also permit the notation $\lnot (\varphi)$, $\exists x (\varphi), \forall x (\varphi)$, respectively.
+\item For $(\varphi_0 * \varphi_1)$ with $* \in \lbrace \vee, \wedge, \rightarrow, \leftrightarrow \rbrace$, we also permit the notation $\varphi_0 * \varphi_1$. Furthermore, we also write $\lbrace \varphi_0 * \varphi_1 \rbrace$ instead of $(\varphi_0 * \varphi_1)$ for $* \in \lbrace \vee, \wedge, \rightarrow, \leftrightarrow \rbrace$.
+\item Instead of $\lnot t_0 = t_1 $, we also write $t_0 \neq t_1$.
+\item Furthermore, for some function symbols, e.\,g.\@ $+$, $\cdot$ and relation symbols, e.\,g.\@ $\le$, we utilize infix notation as well. Hereby, we sometimes omit the brackets, e.\,g.\@ we write $x+y$ instead of $(x+y)$.
+\end{itemize}
+
+\paragraph{Free and Bounded Occurrences of Variables}
+Let $\mathcal{L}=\mathcal{L}(\sigma)$ be a language with signature $\sigma $. \textit{Free} and \textit{bounded occurrences of variables in $\mathcal{L}$-formulas} are inductively defined as follows.
+\begin{enumerate}
+\item The variable $x$ occurs in the atomic formula $t_0 = t_1$ or $R_i(t_0, \ldots, t_{n_i-1})$ if $x$ occurs in $t_0$, $t_1$ or $t_0, \ldots, t_{n_i-1}$, respectively. All occurrences of  $x$ are free.
+\item The variable $x$ occurs in $\lnot \varphi$ if $x$ occurs in $\varphi$. Then the occurrence of $x$ is  free (bounded) in $\lnot \varphi$ if the respective occurrence of $x$ is free (bounded) in $\varphi$. 
+\item The variable $x$ occurs in the formula $(\varphi_0 \vee \varphi_1 )$ if $x$ occurs in $\varphi_0$ or $\varphi_1$. Then the occurrence of $x$ in $(\varphi_0 \vee \varphi_1)$ is free (bounded) if the respective occurrence of $x$ is free (bounded) in $\varphi_0$ or $\varphi_1$. 
+\item The variable $x$ occurs in $\exists y \varphi$ if $x \equiv y$ or if $x$ occurs in the formula $\varphi$. If $x \equiv y$, then all occurrences of $x$ in $\exists y \varphi$ are bounded. Else an occurrence of $x$ in $\exists y \varphi$ is free (bounded) if the respective occurrence is free (bounded) in $\varphi$.
+\end{enumerate}
+
+We also write $\varphi(x_0, \ldots, x_n)$ instead of $\varphi$ if at most the occurrences of the variables $x_0, \ldots, x_n$ are free. 
+
+We call a variable $x$ a \textit{free $($bounded$)$ variable} in $\varphi$ if every occurence of $x$ is free (bounded) in $\varphi$.
+
+An $\mathcal{L}$-formula $\varphi$ in which every occurrence of a variable is bounded, is called an ($\mathcal{L}$-)\textit{sentence}.
+
+Throughout this thesis we denote sentences with $\sigma, \tau, \sigma_0, \sigma_1,  \ldots$ and sets of sentences with $\Sigma, \Sigma_0, \Sigma_1, \ldots$
+
+\paragraph{Interpretation of Formulas} 
+Let $\mathcal{M}$ be an $\mathcal{L}$-structure, $\varphi \equiv \varphi(x_0, \ldots, x_n)$ an $\mathcal{L}$-formula and $B$ a valuation of $\lbrace x_0, \ldots, x_n \rbrace$ in $\mathcal{M}$. Then the \textit{truth value} 
+\[V_B^\mathcal{M}(\varphi) \in \lbrace 0,1 \rbrace (= \lbrace \text{False, True} \rbrace )\]
+\textit{of $\varphi$ in $\mathcal{M}$ regarding the valuation $B$} is inductively defined by
+\begin{enumerate}
+\item $V_B^\mathcal{M} (t_0 = t_1) = 1$ if and only if $(t_0)^\mathcal{M}_B = (t_1)^\mathcal{M}_B$.
+\item For $i \in I$, $V_B^\mathcal{M} (R_i(t_0, \ldots, t_{n_i-1})) = 1$ if and only if $((t_0)^\mathcal{M}_B, \ldots , (t_{n_i-1})^\mathcal{M}_B) \in R_i^\mathcal{M}$.
+\item $V_B^\mathcal{M} (\lnot \psi) = 1$ if and only if $V_B^\mathcal{M} (\psi) = 0$.
+\item $V_B^\mathcal{M} (\varphi_0 \vee \varphi_1) = 1$ if and only if $V_B^\mathcal{M} (\varphi_0) = 1$ or $V_B^\mathcal{M} (\varphi_1) = 1$ (or both).
+\item $V_B^\mathcal{M} (\exists y \psi) = 1$ if and only if there exists a valuation $B'$ of $\lbrace x_0, \ldots, x_n, y \rbrace$ such that $B'$ coincides with $B$ on $\lbrace x_0, \ldots, x_n \rbrace \setminus \lbrace y \rbrace$ and $V_{B'}^\mathcal{M} (\psi) = 1$.
+\end{enumerate}
+
+Then the truth value of an improper formula $\varphi \equiv \varphi(x_0, \ldots, x_n)$ regarding the valuation $B$ of $\lbrace x_0, \ldots, x_n \rbrace$ in $\mathcal{M}$ is the following:
+\begin{enumerate}
+\item $V_B^\mathcal{M} (\varphi_0 \wedge \varphi_1) = 1$ if and only if $V_B^\mathcal{M} (\varphi_0) = 1$ and $V_B^\mathcal{M} (\varphi_1) = 1$.
+\item $V_B^\mathcal{M} (\varphi_0 \rightarrow \varphi_1) = 1$ if and only if $V_B^\mathcal{M} (\varphi_0) = 0$ or $V_B^\mathcal{M} (\varphi_1) = 1$ (or both).
+\item $V_B^\mathcal{M} (\varphi_0 \leftrightarrow \varphi_1) = 1$ if and only if $V_B^\mathcal{M} (\varphi_0) = V_B^\mathcal{M} (\varphi_1)$.
+\item $V_B^\mathcal{M} (\forall y \psi) = 1$ if and only if for all valuations $B'$ of $\lbrace x_0, \ldots, x_n,y \rbrace$ such that $B'$ coincides with $B$ on $\lbrace x_0, \ldots, x_n \rbrace \setminus \lbrace y \rbrace$ and $V_{B'}^\mathcal{M} (\psi) = 1$.
+\end{enumerate}
+
+Let $B$ be a valuation of $V = \lbrace x_0, \ldots, x_n \rbrace$ in $\mathcal{M}$ with $B(x_i)=a_i$ for $i \in \lbrace 0, \ldots, n \rbrace$. For $\varphi \equiv \varphi(x_0, \ldots, x_n)\equiv \varphi(\overrightarrow{x}) $ instead of $V_B^\mathcal{M}(\varphi) = 1$, we also write
+\[\mathcal{M} \vDash \varphi[B(x_0), \ldots, B(x_n) ] \text{ or } \mathcal{M} \vDash \varphi[\overrightarrow{a}] \]
+and say \textit{$\mathcal{M}$ makes the formula $\varphi$ regarding the valuation $\overrightarrow{a}$ true}. Accordingly, we write $\mathcal{M} \nvDash \varphi[B(x_0), \ldots, B(x_n) ]$ if $V_B^\mathcal{M}(\varphi) = 0$.
+
+An $\mathcal{L}$-sentence \textit{$\sigma$ is true $($false$)$ in} \textit{$\mathcal{M}$} if $V_B^\mathcal{M}(\sigma) = 1$ $(V_B^\mathcal{M}(\sigma) = 0)$ regarding the valuation $B$ of the empty set. We write $\mathcal{M} \vDash \sigma$ ($\mathcal{M} \nvDash \sigma$) and say that \textit{$\mathcal{M}$ is a model of $\sigma$ $(\lnot \sigma)$} if $\sigma$ is true (false) in $\mathcal{M}$.
+
+\paragraph{Valid and Satisfiable Formulas}
+An $\mathcal{L}$-sentence $\sigma$ is \textit{valid} if 
+\[\text{for every }\mathcal{L}\text{-structure }\mathcal{M}\text{, } \mathcal{M} \vDash \sigma. \] 
+
+An $\mathcal{L}$-sentence $\varphi$ is \textit{satisfiable} if 
+\[ \text{there exists an } \mathcal{L}\text{-structure }\mathcal{M} \text{, such that }\mathcal{M} \vDash \sigma . \]
+
+Else $\sigma$ is \textit{unsatisfiable}.
+
+A set $\Sigma$ of $\mathcal{L}$-sentences is \textit{satisfiable} if there exists an $\mathcal{L}$-structure $\mathcal{M}$ such that $\mathcal{M}$ is a model for every sentence in $\Sigma$. Else $\Sigma$ is \textit{unsatisfiable}.
+
+If an $\mathcal{L}$-structure $\mathcal{M}$ is a model for every sentence in the set of sentences $\Sigma$, then we say that \textit{$\mathcal{M}$ is a model of $\Sigma$} and write $\mathcal{M} \vDash \Sigma$, otherwise we say \textit{$\mathcal{M}$ is no model of $\Sigma$} and write $\mathcal{M} \nvDash \Sigma$.
+
+Let $\sigma$ be an $\mathcal{L}$-sentence. An $\mathcal{L}$-sentence $\tau$ \textit{follows from $\sigma$} if every model of $\sigma$ is a model of $\tau$, i.\,e.\@
+\[ \text{for every }\mathcal{L}\text{-structure }\mathcal{M}\text{, } \mathcal{M} \vDash \sigma \Rightarrow \mathcal{M} \vDash \tau. \]
+We denote this by $ \sigma \vDash \tau$.
+
+$ \sigma $ and $\tau$ are \textit{equivalent} if $\sigma$ follows from $\tau$ and $\tau$ follows from $\sigma$. 
+
+
+Let $\Sigma$ be a set of $\mathcal{L}$-sentences. An $\mathcal{L}$-sentence $\tau$ \textit{follows from $\Sigma$} if every model of $\Sigma$ is a model of $\tau$, i.\,e.\@
+\[ \text{for every }\mathcal{L}\text{-structure }\mathcal{M}\text{, } \mathcal{M} \vDash \Sigma \Rightarrow \mathcal{M} \vDash \tau. \]
+We denote this by $ \Sigma \vDash \tau$.
+
+Let $\Sigma_0, \Sigma_1$ be sets of $\mathcal{L}$-sentences. We write $\Sigma_0 \vDash \Sigma_1$ and say that $\Sigma_1$ \textit{follows from $\Sigma_0$} if $\Sigma_0 \vDash \sigma$ for every $\sigma \in \Sigma_1$.
+
+\paragraph{Substitution}
+If we replace every free occurrence of the variable $x$ by the term $t$, then we denote the resulting formula of this \textit{substitution} with $\varphi[t/x]$. Likewise, we extend this notion for multiple variables. If we replace every free occurrence of variables $x_0, \ldots, x_n$ by the terms $t_0, \ldots, t_n$, respectively, then we denote the resulting formula of this substitution with $\varphi[t_0, \ldots, t_n / x_0, \ldots, x_n] \equiv \varphi[\overrightarrow{t}/\overrightarrow{x}]$.
+
+Let $t$ be a term and $\varphi$ a formula. Then $t$ is \textit{substitutable for }(\textit{the variable}) $x$ \textit{in} $\varphi$ if for any variable $y \neq x$ in $t$, every occurrence of $y$ in $\varphi$ is not bounded. 
+
+%If $t$ is substitutable for $x$ in $\varphi$, then \[\varphi[t/x] \rightarrow \exists x \varphi \] is valid.
+
+\paragraph{Deductive System}
+A \textit{deductive system $\mathcal{K}$ over }(\textit{a language}) $\mathcal{L}$ consists of the following components:
+\begin{enumerate}
+\item The set of ($\mathcal{K}$-)\textit{axioms} where every axiom is an $\mathcal{L}$-formula.
+\item The set of ($\mathcal{K}$-)\textit{rules}. Every rule $R$ is of the form 
+\[\frac{\varphi_0, \ldots, \varphi_n}{\varphi}\] where $\varphi_0, \ldots, \varphi_n, \varphi$ are $\mathcal{L}$-formulas. $\varphi_0, \ldots, \varphi_n$ are \textit{premises} and $\varphi$ the \textit{conclusion of $R$}.
+\end{enumerate}
+%Moreover, the set of $\mathcal{K}$-axioms and the set of $\mathcal{K}$-rules are decidable.
+
+Let $\mathcal{K}$ be a deductive system and $\varphi$ an $\mathcal{L}$-formula. A ($\mathcal{K}$-)\textit{proof of $\varphi$} is a sequence $\psi_0, \ldots, \psi_n$ of $\mathcal{L}$-formulas $(n \ge 0)$ where the following holds:
+\begin{itemize}
+\item $\varphi \equiv \psi_n$.
+\item Every formula $\psi_i$ with $i \in \lbrace 0, \ldots, n \rbrace$ is 
+\begin{itemize}
+\item a $\mathcal{K}$-axiom or
+\item the conclusion of a $\mathcal{K}$-rule $R$ where the premise(s) is (are) an element of $\lbrace \psi_0,\ldots, \psi_{i-1} \rbrace$.
+\end{itemize}
+\end{itemize}
+
+The \textit{length of the proof} $\psi_0, \ldots, \psi_n$ is $n+1$.
+
+An $\mathcal{L}$-formula $\varphi$ is \textit{$\mathcal{K}$-provable} if there exists a $\mathcal{K}$-proof of $\varphi$. (Otherwise, $\varphi$ is \textit{$\mathcal{K}$-unprovable}). We denote this with $\vdash_\mathcal{K} \varphi$ ($\nvdash_\mathcal{K} \varphi$). 
+
+Let $\mathcal{K}$ be a deductive system, $\Phi$ a set of $\mathcal{L}$-formulas and $\varphi$ an $\mathcal{L}$-formula. A ($\mathcal{K}$-)\textit{proof of $\varphi$ from $\Phi$} is a finite sequence $\psi_0, \ldots, \psi_n$ of $\mathcal{L}$-formulas $(n \ge 0)$ where the following holds:
+\begin{itemize}
+\item $\varphi \equiv \psi_n$.
+\item Every formula $\psi_i$ with $i \in \lbrace 0, \ldots, n \rbrace$ is 
+\begin{itemize}
+\item a $\mathcal{K}$-axiom or
+\item a formula of the set $\Phi$ or
+\item the conclusion of a $\mathcal{K}$-rule $R$ where the premise(s) is (are) an element of $\lbrace \psi_0,\ldots, \psi_{i-1} \rbrace$.
+\end{itemize}
+\end{itemize}
+
+The \textit{length of the proof} $\psi_0, \ldots, \psi_n$ is $n+1$.
+
+An $\mathcal{L}$-formula $\varphi$ is \textit{$\mathcal{K}$-provable from $\Phi$} if there exists a $\mathcal{K}$-proof of $\varphi$ from $\Phi$. (Otherwise, $\varphi$ is \textit{$\mathcal{K}$-unprovable from $\Phi$}.) We denote this with $\Phi \vdash_\mathcal{K} \varphi$ ($\Phi \nvdash_\mathcal{K} \varphi$).
+
+A deductive system $\mathcal{K}$ over a language $\mathcal{L}$ is \textit{sound} if
+\[ \text{for all sets of }\mathcal{L}\text{-sentences }\Sigma\text{ and for all }\mathcal{L}\text{-sentences }\sigma\text{, }\Sigma \vdash \sigma \Rightarrow \Sigma \vDash \sigma. \]
+
+A deductive system $\mathcal{K}$ over a language $\mathcal{L}$ is \textit{complete} if 
+\[ \text{for all sets of }\mathcal{L}\text{-sentences }\Sigma\text{ and for all }\mathcal{L}\text{-sentences }\sigma\text{, }\Sigma \vDash \sigma \Rightarrow \Sigma \vdash \sigma. \]
+
+
+\paragraph{Shoenfield-System}
+Let $\mathcal{L}= \mathcal{L}(\sigma)$ be a language with signature $\sigma $. The \textit{Shoenfield-system $\mathcal{S}$} is a deductive system which is defined as follows: 
+\begin{enumerate}
+\item The set of ($\mathcal{S}$-)axioms consists of the following axioms:
+\begin{enumerate}[label=({A\arabic*})]
+\item $\lnot \varphi \vee \varphi$.
+\item $\varphi[t/x] \rightarrow \exists x \varphi$ if $t$ is substitutable for $x$ in $\varphi$.
+\item $x=x$.
+\item $x_0 = y_0 \wedge \ldots \wedge x_{m_j-1} = y_{m_j-1} \rightarrow f_j(x_0, \ldots, x_{m_j-1}) = f_j(y_0, \ldots, y_{m_j-1})$ for~$j \in J$.
+\item $x_0 = y_0 \wedge \ldots \wedge x_{n_j-1} = y_{n_i-1} \wedge R_i(x_1, \ldots, x_{n_i-1})=R_i(y_1, \ldots, y_{n_i-1})$ for~$i \in I$.
+\item $x_0 = y_0 \wedge x_1 = y_1 \wedge x_0 = x_1 \rightarrow y_0 = y_1$.
+\end{enumerate}
+
+\item The set of ($\mathcal{S}$-)\textit{rules} consists of the following rules: 
+
+\begin{tabular}{l}
+(R1) \(\displaystyle \frac{\psi}{\varphi \vee \psi}  \). \\[10pt] (R2) \( \displaystyle\frac{\varphi \vee ( \psi \vee \delta )}{(\varphi \vee \psi) \vee \delta}\). \\[10pt] (R3) \( \displaystyle\frac{\varphi \vee \varphi}{\varphi}\). \\[10pt] (R4) \( \displaystyle\frac{\varphi \vee \psi, \lnot \varphi \vee \delta}{\psi \vee \delta} \). \\[10pt]
+(R5) \( \displaystyle \frac{\varphi \rightarrow \psi}{\exists x \varphi \rightarrow \psi} \) if the occurrences of $x$ in $\psi$ are not free.
+\end{tabular}
+
+\end{enumerate}
+
+Throughout this thesis $\vdash$ $(\nvdash)$ denotes the provability (unprovability) in $\mathcal{S}$, i.\,e.\@ for a set of $\mathcal{L}$-formulas $\Phi$, 
+\begin{align*}
+\Phi\vdash \varphi & \Leftrightarrow \varphi \text{ is }(\mathcal{S}\text{-)provable from }\Phi \text{ or } \\
+\Phi\nvdash \varphi &\Leftrightarrow \varphi \text{ is }(\mathcal{S}\text{-)unprovable from }\Phi .
+\end{align*} 
+
+
+Moreover, we also write 
+\begin{align*}
+\varphi_0, \ldots, \varphi_n \vdash \varphi &\text{ instead of }\lbrace \varphi_0, \ldots, \varphi_n \rbrace \vdash \varphi, \\
+\vdash \varphi &\text{ instead of } \emptyset \vdash \varphi \text{ or} \\
+\varphi_0, \ldots, \varphi_n \nvdash \varphi &\text{ instead of }\lbrace \varphi_0, \ldots, \varphi_n \rbrace \nvdash \varphi,\\
+\nvdash \varphi &\text{ instead of } \emptyset \nvdash \varphi. 
+\end{align*}
+
+We write $\Sigma_0 \vdash \Sigma_1$ if $\Sigma_0 \vdash \sigma$ for every $\sigma \in \Sigma_1$, and $\Sigma_0 \nvdash \Sigma_1$ otherwise. 
+
+A set of $\mathcal{L}$-sentences $\Sigma$ is \textit{consistent} if there exists an $\mathcal{L}$-sentence $\sigma$ with $\Sigma \nvdash \sigma$. Else $\Sigma$ is \textit{inconsistent}.
+
+A set of $\mathcal{L}$-sentences $\Sigma$ is (\textit{negation-})\textit{complete} if for all $\mathcal{L}$-sentences $\sigma$, $\Sigma\vdash \sigma$ or $\Sigma\vdash \lnot \sigma$ holds. Else $\Sigma$ is \textit{incomplete}.
+
+
+\paragraph{Completeness and Soundness Theorem}
+
+The \textit{Completeness and Soundness Theorem} states that the Shoenfield-System $\mathcal{S}$ is complete and sound, i.\,e.\@
+\[ \text{for all sets of }\mathcal{L}\text{-sentences }\Sigma\text{ and for all sentences }\sigma\text{, }\Sigma \vDash \sigma \Leftrightarrow \Sigma \vdash \sigma. \]
+(A version of the Completeness Theorem was first proven by G\"odel in 1929 and then simplified by Leon Henkin in 1947.)
+
+
+\paragraph{Theories}
+An ($\mathcal{L}$-)\textit{theory $T$} is a tuple $T = (\mathcal{L}, \Sigma)$ where 
+\begin{itemize}
+\item $\mathcal{L} = \mathcal{L}(\sigma)$ is a language with signature $\sigma$ and
+\item $\Sigma$ is a set of $\mathcal{L}$-sentences (set of \textit{axioms of $T$}).
+\end{itemize}
+
+$\mathcal{L}$ is called the \textit{language of $T$} and $\Sigma$ the set of \textit{axioms of $T$}.
+Furthermore, we also denote the language of the theory $T$ with $\mathcal{L}(T)$.  
+
+The model-class $\mathit{Mod}(T)$ of an $\mathcal{L}$-theory $T = (\mathcal{L}, \Sigma)$ is the set of $\mathcal{L}$-structures which are models of $\Sigma$, i.\,e.\@
+\[ \mathit{Mod}(T) \defeq \lbrace \mathcal{M} : \mathcal{M} \text{ is an }\mathcal{L} \text{-structure and }\mathcal{M} \vDash \Sigma \rbrace. \]
+
+Let $T = (\mathcal{L},\Sigma)$ be a theory. If $\mathcal{M}$ is a model of $\Sigma$ ($\mathcal{M}$ is no model of $\Sigma$), then we also call $\mathcal{M}$ a \textit{model of $T$ $(\mathcal{M}$ no model of $T)$} and write $\mathcal{M}\vDash T$ $(\mathcal{M} \nvDash T)$ instead of $\mathcal{M}\vDash \Sigma$ $(\mathcal{M}\nvDash \Sigma)$. For an $\mathcal{L}$-formula $\varphi$, if $\Sigma \vdash \varphi$ $(\Sigma \nvdash \varphi)$, then we also write $T \vdash \varphi$ $(T \nvdash \varphi)$. An $\mathcal{L}$-sentence $\sigma$ is called a \textit{theorem of $T$} if $T \vdash \sigma$.
+
+Moreover, a theory $T=(\mathcal{L}, \Sigma)$ is \textit{satisfiable} if $\Sigma$ is satisfiable, i.\,e.\@ $\mathit{Mod}(T) \neq \emptyset$. A theory $T$ is \textit{consistent}, or \textit{inconsistent}, or \textit{complete}, or \textit{incomplete} if $\Sigma$ is consistent, or inconsistent, or complete, or incomplete, respectively.
+
+For a theory $T=(\mathcal{L}, \Sigma)$, we say that a finite sequence of $\mathcal{L}$-formulas $\psi_0, \ldots, \psi_n$ is an \textit{$T$-proof} (\textit{of an $\mathcal{L}$-formula}) $\varphi$ if $\psi_0, \ldots, \psi_n$ is an $\mathcal{S}$-proof from $\Sigma$ of $\varphi$. We say that an $\mathcal{L}$-formula $\varphi$ is \textit{$T$-provable} if $\varphi$ is $\mathcal{S}$-provable from $\Sigma$.
+
+Let $\mathcal{M}$ be an $\mathcal{L}$-structure. The \textit{theory of $\mathcal{M}$} is
+\[\mathit{Th}(\mathcal{M}) \defeq \lbrace \sigma : \mathcal{M} \vDash \sigma \rbrace.\]
+
+In particular, the theory $\mathit{Th}(\mathcal{M})$ is satisfiable and complete.
+
+The (\textit{syntactic}) \textit{deductive closure of $T = (\mathcal{L}, \Sigma)$} is
+\[C_\vdash(T) \defeq \lbrace \sigma : \sigma \text{ is an }\mathcal{L}\text{-sentence and }T \vdash \sigma \rbrace. \]
+
+The (\textit{semantic}) \textit{closure of $T$} is
+\[C_\vDash(T) \defeq \lbrace \sigma : \sigma \text{ is an }\mathcal{L}\text{-sentence and }T \vDash \sigma \rbrace. \]
+ 
+The Completeness and Soundness Theorem infers \[C_\vdash(T) = C_\vDash(T),\] since \[T \vdash \sigma \Leftrightarrow T \vDash \sigma. \] 
+
+Two $\mathcal{L}$-theories $T = (\mathcal{L}, \Sigma)$ and $T' = (\mathcal{L}, \Sigma')$ are \textit{equivalent} if their deductive closures are the same, i.\,e.\@
+\[C_\vdash(T) = C_\vdash(T'). \]
+
+\paragraph{Extensions}
+A language $\mathcal{L}'$ is an \textit{extension of }(\textit{a language}) $\mathcal{L}$ if every non-logical symbol of $\mathcal{L}$ is a symbol of $\mathcal{L}'$. We write $\mathcal{L}\subseteq \mathcal{L}'$ and say that $\mathcal{L}'$ \textit{extends} $\mathcal{L}$ if $\mathcal{L}'$ is an extension of $\mathcal{L}$.
+
+An $\mathcal{L}'$-theory $T'= (\mathcal{L}', \Sigma')$ is an \textit{extension of }(\textit{an $\mathcal{L}$-theory}) $T = (\mathcal{L}, \Sigma)$ if 
+\begin{enumerate}
+\item $\mathcal{L}'$ is an extension of $\mathcal{L}$ and
+\item for every $\mathcal{L}$-formula $\varphi$, $T \vdash \varphi \Rightarrow T' \vdash \varphi$.
+\end{enumerate} 
+We write $T \sqsubseteq T'$ and say that $T'$ \textit{extends} $T$ if $T'$ is an extension of $T$.
+\paragraph{Arithmetic}
+Adding the addition function $+$, multiplication function $\cdot$, the successor function $S$ ($S(n)=n+1$ for $n \in \mathbb{N}$) and the number $0$ to the natural numbers $\mathbb{N}$, the structure $\mathcal{N} \defeq ( \mathbb{N}; +, \cdot, S;0 )$ is obtained. $\mathcal{N}$ has signature $\sigma(\mathcal{N}) = ($--$; 2, 2, 1; \lbrace 0 \rbrace )$. (Note that $\mathcal{N}$ does not have any relations.) We call the structure $\mathcal{N}$ the \textit{arithmetic} and the language $\mathcal{L}_A \defeq \mathcal{L}(\sigma)$ the \textit{language of arithmetic}.
+
+We call a theory $T = (\mathcal{L}_A, \Sigma)$ an \textit{arithmetical theory} if $T$ is consistent and  the language $\mathcal{L}(T)$ of $T$ is the language of arithmetic $\mathcal{L}_A$.
+
+A theory $T$ is \textit{arithmetically sound} if for every $\mathcal{L}_A$-sentence $\sigma$, $T \vdash \sigma$ implies $\mathcal{N} \vDash \sigma$.
+
+If constant terms $\overline{n}$ $(n \in \mathbb{N})$ are defined by
+\[ \overline{0}\deffeq 0 \text{ and }\overline{n+1}\deffeq S(\overline{n}), \]
+then $\overline{n}^\mathcal{N} = n$. (We call $\overline{n}$ a \textit{numeral}.) Thus every natural number can be expressed by a constant term of the language $\mathcal{L}_A$. 
+
+We call $\mathit{Th}(\mathcal{N})$ the \textit{true arithmetic}. (Note that for every structure $\mathcal{M}$, $\mathit{Th}(\mathcal{M})$ is complete. Hence in particular $\mathit{Th}(\mathcal{N})$ is complete.) 
+
+\subsection{Basic Concepts of Computability Theory}
+In the following we introduce the  basic concepts of computability theory.
+\paragraph{Characteristic Functions}
+The \textit{characteristic function} of the $n$-ary relation $R \subseteq \mathbb{N}^n$ $c_R$ is the $n$-ary function $c_R: \mathbb{N}^n \rightarrow \lbrace 0, 1 \rbrace$ such that $(m_0, \ldots, m_{n-1}) \in R$ if and only if $c_R(m_0, \ldots, m_{n-1}) = 0$. (Note that $0$ symbolizes true and $1$ false, adhering to G\"odels notation.)
+
+
+
+\paragraph{Primitive Recursive Functions}
+
+The \textit{basic primitive recursive functions} are the following:
+\begin{itemize}
+\item The $m$-ary zero function $C^m: \mathbb{N}^m \rightarrow \mathbb{N}$ $(m \ge 0)$ is defined by 
+\[C^m(\overrightarrow{x}) = 0. \]
+\item The $1$-ary successor function $S^1: \mathbb{N}^1 \rightarrow \mathbb{N}$ is defined by
+\[ S^1(x) = x + 1. \]
+\item The $n$-ary projection function $P_i^n:\mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1, 0 \le i \le n-1)$ is defined by
+\[ P_i^n(x_0,\ldots, x_{n-1}) = x_{i} .\]
+(Note that $P_i^n$ returns the $(i+1)$-th variable.)
+\end{itemize}
+
+Let $g : \mathbb{N}^m \rightarrow \mathbb{N}$ $(m \ge 1)$ and $h_0, \ldots, h_{m-1} : \mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1)$ be $m$-ary and $n$-ary functions, respectively. The \textit{composition of $g$ and $h_0, \ldots, h_{m-1}$} yields the $n$-ary function
+\[f = g(h_0,\ldots, h_{m-1}): \mathbb{N}^n \rightarrow \mathbb{N} \]
+which is defined by 
+\[f(\overrightarrow{x}) = g(h_0(\overrightarrow{x}), \ldots, h_{m-1}(\overrightarrow{x})). \]
+
+Let $g : \mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1)$ and $h : \mathbb{N}^{n+2} \rightarrow \mathbb{N}$ be $n$-ary and $(n+2)$-ary functions, respectively. The \textit{primitive recursion of $g$ and $h$} yields the $(n+1)$-ary function
+\[f= \mathit{PR}(g,h): \mathbb{N}^{n+1} \rightarrow \mathbb{N} \]
+which is defined by
+\[ f(\overrightarrow{x}, 0) = g(\overrightarrow{x}),\] 
+\[ f(\overrightarrow{x}, y+1) = h( \overrightarrow{x}, y, f(\overrightarrow{x},y)), \] 
+where $ \overrightarrow{x} \in \mathbb{N}^n $ and $y \in \mathbb{N}$.
+\\
+
+The class $\mathsf{PRIM}$ of \textit{primitive recursive functions} (\textit{p.\,r.\@ functions}) is inductively defined as follows.
+\begin{enumerate}
+\item For $0 \le i \le n-1, m \ge 0$, $S^1, P_i^n, C^m \in \mathsf{PRIM}$.
+\item If the $m$-ary function $g$ and the $n$-ary functions $h_0, \ldots, h_{m-1} $ are in $\mathsf{PRIM}$, then $g(h_0, \ldots, h_{m-1}) \in \mathsf{PRIM}$.
+\item If the $n$-ary function $g$ and the $(n+2)$-ary function $h$ are in $\mathsf{PRIM}$, then $\mathit{PR}(g,h) \in \mathsf{PRIM}$.
+\end{enumerate}
+
+
+ 
+
+\paragraph{Primitive Recursive Relations}
+
+A relation $R \subseteq \mathbb{N}^n$ $(n \ge 0)$ is a \textit{primitive recursive relation} (\textit{p.\,r.\@ relation}) if and only if its characteristic function $c_R$ of $R$ is primitive recursive. (We write $R \in \mathsf{PRIM}$.)
+
+
+Note that for a relation $R \subseteq \mathbb{N}^n$ $(n \ge 0)$, we often say that \textit{$R(m_0,\ldots, m_{n-1})$ holds} if $(m_0,\ldots, m_{n-1}) \in R$, and \textit{$R(m_0,\ldots, m_{n-1})$ does not hold} if $(m_0,\ldots, m_{n-1}) \notin R$.
+
+\paragraph{Properties and Examples of Primitive Recursion}
+Let $f_0, \ldots, f_k : \mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1,k \ge 0)$ be functions and $C_0, \ldots, C_k \subseteq  \mathbb{N}^n $ be mutually exclusive relations. Then the function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is \textit{defined by cases $C_0, \ldots, C_k$ from functions $f_0, \ldots, f_k$} if  
+\[ f(x_0, \ldots, x_{n-1}) =\begin{cases} 
+      f_0(x_0, \ldots, x_{n-1}) & \text{if }C_0(x_0, \ldots, x_{n-1}), \\
+      f_1(x_0, \ldots, x_{n-1}) & \text{if }C_1(x_0, \ldots, x_{n-1}), \\
+      \vdots \\
+      f_k(x_0, \ldots, x_{n-1}) & \text{if }C_k(x_0, \ldots, x_{n-1}), \\
+      a & \text{otherwise}, \\
+   \end{cases}
+\] where $a \in \mathbb{N}$.
+
+
+Let $R\subseteq \mathbb{N}^{n+1}$ $(n \ge 0)$ be an $(n+1)$-ary relation. Then for $\overrightarrow{x} \in \mathbb{N}^n, y \in \mathbb{N}$ the \textit{bounded existential quantifier} is defined by
+\[ (\exists z < y) (R(\overrightarrow{x},y)) \defeeq \exists z (z <y \wedge R(\overrightarrow{x},y)), \]
+and the \textit{bounded universal quantifier} defined by 
+\[ (\forall z < y) (R(\overrightarrow{x},y)) \defeeq \exists z (z <y \wedge R(\overrightarrow{x},y)). \]
+Likewise we define $(\exists z \le y)$ and $(\forall z \le y)$. Those are also called bounded existential or bounded universal quantifiers, respectively. 
+
+
+Let $R\subseteq \mathbb{N}^{n+1}$ $(n \ge 0)$ be an $(n+1)$-ary relation. The \textit{bounded minimization operator $(\mu z  < y)$} in the $n$-ary function $f(x_0, \ldots, x_{n-1}) = (\mu z < y) R(x_0, \ldots, x_{n-1},z)$ returns the least number $z < y$ such that $R(x_0, \ldots, x_{n-1},z)$ holds if such an $\overrightarrow{x}$ exists, or $0$ otherwise:
+\begin{align*}
+f(x_0, \ldots, x_{n-1}) & = (\mu z < y) R(x_0, \ldots, x_{n-1},z)\\
+& = \begin{cases} \min_{0 \le z < y }R(\overrightarrow{x},z)) &\text{ if } (\exists z < y) R(\overrightarrow{x},z) \\
+0 &\text{ otherwise.}\end{cases}  
+\end{align*}
+Analogously, we also permit $(\mu z \le y)$ which is defined accordingly and also called the bounded minimization operator.
+
+Primitive recursive functions and relations are closed under the following operations:
+\begin{itemize}
+\item explicit definitions,
+\item definition by p.\,r.\@ cases and p.\,r.\@ functions,
+\item logical connectives, i.\,e.\@ $\lnot, \vee, \wedge, \rightarrow, \leftrightarrow$,
+\item the bounded existential quantifier and the bounded universal quantifier,
+\item the bounded minimization operator $(\mu z < y)$.
+\end{itemize}
+
+Moreover, it can be easily shown that the following functions and relations are primitive recursive:
+\begin{itemize}
+\item The relations $=, <, \le, >, \ge, \neq$ over $\mathbb{N}$.
+\item The addition function $+$ and multiplication function $\cdot$ over $\mathbb{N}$.
+\item The factorial function $!(x)$ over $\mathbb{N}$. (Note that we usually write $x!$ instead of $!(x)$.)
+\item The $2$-ary relation \textit{divides relation} $\ver(x,y)$ holds if $y$ is divisible by $x$. (Note that we also use infix notation.)
+\item The $2$-ary \textit{exponentiation function} $\mathit{exp}(n,m)$ returns the product of $n$ multiplied $m$-times, i.\,e.\@ $\mathit{exp}(n,m)\defeq \underbrace{n \cdot \ldots \cdot n}_{m\text{-times}}$. (We also write $n^m$ instead of $\mathit{exp}(n,m)$.)
+\end{itemize}
+
+\paragraph{Partial Recursive and Recursive Functions}
+Let $g:\mathbb{N}^{n+1} \rightarrow \mathbb{N}$ be a (possibly partial) function. The \textit{minimalization operator} $\mu$ in the $n$-ary function $f = \mu(g)$ is defined by
+\begin{align*}
+f(\overrightarrow{x}) & = \mu y (g(\overrightarrow{x},y) = 0 \text{ and } \forall z <y (g(\overrightarrow{x},z) \downarrow)) \\
+& = \min \lbrace y : g(\overrightarrow{x},y) = 0 \text{ and } (\forall z <y) (g(\overrightarrow{x},z)\downarrow) \rbrace
+\end{align*} 
+where $\min \emptyset \equiv \uparrow$.
+
+The class $\mathsf{PREK}$ of \textit{partial recursive functions} (\textit{p.\,r.\@ functions}) is inductively defined by
+\begin{enumerate}
+\item For $n \ge 1$, $0 \le i \le n-1, m \ge 0$, $S^1, P_i^n, C^m \in \mathsf{PREK}$.
+\item If the $m$-ary function $g$ and the $n$-ary functions $h_0, \ldots, h_{m-1} $ are in $\mathsf{PREK}$, then $g(h_0, \ldots, h_{m-1}) \in \mathsf{PREK}$.
+\item If the $n$-ary function $g$ and the $(n+2)$-ary function $h$ are in $\mathsf{PREK}$, then $\mathit{PR}(g,h) \in \mathsf{PREK}$.
+\item If the $(n+1)$-ary function $g$ is in $\mathsf{PREK}$, then $f = \mu(g) \in \mathsf{PREK}$. 
+\end{enumerate}
+Throughout this thesis we denote partial recursive function with Greek letters, e.\,g.\@ $\varphi,\psi, \ldots$ It should be clear from the context whether we are dealing with formulas or partial recursive functions.
+
+
+A total function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ $(n\ge 0 )$ is \textit{recursive} if $f$ is partial recursive. (The class of recursive functions is denoted with $\mathsf{REK}$.)
+
+A relation $R \subseteq \mathbb{N}^n$ $(n \ge 0)$ is \textit{recursive} if the characteristic function $c_R$ of $R$ is recursive. We write $R \in \mathsf{REK}$.
+
+A relation $R \subseteq \mathbb{N}^n$ $(n \ge 0)$ is \textit{recursively enumerable $($r.\,e.$)$} if there is an $n$-ary partial recursive function $\varphi$ whose domain is $R$.
+
+
+
+\paragraph{Enumerability, Decidability and Computability}
+A set $M$ is \textit{enumerable} if there exists an algorithm $\mathfrak{A}$ which takes no input and outputs every element of $M$ in an arbitrary order (possibly with repetitions).
+
+A relation $M$ is \textit{decidable} if there exists an algorithm $\mathfrak{A}$ which takes $x$ as input and outputs $0$ if $x \in M$ and $1$ if $x \notin M$. Else $M$ is \textit{undecidable}.
+
+A function $f$ is \textit{computable} if there exists an algorithm which takes $x$ as input and outputs $f(x)$.
+
+Having introduced the basic concepts of enumerability, decidability and computability, we shortly state the relations between those concepts. Hereby, we limit to the case of the natural numbers.
+\begin{itemize}
+\item If $R \subseteq \mathbb{N}^n$ $(n \ge 1)$ is decidable, then $R$ is enumerable. (The other direction does not hold.)
+\item If $R\subseteq \mathbb{N}^n$ and $R'\subseteq \mathbb{N}^n$ $(n \ge 1)$ are decidable, then $\overline{R} \defeq \mathbb{N}^n\setminus R$, $R \cap R'$, $R \cup R'$ are decidable.
+\item If $R\subseteq \mathbb{N}^n$ and $R'\subseteq \mathbb{N}^n$ $(n \ge 1)$ are enumerable, then $R \cap R'$, $R \cup R'$ are enumerable.
+\item $R\subseteq \mathbb{N}^n$ $(n \ge 1)$ is decidable if and only if $R$ and $\overline{R}$ are enumerable. (This is called the \textit{complement lemma}.)
+\item $R\subseteq \mathbb{N}^n$ $(n \ge 1)$ is decidable if and only if $c_R$ is computable.
+\item $R\subseteq \mathbb{N}$ is enumerable if and only if $R = \emptyset$ or $R$ is the codomain of a computable function $f: \mathbb{N} \rightarrow \mathbb{N}$.
+\item $f:\mathbb{N}^n \rightarrow \mathbb{N}$ is computable if and only if $G_f \subseteq \mathbb{N}^{n+1}$ is decidable. Equivalently, $f:\mathbb{N}^n \rightarrow \mathbb{N}$ is computable if and only if $G_f$ is enumerable where $G_f$ is the \textit{graph} of $f$ defined by $G_f \defeq \lbrace (x, f(x)):x\in \mathbb{N} \rbrace$.
+\end{itemize}
+
+The \textit{projection lemma} states the following:
+A set $A\subseteq \mathbb{N}$ is enumerable if and only if $A$ is the projection of a decidable set $B \subseteq \mathbb{N}^2$, i.\,e.\@
+\[ x \in A \Leftrightarrow \exists y \lbrace (x,y) \in B \rbrace. \]
+
+
+
+
+\paragraph{Church-Turing Thesis}
+The Church-Turing Thesis claims that recursive functions are in fact computable functions. Moreover, the Church-Turing Thesis implies that recursive relations are decidable relations, and r.\,e.\@ relations are enumerable relations.
+
+
+\paragraph{Axiomatized Theories}
+A theory $T= (\mathcal{L}, \Sigma)$ is \textit{finitely axiomatized} if $\Sigma$ is finite. A theory $T = ( \mathcal{L}, \Sigma) $ is \textit{finitely axiomatizable} if there exists a finitely axiomatized theory $T'$ such that $T$ is equivalent to $T'$.
+
+A theory $T = ( \mathcal{L}, \Sigma) $ is \textit{effectively axiomatized} if $\Sigma$ is a decidable set. A theory $T = ( \mathcal{L}, \Sigma) $ is \textit{effectively axiomatizable} if there exists an effectively axiomatized theory $T'$ such that $T$ is equivalent to $T'$. 
+
+A theory $T = ( \mathcal{L}, \Sigma)$ is \textit{enumerably axiomatized} if $\Sigma$ is an enumerable set. A theory $T = ( \mathcal{L}, \Sigma) $ is \textit{enumerably axiomatizable} if there exists an enumerably axiomatized theory $T'$ such that $T$ is equivalent to $T'$.
+
+We will later show that every enumerably axiomatized theory is also effectively axiomatizable. 
+
+\paragraph{Proves and Provability} 
+In the following, we list some properties about proves and provability:
+\begin{enumerate}
+\item The set of proofs is decidable, i.\,e.\@ one can effectively decide whether a sequence of formulas $\varphi_0, \ldots, \varphi_n$ is a proof (in the Shoenfield-System). If $T$ is an effectively axiomatized theory, then the set of $T$-proofs is also decidable.
+\item The set of theorems is enumerable. This follows from (i) by the projection lemma, since a formula $\varphi$ is provable if and only if there exists a proof $\varphi_0, \ldots, \varphi_n$ of $\varphi$. If $T$ is an effectively axiomatized theory, then the set of $T$-provable sentences is also decidable, i.\,e.\@ $C_\vdash(T) = \lbrace \sigma : T \vdash \sigma \rbrace$.
+\end{enumerate}
+
+
+
+
+
+\section{Historical Background}
+
+In the early $20$th century, several schools of the philosophy of mathematics ran into difficulties as they were pursuing to find a consistent foundation of mathematics by discovering various paradoxes, e.\,g.\@ Russel's paradox. As a solution, the German mathematician David Hilbert together with his doctoral student Wilhelm Ackermann proposed to create a deductive system which provides solid foundations for all mathematics, known under the name Hilbert's program. Hilbert intended to ground all existing statements to a theory which is consistent and complete. Moreover, the 'Entscheidungproblem (decision problem)' that was introduced by Hilbert and Ackermann in their book 'Grundzüge der Theoretischen Logik (Principles of Mathematical Logic)' \cite{Hilbert1972} published in $1928$ demanded for an algorithm which decides for a given sentence in first-order logic together with a (possibly finite) number of axioms whether the sentence is valid or not. Indeed, by G\"odels Completeness and Soundness Theorem, there exists a deductive system $\mathcal{K}$ such that any valid sentence is $\mathcal{K}$-provable ($\vDash \sigma \Leftrightarrow \vdash_\mathcal{K} \sigma$), so the 'Entscheidungsproblem' can be viewed as the problem to find an algorithm which decides whether a sentence is $\mathcal{K}$-provable or not. However, Hilbert's hope of completeness was destroyed by Gödel who published his incompleteness theorems in $1931$, and showed that there does not exist a deductive system $\mathcal{K}$ such that any mathematical true sentence is $\mathcal{K}$-provable. This is already the case in the theory of arithmetic, i.\,e.\@ in the structure $\mathcal{N} = (\mathbb{N};+,\cdot; 0,1)$ of the natural numbers, and thus in particular also for more powerful structures, e.\,g.\@ the theory of the real numbers. In his First Theorem Gödel showed that any consistent arithmetical effectively axiomatized theory cannot be complete and in his Second Theorem he indicates that such a theory cannot prove its own consistency. Gödel's theorems were devastating for Hilbert's hope for proof of consistency in a theory and destroyed Hilbert's search for a strong and complete theory. G\"odel's original proof of the incompleteness theorem is based on the liar's paradoxon which states: 'This statement is false.' By changing this to, 'This statement is unprovable.', G\"odel showed that this statement can be expressed in any theory which contains the language of arithmetic. If this assertion is provable, then it is false and hence the theory is inconsistent. Thus the assertion is true and unprovable. 
+
+G\"odel's Incompleteness Theorems left the 'Entscheidungsproblem' as unfinished business. Although G\"odel had shown that any consistent theory of arithmetic cannot prove every arithmetical truth, it did not rule out the existence of a computable decision procedure which reveals in finite time whether a statement is valid or not. In Alan Turing's paper 'On Computable Numbers with an Application to the Entscheidungsproblem' \cite{Church1937}, 1936, Turing succeded to define an effective procedure by inventing a simple idealized computer, the so-called Turing machine and showed that the halting problem is undecidable, meaning that there is no effective procedure or algorithm for deciding whether or not a program halts. Utilizing the undecidability of the halting problem, G\"odel's theorems can be derived. Suppose that an arithmetical sound theory $F$ which is powerful enough to reason about Turing machines, is given. For a contradiction, suppose that $F$ is complete and consider the question whether an arbitrary Turing machine $M$ with a blank tape as input halts. Then $F$ could decide the halting problem since all proofs of $F$ can be enumerated, until either a proof that $M$ halts or a proof that $M$ runs forever is found.  Eventually, this procedure terminates because $F$ is complete and hence it can be decided whether $M$ halts, a contradiction to the undecidability of the halting problem.
+

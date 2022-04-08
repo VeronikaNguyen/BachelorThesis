@@ -1,0 +1,215 @@
+\chapter{Second Incompleteness Theorem}
+
+Before proving the Second Incompleteness Theorem, an essential statement, the so-called Formalized First Theorem, is required. Therefore, the absurdity constant '$\bot$' is introduced and as the name suggests, \PA is consistent if and only if $\mathsf{PA} \nvdash \bot$. With the help of the absurdity constant, the $\Pi_1$-sentence $\mathsf{Con}$ is defined which is constructed so that $\mathsf{Con}$ is true if and only if \PA is consistent. 
+
+\section{The Formalized First Theorem}
+
+\begin{dfn}
+$\bot$ is an abbreviation for the $\mathcal{L}_A$-formula $\bot \deffeq \overline{0}= \overline{1}$. We call $\bot$ the \textit{absurdity constant}.
+\end{dfn}
+
+\PA and $\mathsf{Q}$ of course prove $\overline{0} \neq \overline{1}$. In fact, if \PA and $\mathsf{Q}$ prove $\bot$, then both theories are inconsistent. Evidently, there are further possibilities to define the absurdity constant. 
+
+\begin{dfn}
+Let $\mathit{Prov}(n) \defeeq \exists x \mathit{Prf}(x,n)$ be a relation which holds when the $\mathcal{L}_A$-sentence $\sigma$ with g.\,n.\@ $n$ is a theorem in $\mathsf{PA}$, i.\,e.\@ \PA $\vdash \sigma$.
+\end{dfn}
+
+Recall that $\mathit{Prf}(m,n)$ is arithmetically defined and defined in \PA by the $\Sigma_1$-formula $\mathsf{Prf}(v_0,v_1)$.
+
+\begin{dfn}
+Let $\mathsf{Prov}(v_1) \deffeq \exists  v_0  \mathsf{Prf}(v_0,v_1)$ in $\mathsf{PA}$ be an $\mathcal{L}_A$-formula.
+\end{dfn}
+
+\begin{thm}\label{thm:PAprov}
+$\mathit{Prov}(n)$ is arithmetically defined by $\mathsf{Prov}(v_1)$.
+\end{thm}
+\begin{proof}
+If $\mathit{Prov}(n)$ holds, then by definition $\exists x  \mathit{Prf}(x,n)$ holds and for some $m$, $\mathit{Prf}(m,n)$ holds. Since $\mathit{Prf}$ is arithmetically defined by $\mathsf{Prf}$, $\mathcal{N}\vDash\mathsf{Prf}[\overline{m}, \overline{n}/v_0,v_1]$ follows. Hence $\mathcal{N} \vDash \exists  v_0  \mathsf{Prf}[\overline{n}/v_1]$, i.\,e.\@ $\mathcal{N} \vDash  \mathsf{Prov}[\overline{n}/v_1]$. 
+
+If $\mathit{Prov}(n)$ does not hold, then for all $m \in \mathbb{N}$, $\mathit{Prf}(m,n)$ does not hold. Since $\mathit{Prf}$ is arithmetically defined by $\mathsf{Prf}$ for all $m\in \mathbb{N}$, $\mathcal{N} \vDash\lnot \mathsf{Prf}[\overline{m}, \overline{n}/v_0, v_1]$. Thus $\mathcal{N} \vDash \forall v_0 \lnot \mathsf{Prf}[ \overline{n}/v_1]$, i.\,e.\@ $ \mathcal{N} \vDash \lnot \mathsf{Prov}[\overline{n}/v_1]$. 
+
+Therefore, $\mathit{Prov}(n)$ is arithmetically defined by $\mathsf{Prov}(v_1)$.
+\end{proof}
+
+It can be shown that $\mathit{Prov}$ is not definable in \PA by $\mathsf{Prov}$. (For a proof the reader may refer to the book of Smith \cite{Smith2009}, p. 183.) Since $\mathit{Prov}(n)$ is arithmetically defined by $\mathsf{Prov}(v_1)$, $\mathcal{N}\vDash \mathsf{Prov}[\overline{\upl \varphi \upr}/v_1]$ if and only if $\mathit{Prov}(\upl \varphi \upr)$ holds, i.\,e.\@ $\mathsf{PA} \vdash \varphi$. Then the sentence $\mathsf{\lnot Prov(\overline{\upl \bot \upr})}$ is true in $\mathcal{N}$ if and only if \PA does not prove $\bot$. This is equivalent to \PA being consistent and therefore motivates the following definition.
+
+\begin{dfn}
+Let $\mathsf{Con} \deffeq \mathsf{\lnot Prov}[\overline{\upl \bot \upr}/v_1]$ be an $\mathcal{L}_A$-formula. $\mathsf{Con}$ is called the \textit{consistency sentence}.
+\end{dfn}
+
+Indeed, there are natural alternatives of consistency sentences. On modest assumptions, those formulas will be equivalent to each other.
+
+To proof the Formalized First Theorem which states $\mathsf{PA} \vdash \mathsf{Con} \rightarrow \lnot \mathsf{Prov}[\overline{\upl\mathsf{G} \upr}/v_1]$, Hilbert and Bernays isolated three conditions on $\mathsf{Prov}$, the so-called \textit{Hilbert-Bernays-L\"ob conditions} (\textit{HBL}). 
+
+\begin{thm}[Hilbert-Bernays-L\"ob conditions for $\mathsf{PA}$]\label{dfn:HBL}
+For any $\mathcal{L}_A$-sentence $\sigma$, $\tau$, the following holds
+\begin{enumerate}[label=({HBL\arabic*})]
+\item if $\mathsf{PA} \vdash \sigma$, then $\mathsf{PA} \vdash  \mathsf{Prov}[\overline{\upl\sigma \upr}/v_1] $,
+\item $\mathsf{PA} \vdash  \mathsf{Prov}[\overline{\upl\sigma \rightarrow \tau \upr}/v_1] \rightarrow ( \mathsf{Prov}[\overline{\upl\sigma \upr}/v_1] \rightarrow \mathsf{Prov}[\overline{\upl\tau \upr}/v_1])$,
+\item $\mathsf{PA} \vdash \mathsf{Prov}[\overline{\upl\sigma \upr}/v_1]  \rightarrow \mathsf{Prov}[\overline{\upl\mathsf{Prov}[\overline{\upl\sigma \upr}/v_1] \upr}/v_1]$.
+\end{enumerate}
+\end{thm}
+
+The proof of the conditions (ii) and (iii) of latter theorem is tiresome. Nevertheless, the reader is encouraged to approach the book of Boolos (\cite{Boolos1994}, p.44-49) or alternatively the book of Rautenberg (\cite{2006a}, p.269-284).
+
+
+To improve readability, we abbreviate $\mathsf{Prov}[\overline{\upl\sigma\upr}/v_1]$ with $\square[\sigma]$. (Note that the abbreviation $\square[\sigma]$ has several tasks. Firstly, we omit the corner quotes $\upl \phantom{\sigma} \upr$ of $\upl \sigma \upr$. Secondly, we omit $\overline{\phantom{\upl \sigma \upr}}$ of $\overline{\upl \sigma \upr}$. And thirdly, it is clear from context that we substitute the variable $v_1$, hence we omit $/v_1$ of $[\overline{\upl \sigma \upr}/v_1]$.)
+
+Then the abbreviated version of the Hilbert-Bernays-L\"ob conditions for \PA is the following:
+\begin{enumerate}[label=(HBL\arabic*)]
+\item if $\mathsf{PA} \vdash \sigma$, then $\mathsf{PA} \vdash \square [\sigma]$,
+\item $\mathsf{PA} \vdash  \square [ \sigma \rightarrow \tau] \rightarrow ( \square [\sigma] \rightarrow \square [\tau])$,
+\item $\mathsf{PA} \vdash \square [\sigma ] \rightarrow \square [\square [\sigma]]$.
+\end{enumerate}
+
+\begin{lem} \label{lem:GProvequi}
+$\mathsf{PA \vdash G }\leftrightarrow \lnot \square[\mathsf{G}]$.
+\end{lem}
+\begin{proof}
+Firstly, rearrange $\mathsf{U}(v_1)$ by elementary logical manipulations:
+
+\begin{nscenter}
+  \begin{tabular}{p{0.05\linewidth}p{0.5\linewidth}p{0.4\linewidth}}
+  $\mathsf{U}(v_1)$ & $\equiv \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1)$ & definition of $\mathsf{U}$ \\
+   & $\equiv \forall v_0  \lnot \exists v_2  \mathsf{(Prf}[v_2/v_1] \wedge \mathsf{Sub}(v_1,v_2))$ & definition of $\mathsf{Gdl}$ \\
+   & $\equiv \forall v_2 \forall v_0  \lnot (\mathsf{Prf}[v_2/v_1] \wedge\mathsf{ Sub}(v_1,v_2))$ & $\lnot \exists v_2 \varphi \equiv \forall v_2  \lnot\varphi$ \\
+   & $\equiv \forall v_2 \forall v_0  ( \lnot \mathsf{Prf}[v_2/v_1] \vee\lnot \mathsf{ Sub}(v_1,v_2))$ & De Morgan's Law\\
+    & $\equiv \forall v_2  (\forall v_0 \lnot \mathsf{Prf}[v_2/v_1] \vee \lnot \mathsf{Sub}(v_1,v_2))$ &  $ \forall v_0 (\varphi(v_0)\vee \psi ) \equiv  ( \forall v_0 \varphi(v_0)\vee \psi)$ \\   
+    & $\equiv \forall v_2  (\lnot\exists v_0 \mathsf{Prf}[v_2/v_1] \vee \lnot \mathsf{Sub}(v_1,v_2))$ &  $ \forall v_0 \lnot \varphi \equiv \lnot \exists v_0 \varphi $ \\
+   & $ \equiv \forall v_2 (\mathsf{Sub}(v_1,v_2) \rightarrow \lnot \exists v_0  \mathsf{Prf}[v_2/v_1])$ & $( \psi \wedge \lnot \varphi)\equiv(\varphi \rightarrow \psi)   $\\
+   & $\equiv\forall v_2 (\mathsf{Sub}(v_1,v_2) \rightarrow \lnot \mathsf{Prov}[v_2/v_1])$ & definition of $\mathsf{Prov}$
+  \end{tabular}
+\end{nscenter}
+
+By definition $\mathsf{G}$ is the indirect substitution of $v_1$ for $\overline{\upl \mathsf{U} \upr}$ in $\mathsf{U}$ and utilizing the Completeness Theorem,
+\begin{equation}
+\mathsf{PA \vdash G \leftrightarrow U[\overline{\upl U \upr}}/v_1]
+\end{equation}
+holds. Above we showed that $\mathsf{U}(v_1) \equiv \forall v_2 (\mathsf{Sub}(v_1,v_2) \rightarrow \lnot \mathsf{Prov}[v_2/v_1])$ and by substituting $\overline{\upl \mathsf{U}\upr}$ for $v_1$, we obtain
+\begin{equation}\label{eq:Gprove1}
+\mathsf{PA} \vdash \mathsf{G} \leftrightarrow\forall v_2 (\mathsf{Sub}[\mathsf{\overline{\upl U \upr}}/v_1] \rightarrow \lnot \mathsf{Prov}[v_2/v_1]).
+\end{equation}
+$\mathit{Sub}(\upl\mathsf{U} \upr)  = \upl \mathsf{G} \upr$ holds and since $\mathit{Sub}$ is defined in $\mathsf{PA}$ by $\mathsf{Sub}$, this infers
+\begin{equation}\label{eq:Gprove2}
+\mathsf{PA} \vdash \forall v_2  (\mathsf{Sub}[\overline{\upl\mathsf{ U} \upr}/ v_1 ] \leftrightarrow v_2 = \overline{\upl\mathsf{ G} \upr}).
+\end{equation}
+\Cref{eq:Gprove1} and \Cref{eq:Gprove2} imply
+\begin{equation}
+\mathsf{PA \vdash G }\leftrightarrow \forall v_2  ( v_2 = \overline{\upl \mathsf{G} \upr} \rightarrow \lnot \mathsf{Prov}[v_2/v_1]).
+\end{equation}
+Since the right-hand side of the biconditional is equivalent to $\lnot \mathsf{Prov[\overline{\upl G\upr}]}$,
+\begin{equation}
+\mathsf{PA \vdash G \leftrightarrow \lnot Prov[\overline{\upl G\upr}}/v_1].
+\end{equation}
+\end{proof}
+As a result the Formalized First Theorem can be derived.
+\begin{thm}[Formalized First Theorem in $\mathsf{PA}$]
+$\mathsf{PA} \vdash \mathsf{Con} \rightarrow \lnot \mathsf{Prov} [\overline{\upl \mathsf{G} \upr}/v_1].$
+\end{thm}
+\begin{proof}
+Elementary logic infers, for any formula $\varphi$, 
+\[ \mathsf{PA} \vDash \lnot \varphi \rightarrow ( \varphi \rightarrow \bot ) \]
+and by the Completeness and Soundness Theorem
+\[ \mathsf{PA} \vdash \lnot \varphi \rightarrow ( \varphi \rightarrow \bot ). \]
+Latter and HBL(i) implies:
+\[ \mathsf{PA} \vdash \square[ \lnot \varphi \rightarrow ( \varphi \rightarrow \bot ) ] .\]
+Using HBL(ii),
+\begin{equation}\label{eq:prffirstform}
+\mathsf{PA} \vdash \square[\lnot \varphi ]  \rightarrow \square[ \varphi \rightarrow \bot ] 
+\end{equation} 
+holds.
+
+Note that in the following we sometimes skip minor steps and use the Completeness and Soundness Theorem without explicitly stating this. Then the argumentation continues as follows:
+\begin{nscenter}
+  \begin{tabular}{p{0.02\linewidth}p{0.5\linewidth}p{0.4\linewidth}}
+  1. & $\mathsf{PA} \vdash \mathsf{G} \rightarrow \lnot \square [\mathsf{G}]$ & \Cref{lem:GProvequi} \\
+  2. & $\mathsf{PA} \vdash \square[\mathsf{G} \rightarrow \lnot \square [ \mathsf{G}]]$ & from 1 using HBL(i) \\
+  3. & $\mathsf{PA} \vdash \square[\mathsf{G}] \rightarrow \square[ \lnot \square[ \mathsf{G}]]$ & from 2, using HBL(ii) \\
+  4. & $\mathsf{PA} \vdash \square[ \lnot \square [\mathsf{G}]] \rightarrow \square [ \square[ \mathsf{G} ]\rightarrow \bot]$ & instance of \Cref{eq:prffirstform} with $\varphi$ as $\square [\mathsf{G}]$ \\
+  5. & $\mathsf{PA} \vdash \square [\mathsf{G} ]\rightarrow \square [ \square [ \mathsf{G} ] \rightarrow \bot ]$ & from 3 and 4 \\
+  6. & $\mathsf{PA} \vdash \square [\mathsf{G}] \rightarrow ( \square [ \square [\mathsf{G}]] \rightarrow \square [\bot] )$ & from 5, using HBL(ii) \\
+  7. & $\mathsf{PA} \vdash \square[ \mathsf{G} ]\rightarrow \square [ \square [ \mathsf{G}]]$ & instance of HBL(iii) \\
+  8. & $\mathsf{PA} \vdash \square [\mathsf{G} ] \rightarrow \square  [\bot]$ & from 6 and 7 \\
+  9. & $\mathsf{PA} \vdash \lnot \square [\bot] \rightarrow \lnot \square [\mathsf{G}]$ & contraposition of 8 \\
+  10. & $\mathsf{PA} \vdash \mathsf{Con} \rightarrow \lnot \square [ \mathsf{G} ]$ & definition of $\mathsf{Con}$\\
+  \end{tabular}
+\end{nscenter}
+\end{proof}
+
+\section{The Second Theorem and Some Results}
+
+\begin{thm}[G\"odel's Second Incompleteness Theorem for $\mathsf{PA}$] \label{thm:secondPA}
+If \PA is consistent, $\mathsf{PA} \nvdash \mathsf{Con}$.
+\end{thm}
+\begin{proof}
+Suppose $\mathsf{PA} \vdash \mathsf{Con}$ for a contradiction. Given the Formalized First Theorem, i.\,e.\@ $\mathsf{PA} \vdash \mathsf{Con} \rightarrow  \lnot \mathsf{Prov}[\overline{\upl \mathsf{G} \upr}/v_1]$, this yields $\mathsf{PA} \vdash \lnot \mathsf{Prov}[\overline{\upl \mathsf{G} \upr}/v_1]$. By \Cref{lem:GProvequi} which states $\mathsf{PA} \vdash \mathsf{G} \leftrightarrow \lnot \mathsf{Prov[\overline{\upl G \upr}}/v_1]$ and due to $\mathsf{PA} \vdash \lnot \mathsf{Prov}[\overline{\upl \mathsf{G} \upr}/v_1]$, it follows that $\mathsf{PA \vdash G}$. However, this contradicts to the First Incompleteness Theorem (see \Cref{thm:synfirst}), assuming \PA is consistent.
+\end{proof}
+
+Suppose that \PA is an arithmetically sound theory and thus all its theorems are true, then in particular \PA is consistent. Hence $\mathsf{Con}$ will be another true in $\mathcal{N}$ but unprovable sentence. 
+
+In the following, we show that $\mathsf{PA}$ is $\omega$-incomplete if \PA is consistent. Moreover, if \PA is $\omega$-consistent, \PA cannot prove $\lnot \mathsf{Con}$. As a result $\mathsf{Con}$ is another undecidable sentence in $\mathsf{PA}$, i.\,e.\@ $\mathsf{PA \nvdash Con}$ and $\mathsf{PA \nvdash \lnot Con}$ if $\omega$-consistency of $\mathsf{PA}$ is assumed. 
+\begin{cor} \label{cor:PAomegaincomplete}
+If \PA is consistent, then $\mathsf{PA}$ is $\omega$-incomplete.
+\end{cor}
+\begin{proof}
+Assume \PA is consistent which asserts that $\bot$ is not a theorem. Therefore, there is no number which is the s.\,g.\,n.\@ of a proof of $\bot$, i.\,e.\@ for all $n$, $\mathit{Prf}(n, \upl \bot \upr )$ does not hold. Since $\mathit{Prf}$ is defined in \PA by $\mathsf{Prf}$, 
+\begin{equation}\label{eq:omegain1}
+\text{for every }n\text{, }\mathsf{PA
+ \vdash \lnot Prf} [\overline{n}, \overline{\upl \bot \upr} /v_0, v_1]
+\end{equation}
+holds. Since $\mathsf{Con}$ is unprovable in $\mathsf{PA}$, unpacking the abbreviation
+\begin{equation}\label{eq:omegain2}
+\mathsf{PA \nvdash \forall} v_0  \lnot\mathsf{ Prf}[ \overline{\upl \bot \upr}/v_1]
+\end{equation}
+holds and hence by \Cref{eq:omegain1} and \Cref{eq:omegain2} \PA is $\omega$-incomplete.
+\end{proof}
+
+\begin{cor}
+If $\mathsf{PA}$ is $\omega$-consistent, then $\mathsf{PA} \nvdash \lnot \mathsf{Con}$. 
+\end{cor}
+\begin{proof}
+For a contradiction suppose $\mathsf{PA}$ is $\omega$-consistent and $\mathsf{PA \vdash \lnot Con}$, i.\,e.\@ 
+\begin{equation}\label{eq:omegain3}
+\mathsf{PA \vdash} \exists v_0  \mathsf{Prf}[\overline{\upl \bot \upr} /v_1].
+\end{equation} Since $\omega$-consistency implies plain consistency, by the same reasoning as in the proof of \Cref{cor:PAomegaincomplete},
+\begin{equation}\label{eq:omegain4}
+\text{for every }n\text{, }\mathsf{PA
+ \vdash \lnot Prf} [\overline{n}, \overline{\upl \bot \upr} /v_0, v_1].
+\end{equation} However, \Cref{eq:omegain3} and \Cref{eq:omegain4} contradict to \PA being $\omega$-consistent and hence $\mathsf{PA} \nvdash \lnot \mathsf{Con}$.
+\end{proof}
+
+The Second Incompleteness Theorem can be generalized for arithmetical theories $T = ( \mathcal{L}_A, \Sigma)$. We define $\mathsf{Prov}_T$ and $\mathsf{Con}_T$ analogously to the case of $\mathsf{PA}$.
+ 
+\begin{dfn}
+Let $T = ( \mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory and let $\mathit{Prov}_T(n)\defeeq \exists x \mathit{Prf}_T(x,n)$ be a relation which holds when the $\mathcal{L}_A$-sentence $\sigma$ with g.\,n.\@ $n$ is a theorem in $T$, i.\,e.\@ $T \vdash \sigma$. 
+\end{dfn} 
+
+
+\begin{dfn}
+Let $T = ( \mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory.
+\begin{enumerate}
+\item  Let $\mathsf{Prov}_T(y)\deffeq \exists v_0 \mathsf{ Prf}_T(v_0,y)$ be an $\mathcal{L}_A$-formula. 
+\item Let $\mathsf{Con_T} \deffeq \mathsf{\lnot Prov}_T[\overline{\upl \bot \upr}/v_1]$ be an $\mathcal{L}_A$-formula.
+\end{enumerate}
+\end{dfn}
+Note that $\mathit{Prov}_T(n)$ is arithmetically defined by $\mathsf{Prov}_T$. We also abbreviate $\mathsf{Prov}_T(\varphi)$ by $\square_T[ \varphi]$ for an $\mathcal{L}_A$-formula $\varphi$. 
+
+Similar to $\mathsf{PA}$, it can be shown that the Formalized First Theorem for $T$ holds, i.\,e.\@ $T \vdash \mathsf{Con}_T \rightarrow \lnot \mathsf{Prov}_T (\overline{\upl \mathsf{G}_T \upr})$ if the Hilbert-Bernays-Löb conditions hold for $T$.
+
+\begin{dfn}[Hilbert-Bernays-L\"ob conditions]\label{dfn:HBL}
+Let $T = (\mathcal{L}_A, \Sigma)$ be an arithmetical theory which extends $\mathsf{Q}$ and is primitive recursively axiomatized. $T$ satisfies the \textit{Hilbert-Bernays-L\"ob conditions} (\textit{HBL conditions}) if for any $\mathcal{L}$-sentence $\sigma$, $\tau$, the following conditions hold.
+\begin{enumerate}
+\item if $T \vdash \sigma$, then $T \vdash \square_T [\sigma]$,
+\item $T \vdash  \square_T [ \sigma \rightarrow \tau] \rightarrow ( \square_T [\sigma] \rightarrow \square_T [ \tau])$,
+\item $T \vdash \square_T [\sigma ]\rightarrow \square_T [\square_T [\sigma]]$.
+\end{enumerate}
+\end{dfn}
+
+\begin{thm}[Generalized Formalized First Theorem]
+Let $T = (\mathcal{L}_A, \Sigma)$ be an arithmetical theory which extends $\mathsf{Q}$ and is primitive recursively axiomatized. Moreover, assume that $T$ satisfies the Hilbert-Bernays-L\"ob conditions. Then
+\[T \vdash \mathsf{Con}_T \rightarrow \lnot \mathsf{Prov}_T (\overline{\upl \mathsf{G}_T \upr}).\]
+\end{thm}
+
+\begin{thm}[Generalized Version of G\"odel's Second Incompleteness Theorem]
+Let $T = (\mathcal{L}_A, \Sigma)$ be an arithmetical theory which extends $\mathsf{Q}$ and is primitive recursively axiomatized. Moreover, assume that $T$ satisfies the Hilbert-Bernays-L\"ob conditions. Then $T \nvdash \mathsf{Con}_T$.
+\end{thm}

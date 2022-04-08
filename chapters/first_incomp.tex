@@ -1,0 +1,332 @@
+\chapter{First Incompleteness Theorem}\label{chap:firstIncomp}
+Goal of this chapter is to construct a sentence $\mathsf{G}$ that is true in $\mathcal{N}$ if and only if it is $\mathsf{PA}$-unprovable. For a formula $\varphi$ with free variable $v_1$ and g.\,n.\@ $n$, we aim to construct a function $\widetilde{\mathit{sub}}$ which on input $n$ returns the g.\,n.\@ of the formula $\varphi[\overline{\upl \varphi \upr} / v_1] = \varphi[\overline{n}/ v_1]$. G\"odel showed in a time-consuming procedure that this function $\widetilde{\mathit{sub}}$ is primitive recursive. However, to simplify things, we instead consider the g.\,n.\@ of the formula $\exists v_1  ( v_1 = \overline{\upl \varphi \upr} \wedge \varphi )$ since both formulas are logically equivalent if $v_1$ is a free variable in $\varphi$. Again, in this chapter we fix the language of arithmetic $\mathcal{L}_A$. Moreover, we only consider functions $f$ with domain $\mathbb{N}^n$ $(n \ge 1)$ and codomain $\mathbb{N}$, i.\,e.\@ $f$ is of the form $f: \mathbb{N}^n \rightarrow \mathbb{N}$ $(n\ge 0)$. Furthermore, we only consider relations of the form $R\subseteq \mathbb{N}^n$ for $n \ge 1$. 
+
+Lastly, we state a generalized version of G\"odel's First Theorem which applies to any arithmetical theory $T=(\mathcal{L}_A, \Sigma)$ which satisfies specific conditions.
+
+\begin{dfn}
+Let $\mathit{sub}(n)$ be a $1$-ary function defined by
+\[ \mathit{sub}(n) \defeq \begin{cases} 
+\upl \exists v_1  ( v_1 = \overline{\upl \varphi \upr} \wedge \varphi ) \upr & \text{if }n \text{ is the g.\,n.\@ of a formula } \varphi, \\
+0 & \text{otherwise}.
+\end{cases} 
+\]\end{dfn}
+
+Note that this definition also applies if $v_1$ is not a free variable of $\varphi$.
+
+For a formula $\varphi$ with g.\,n.\@ $n$, we call the formula $\exists v_1 (v_1 = \overline{n} \wedge \varphi)$ the \textit{indirect substitution of $v_1$ for $\overline{\upl\varphi \upr}$ in $\varphi$}.
+ 
+\begin{thm}
+The function $\mathit{sub}(n)$ is primitive recursive. 
+\end{thm}
+\begin{proof}
+In case $n$ is the g.\,n.\@ of a formula $\varphi$, i.\,e.\@ $\mathit{Form}(n)$ holds, the $\mathit{sub}$ function maps $n$, the g.\,n.\@ of $\varphi$, to the g.\,n.\@ of $ \exists v_1  \, v_1 = \lnot (\lnot  \overline{\upl \varphi \upr} \vee \lnot \varphi ) $ (unpacking the abbreviation $\exists v_1  ( v_1 =  \overline{\upl \varphi \upr} \wedge \varphi )  $). If $\mathit{Form}(n)$ holds, then let \[\mathit{sub}(n) \defeq \upl \exists v_1  \, v_1 = \lnot (\lnot \upr  \circ num(n) \circ \upl \vee \lnot\upr \circ n \circ \upl)\upr \] where $\mathit{num}$ is p.\,r.\@ and returns the g.\,n.\@ of the numeral $n$ (see \Cref{lem:num}). Else, let $\mathit{sub}(n) = 0$. So $\mathit{sub}(n)$ is defined by p.\,r.\@ cases from p.\,r.\@ functions and thus is primitive recursive as well.
+\end{proof}
+
+\begin{dfn}
+Let $\mathit{Gdl}(m,n)$ be a relation which holds when $m$ is the s.\,g.\,n.\@ of a $\mathsf{PA}$-proof of $\mathit{sub}(n)$ (which is the g.\,n.\@ of the indirect substitution of $v_1$ for $\overline{n}$ in the formula with g.\,n.\@ $n$).
+\end{dfn}
+
+\begin{thm}
+The relation $\mathit{Gdl}(m,n)$ is primitive recursive.
+\end{thm}
+
+\begin{proof}
+Let $\mathit{Gdl}(m,n) \defeeq \mathit{Prf}(m, \mathit{sub}(n))$. Then the relation $\mathit{Gdl}$ is a composition of p.\,r.\@ relations $\mathit{Prf}, \mathit{sub}$ and therefore primitive recursive.
+\end{proof}
+
+\begin{dfn}
+
+\Cref{cor:captureandexpress} ensures the existence of the following $\Sigma_1$-formulas.
+\begin{enumerate}
+\item Let $\mathsf{Sub}(v_1,v_2)$ be the $\Sigma_1$-formula s.\,t.\@ $\mathit{sub}(n)$ is arithmetically defined and defined in \PA by $\mathsf{Sub}(v_0,v_1)$.
+\item Let $\mathsf{Prf}(v_0,v_1)$ be the $\Sigma_1$-formula s.\,t.\@ $\mathit{Prf}(m,n)$ is arithmetically defined and defined in \PA by $\mathsf{Prf}(v_0,v_1)$.
+%\item Let $\mathsf{Gdl}(v_0,v_1)$ be the $\Sigma_1$-formula s.\,t.\@ $\mathit{Gdl}(m,n)$ is arithmetically defined and defined in \PA by $\mathsf{Gdl}(v_0,v_1)$.
+\end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+Let $\mathsf{Gdl}(v_0, v_1) \deffeq \exists v_2 (\mathsf{Prf}[v_2/v_1] \wedge \mathsf{Sub}(v_1,v_2))$ be an $\mathcal{L}_A$-formula.
+\end{dfn}
+Evidently, $\mathsf{Gdl}$ is a $\Sigma_1$-formula since $\mathsf{Prf}$ and $\mathsf{Sub}$ are $\Sigma_1$-formulas.
+
+\begin{prop}
+$\mathit{Gdl}(m,n)$ is arithmetically defined and defined in \PA by $\mathsf{Gdl}(v_0,v_1)$.
+\end{prop}
+
+Latter proposition can be easily shown by the facts that $\mathit{sub}(n)$ is arithmetically defined and defined in $\mathsf{PA}$ by $\mathsf{Sub}(v_1,v_2)$ and $\mathit{Prf}(m,n)$ is arithmetically defined and defined in $\mathsf{PA}$ by $\mathsf{Prf}(v_0,v_1)$.
+%For a proof that $\mathit{Gdl}(m,n)$ is arithmetically defined by $\mathsf{Gdl}(v_0,v_1)$, let $m,n \in \mathbb{N}$. Since $\mathit{sub}(n)$ is arithmetically defined by $\mathsf{Sub}(v_1,v_2)$ and $\mathit{Prf}(m,n)$ is arithmetically defined by $\mathsf{Prf}(v_0,v_1)$, the following holds
+%\begin{align*}
+%&\mathit{Gdl}(m,n) \text{ holds } \\ 
+%\Leftrightarrow &\mathit{Prf}(m,\mathit{sub}(n)) \text{ holds } \\ \Leftrightarrow & \mathcal{N} \vDash \exists v_2 (\mathsf{Prf}[v_2/v_1] \wedge \mathsf{Sub}(v_1,v_2)).
+%\end{align*}
+%As a result $\mathit{Gdl}(m,n)$ is arithmetically defined by $\mathsf{Gdl}(v_1,v_2)$.
+%\\
+
+%For a proof that $\mathit{Gdl}(m,n)$ is defined in $T$ by $\mathsf{Gdl}(v_0,v_1)$, let $m,n \in \mathbb{N}$. 
+
+%If $\mathit{Gdl}(m,n)$ holds, then $\mathit{Prf}(m,\mathit{sub}(n))$ holds.
+
+\begin{dfn}
+Let $\mathsf{U}(v_1) \deffeq \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1)$ be an $\mathcal{L}_A$-formula.
+\end{dfn}
+The indirect substitution of $v_1$ for $\overline{\upl \mathsf{U} \upr}$ in $\mathsf{U}$ yields the desired formula $\mathsf{G}$. Firstly, $\mathsf{G}$ is true if and only if it is unprovable. Secondly, it is a $\Pi_1$-sentence (and very long in its unabbreviated version).
+
+\begin{dfn}
+Let $\mathsf{G} \deffeq \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})$ be an $\mathcal{L}_A$-sentence. We call $\mathsf{G}$ the \textit{G\"odel sentence}.
+\end{dfn}
+%&\deffeq \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U}) \equiv \exists v_1 (v_1 = \overline{\upl \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1) \upr} \wedge \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1))\\
+Note that $\mathsf{G}$ is equivalent to the direct substitution of $v_1$ for $\overline{\upl \mathsf{U} \upr}$ in $\mathsf{U}$. Hence
+\[
+\mathsf{G}   \equiv \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})
+\]
+is equivalent to
+\[
+ \mathsf{U}[\overline{\upl \mathsf{U} \upr}/ v_1] \equiv \forall v_0  \lnot \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ].
+\]
+%& \equiv \exists v_1 (v_1 = \overline{\upl \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1) \upr} \wedge \forall v_0  \lnot \mathsf{Gdl}(v_0,v_1))
+Now we show that $\mathsf{G}$ is true in $\mathcal{N}$ if and only if $\mathsf{G}$ is unprovable.
+\begin{thm}\label{thm:Gtrueunprovable}
+$\mathcal{N} \vDash \mathsf{G}$ if and only if $\mathsf{PA} \nvdash \mathsf{G}$.
+\end{thm}
+
+\begin{proof}
+By definition the following holds:
+\begin{align*}
+\mathcal{N} \vDash \mathsf{G} &\Leftrightarrow \mathcal{N} \vDash  \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})  \\
+& \Leftrightarrow \mathcal{N} \vDash \forall v_0  \lnot \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ] \\
+& \Leftrightarrow \text{for all }m \in \mathbb{N}\text{, }\mathcal{N} \vDash \lnot\mathsf{Gdl}[\overline{m},\overline{\upl \mathsf{U} \upr }/v_0, v_1 ]
+\end{align*}
+Since $\mathit{Gdl}$ is arithmetically defined by $\mathsf{Gdl}$,
+\begin{align*}
+\mathcal{N} \vDash \mathsf{G} &  \Leftrightarrow \text{for all }m \in \mathbb{N}\text{, } \lnot \mathit{Gdl}(m, \upl \mathsf{U} \upr ) \\
+& \Leftrightarrow \text{for all }m \in \mathbb{N}\text{, } \lnot \mathit{Prf}(m, \mathit{sub}(\upl \mathsf{U} \upr)) \\
+& \Leftrightarrow \text{for all }m \in \mathbb{N}\text{, } \lnot \mathit{Prf}(m, \upl \mathsf{G} \upr) \\
+& \Leftrightarrow \text{there exists no }\mathsf{PA}\text{-proof of }\mathsf{G} \\
+& \Leftrightarrow\mathsf{PA} \nvdash \mathsf{G}.
+\end{align*}
+As a result $\mathcal{N} \vDash \mathsf{G}$ if and only if $\mathsf{PA} \nvdash \mathsf{G}$. 
+\end{proof}
+
+\begin{prop}
+$\mathsf{G}$ is a $\Pi_1$-sentence.
+\end{prop}
+\begin{proof}
+$\mathsf{Gdl}(v_0,v_1)$ is a $\Sigma_1$-formula and so $\mathsf{Gdl}[\overline{\upl \mathsf{U}} \upr /v_1]$ is a $\Sigma_1$-formula as well. Hence its negation $\lnot\mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1]$ is a $\Pi_1$-formula and lastly $\forall v_0  \lnot\mathsf{Gdl}[\overline{\upl \mathsf{U}} \upr /v_1]$ is a $\Pi_1$-sentence. As a result $\mathsf{G}$ is equivalent to a $\Pi$-sentence.
+\end{proof}
+
+\section{The Semantic Version}
+
+\begin{thm}[Semantic Version of G\"odel's First Incompleteness Theorem for $\mathsf{PA}$] \label{thm:semanticPA}
+If \PA is arithmetically sound, then for the $\Pi_1$-sentence $\mathsf{G}$ which is true in $\mathcal{N}$, $\mathsf{PA} \nvdash \mathsf{G}$ and $\mathsf{PA} \nvdash \lnot \mathsf{G}$. So $\mathsf{PA}$ is negation incomplete if \PA is arithmetically sound.
+\end{thm}
+
+\begin{proof}
+Suppose that the theory \PA is arithmetically sound, i.\,e.\@ \PA proves no falsehoods of $\mathcal{N}$. If $\mathsf{G}$ could be proved in $\mathsf{PA}$, i.\,e.\@ $\mathsf{PA} \vdash \mathsf{G}$, then $\mathcal{N} \nvDash \mathsf{G}$ due to \Cref{thm:Gtrueunprovable}. Thus \PA would prove a 'false' theorem, contradicting to \PA being arithmetically sound. Hence $\mathsf{G}$ is not provable in $\mathsf{PA}$ and by \Cref{thm:Gtrueunprovable} $\mathcal{N} \vDash \mathsf{G}$. Since $\mathcal{N} \vDash \mathsf{G}$ and \PA being  arithmetically sound $\lnot \mathsf{G}$ cannot be proved in \PA either. To sum up, $\mathsf{G}$ is an undecidable sentence of $\mathsf{PA}$, i.\,e.\@ $\mathsf{PA} \nvdash \mathsf{G}$ and $\mathsf{PA} \nvdash \lnot \mathsf{G}$.
+\end{proof}
+
+Finally, we showed that \PA is incomplete if \PA is arithmetically sound. The following corollary is a result of latter theorem.
+
+\begin{cor}
+$\mathsf{PA}$ cannot prove all true sentences of arithmetic, i.\,e.\@ $C_\vdash(\mathsf{PA})\neq\mathit{Th}(\mathcal{N})$ if \PA is arithmetically sound.
+\end{cor}
+
+We aim to show that $C_\vdash(T)=\mathit{Th}(\mathcal{N})$ for any effectively axiomatized arithmetical theory $T= (\mathcal{L}_A, \Sigma)$ which satisfies specific conditions. In the following we show that primitive recursively axiomatizable theories coincide with effectively axiomatizable theories $T$. Then it remains to prove $C_\vdash(T)=\mathit{Th}(\mathcal{N})$ for any primitively recursively axiomatized theory.
+
+
+\begin{dfn}
+Let $T = (\mathcal{L}_A, \Sigma)$ be an arithmetical theory.
+\begin{enumerate}
+\item $T$ is \textit{primitive recursively axiomatized} if the set $\upl \Sigma \upr \defeq \lbrace \upl \sigma \upr : \sigma \in \Sigma \rbrace$ is primitive recursive. $T$ is \textit{primitive recursively axiomatizable} if there exists a primitive recursively axiomatized theory $T'$ such that $T$ is equivalent to $T'$.
+\item $T$ is \textit{recursively axiomatized} if the set $\upl \Sigma \upr \defeq \lbrace \upl \sigma \upr : \sigma \in \Sigma \rbrace$ is recursive. $T$ is \textit{recursively axiomatizable} if there exists a recursively axiomatized theory $T'$ such that $T$ is equivalent to $T'$.
+\item $T$ is \textit{recursive enumerably axiomatized} if the set $\upl \Sigma \upr \defeq \lbrace \upl \sigma \upr : \sigma \in \Sigma \rbrace$ is recursive enumerable. $T$ is \textit{recursive enumerably axiomatizable} if there exists a recursive enumerably axiomatized theory $T'$ such that $T$ is equivalent to $T'$.
+\end{enumerate}
+\end{dfn}
+
+By the Church-Turing Thesis r.\,e.\@ sets coincide with enumerable sets, and recursive sets with decidable sets. Thus recursively enumerably axiomatized (axiomatizable) theories correspond to enumerably axiomatized (axiomatizable) theories, and recursive axiomatized (axiomatizable) theories to effectively axiomatized (axiomatizable) theories. In the following we demonstrate that primitive recursively axiomatizable theories in fact coincide with recursive enumerably axiomatized theories and hence in particular with recursively axiomatized theories. We assume that the reader is familiar with the following projection lemma from computability theory, as follows.
+\begin{lem}[Projection Lemma]
+For any r.\,e.\@ set $A\subseteq \mathbb{N}$, there exists a primitive recursive set $B\subseteq \mathbb{N}^2$ such that for all $x$,
+\begin{enumerate}
+\item $x \in A \Rightarrow \exists ! y (x,y) \in B$,
+\item $x \notin A \Rightarrow \nexists y (x,y) \in B$.
+\end{enumerate}
+\end{lem}
+%
+%\begin{lem}[Craig's Theorem I]
+%Let $T=(\mathcal{L}_A, \Sigma)$ be any enumerably axiomatized theory. Then there exists a decidable theory $T'=(\mathcal{L}, \Sigma)$ s.\,t.\@ $C_\vdash (T) = C_\vdash (T')$.
+%\end{lem}
+%\begin{proof}
+%If $\Sigma$ is finite, then $T$ is decidable and hence we can set $T' \defeq T$. If $\Sigma$ is infinite, let $\sigma_1, \sigma_2, \ldots$ be an enumeration of $\Sigma$. Define $\tau_n \deffeq \sigma_n \wedge \ldots \wedge \sigma_n$ as the $n$-fold conjunction of $\sigma_n$. Then $\tau_n$ is equivalent to $\sigma_n$, which is why for $\Sigma' = \lbrace \tau_n: n \ge 1 \rbrace$ the following holds: $C_\vdash (T) = C_\vdash (T')$. $\Sigma'$ is decidable because a sentence $\sigma$ of length $\le n$ is in $\Sigma'$ if and only if $\sigma$ matches one of the sentences $\tau_1, \ldots, \tau_n$.
+%\end{proof}
+
+\begin{thm}[Craig's Theorem]
+Let $T=(\mathcal{L}_A, \Sigma)$ be any recursive enumerably axiomatized theory. Then there exists a primitive recursively axiomatizable theory $T'=(\mathcal{L}, \Sigma)$ such that $C_\vdash (T) = C_\vdash (T')$.
+\end{thm}
+\begin{proof}
+Fix $T = ( \mathcal{L}_A, \Sigma)$ such that $\upl \Sigma \upr \defeq \lbrace \upl \sigma \upr : \sigma \in \Sigma \rbrace$ is r.\,e. By the projection lemma fix a p.\,r.\@ $B$ such that for all $x \in \mathbb{N}$, 
+\begin{align*}
+& x \in \upl \Sigma \upr \Rightarrow \exists !y (x,y) \in B, \\
+& x \notin \upl \Sigma \upr \Rightarrow \nexists y (x,y) \in B.
+\end{align*}
+For any $\mathcal{L}_A$-sentence $\sigma$ and any number $n \ge 1$ let 
+\[\sigma_n \deffeq \sigma \wedge \ldots \wedge \sigma\] be the $n$-fold conjunction of $\sigma$ ($\sigma_1 \deffeq \sigma, \sigma_{n+1} \defeq (\sigma_n \wedge \sigma))$ and let $\Sigma' \deffeq \lbrace \sigma_n: ( \upl \sigma \upr, n) \in B \rbrace$. Then $\Sigma'$ is primitive recursive by the closure properties of $\mathsf{PRIM}$. By definition of $\Sigma'$ and choice of $B$
+\[ \sigma \in \Sigma \Leftrightarrow \exists n ((\upl \sigma\upr, n ) \in B) \Leftrightarrow \exists n ( \sigma_n \in \Sigma'). \]
+Hence for any $\sigma \in \Sigma$ there is an $\sigma' \in \Sigma'$ s.\,t.\@ $\sigma$ equivalent to $\sigma'$. Conversely if $\sigma' \in \Sigma$ then $\sigma' \equiv \sigma_n$ for some $\sigma \in \Sigma$.
+\end{proof}
+
+Likewise to \PA we define the 'proof'-relations in a primitive recursively axiomatized theory.
+
+\begin{dfn}
+Let $T = (\mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory. Define the following relations:
+\begin{enumerate}
+\item Let $\mathit{Prfseq}_T(n)$ be a relation which holds if $n$ is the s.\,g.\,n.\@ of a $T$-proof of an $\mathcal{L}_A$-formula.
+\item Let $\mathit{Prf}_T(m,n)$ be a relation which holds when $m$ is the s.\,g.\,n.\@ of a $T$-proof of the $\mathcal{L}_A$-sentence with g.\,n.\@ $n$.
+\item Let $\mathit{Gdl_T}(m,n)$ be a relation which holds when $m$ is the s.\,g.\,n.\@ of a $T$-proof of $\mathit{sub}(n)$.
+\end{enumerate}
+\end{dfn}
+
+Analogously to \PA it can be shown that the 'proof'-relations are primitive recursive.
+\begin{thm}
+Let $T = (\mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory. The following relations are primitive recursive:
+\begin{enumerate}[label=({\arabic*})]
+\item The relation $\mathit{Prfseq}_T(n)$.
+\item The relation $\mathit{Prf}_T(m,n)$.
+\item The relation $\mathit{Gdl_T}(m,n)$.
+\end{enumerate}
+\end{thm}
+\begin{proof}[Proof Sketch]
+
+\begin{enumerate}[label=({\arabic*})]
+\item In order to show that $\mathit{Prfseq}_T(n)$ is primitive recursive, it suffices to show that the following relations are primitive recursive: 
+
+\begin{enumerate}
+\item[(i)] For $1 \le i \le 6$, $A_i(n)$ holds if $n$ is the g.\,n.\@ of an $\mathcal{S}$-axiom (A$i$).
+\item[(ii)] For $1 \in \lbrace 1, 2, 3, 5 \rbrace$, $R_i(n,c)$ holds if $c$ is the g.\,n.\@ of the formula with g.\,n.\@ $n$ which follows from the premise $n$ (R$i$). $R_4(m, n,c)$ holds if $c$ is the g.\,n.\@ of the formula with g.\,n.\@ $n$ which follows from the premises $m$ and $n$ (R$i$).
+\item[(iii)] $\mathit{TAxiom}(n)$ holds if $n$ is the g.\,n.\@ of an axiom of $T$. 
+\end{enumerate}
+(i) and (ii) are similar to the proof of \Cref{thm:Prfseqpr}.
+For (iii), since $T=(\mathcal{L}_A, \Sigma)$ is a primitive recursively axiomatized theory, $\Sigma$ is primitive recursive and therefore $\mathit{TAxiom}(n)$ is primitive recursive as well. 
+Let 
+\[ \mathit{Axiom}(n) \defeq A_1(n) \vee \ldots \vee A_6(n) \vee \mathit{TAxiom}(n) \]
+and 
+\[ Rule(n, o) \defeq R_1(n,o) \vee R_2(n,o) \vee R_3(n,o) \vee R_5(n,o). \]  
+Then $\mathit{Prfseq}$ is primitive recursive since \begin{align*}
+\mathit{Prfseq}(n) & \defeq ( \forall x < \mathit{len}(n)) \, \lbrace \mathit{Axiom}(\mathit{exf}(n,x))  \vee \\
+&( \exists y, z < x )  R_4(\mathit{exf}(n,y), \mathit{exf}(n,z), \mathit{exf}(n,x)) \vee \\
+&(\exists y < k )  Rule(\mathit{exf}(n,y), \mathit{exf}(n,x))\rbrace.
+\end{align*}
+\item Analogously to $\mathsf{PA}$, the sentence $\sigma$ with g.\,n.\@ $n$ is the last component in the $T$-proof of $\sigma$ so let
+\[ \mathit{Prf}_T(m,n) \defeq \mathit{Prfseq}_T(n) \wedge ( \mathit{exf}(m, \mathit{len}(m)-1)= n ) \wedge \mathit{Sent}(n). \]
+\item Let $\mathit{Gdl}_T(m,n) \defeeq \mathit{Prf}(m, \mathit{sub}(n))$. Therefore $\mathit{Gdl}_T$ is primitive recursive.
+\end{enumerate}
+\end{proof}
+
+\begin{dfn}
+Let $T = ( \mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory.
+\begin{enumerate}
+\item Let $\mathsf{Prf}_T(v_0,v_1)$ be the $\Sigma_1$-formula s.\,t.\@ $\mathit{Prf}_T(m,n)$ is arithmetically defined and defined in \PA by $\mathsf{Prf}_T(v_0,v_1)$.
+\item Let $\mathsf{Gdl}_T(v_0, v_1) \deffeq \exists v_2 ( \mathsf{Prf}[v_2/v_1] \wedge \mathsf{Sub}(v_1, v_2))$ be an $\mathcal{L}_A$-formula. 
+\end{enumerate}
+\end{dfn}
+Evidently, $\mathsf{Gdl}_T$ is a $\Sigma_1$-formula since $\mathsf{Prf}_T$ and $\mathsf{Sub}$ are $\Sigma_1$-formulas. Moreover, $\mathsf{Gdl}_T(m,n)$ is arithmetically defined and defined in $T$ by $\mathsf{Gdl}_T(v_0,v_1)$.
+
+\begin{dfn}
+Let $T = ( \mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory and let $\mathsf{U}_T(v_1) \deffeq \forall v_0  \lnot \mathsf{Gdl}_T(v_0,v_1)$ be an $\mathcal{L}_A$-formula.
+\end{dfn}
+
+Again, by the indirect substitution of the g.\,n.\@ of $\mathsf{U}_T$ for the free variable $v_1$ in $\mathsf{U}_T$, the desired formula $\mathsf{G}_T$ is constructed. 
+\begin{dfn}
+Let $\mathsf{G}_T \deffeq \exists v_1 (v_1 = \overline{\upl \mathsf{U}_T \upr} \wedge\mathsf{ U}_T)$ an $\mathcal{L}_A$-sentence. We call $\mathsf{G}_T$ the \textit{G\"odel sentence of $T$}.
+\end{dfn}
+
+Evidently $\mathsf{G}_T$ is equivalent to $\mathsf{U}_T[\overline{\upl \mathsf{U}_T \upr }/v_1]$ and $\forall v_0  \lnot \mathsf{Gdl}_T[\overline{\upl \mathsf{U}_T \upr }/v_1 ]$.
+ 
+\begin{thm}[Generalized Semantic Version of G\"odel's First Theorem]\label{thm:gensemfirst}
+Let $T = (\mathcal{L}_A, \Sigma)$ be a primitive recursively axiomatized theory. If $T$ is arithmetically sound, then for the $\Pi_1$-sentence $G_T$ which is true in $\mathcal{N}$, $T \nvdash \mathsf{G}_T$ and $T \nvdash \lnot \mathsf{G}_T$. As a result $T$ is negation incomplete if $T$ is arithmetically sound.
+\end{thm}
+
+\begin{proof}
+This version can be proved in the same way as \Cref{thm:semanticPA}. 
+\end{proof}
+
+Latter theorem and Craig's Theorem imply the following.
+
+\begin{cor}
+For any arithmetical recursively axiomatized theory $T= (\mathcal{L}_A, \Sigma)$ which is arithmetically sound, $T$~cannot prove all true sentences of arithmetic, i.\,e.\@ $C_\vdash(T)\neq\mathit{Th}(\mathcal{N})$.
+\end{cor}
+
+%Let $T \defeq (\mathcal{L}_A, \Sigma)$ be a p.\,r.\@ axiomatized and  arithmetical theory. Then by \Cref{thm:gensemfirst} $T$ is incomplete. Now, consider the consistent theory $T^+ \defeq (\mathcal{L}_A, \Sigma_{+})$ which extends $T$. Then $T^+$ is firstly still arithmetically sound because the set $\Sigma_T$ of axioms of $T$ as well as $\Sigma_+$ are true and the logic is truth-preserving. Secondly, $T^+$ is evidently a p.\,r.\@ axiomatized theory. Hence the generalized version of our First Incompleteness Theorem applies, and $\mathsf{G_{T^+}}$ wittnesses the incompleteness of $T^+$. In particular, consider $\Sigma_+ \defeq \lbrace \mathsf{G_T} \rbrace$, then $\mathsf{G_T}$ is undecideable in $T$ but decideable in $T^+$. However, $T^+$ is still incomplete. Concluding, $T$ and in particular, \PA is incomplete, and indeed, both are incompletable.
+
+\section{The Syntactic Version}
+Before dealing with the syntactic version of the First Incompleteness Theorem, two key notions are defined, in order to downgrade the semantic assumption of dealing with an arithmetically sound theory. Instead, the weaker assumption that the theory is consistent and $\omega$-consistent is employed. 
+
+\begin{dfn}
+An arithmetical theory $T= (\mathcal{L}_A, \Sigma)$ is $\omega$-\textit{incomplete} if and only if for some formula $\varphi(x)$, $T \vdash \varphi [\overline{n}/x]$ for each natural number $n$ but $T \nvdash \forall x  \varphi(x)$. A theory which is not $\omega$-incomplete is  $\omega$-\textit{complete}.
+\end{dfn}
+
+\begin{dfn}
+An arithmetical theory $T= (\mathcal{L}_A, \Sigma)$ is $\omega$-\textit{inconsistent} if and only if for some formula $\varphi(x)$, $T \vdash \varphi[\overline{n}/x]$ and $T \vdash \lnot \forall x  \varphi(x)$. A theory which is not $\omega$-inconsistent is  $\omega$-\textit{consistent}.
+\end{dfn}
+
+\begin{prop} \label{prop:omegaconsistent}
+If an arithmetical theory $T= (\mathcal{L}_A, \Sigma)$ theory $T$ is $\omega$-consistent, then $T$ is consistent.
+\end{prop}
+\begin{proof}
+For a proof via contraposition, assume that $T=(\mathcal{L}_A, \Sigma)$ is inconsistent. Then $T$ can derive every formula. In particular, $T \vdash \exists x  \varphi(x)$ and for each natural number $n$, $T \vdash \varphi[\overline{n}/x]$, for an $\mathcal{L}_A$-formula $\varphi(x)$. Hence $T$ is $\omega$-inconsistent.
+\end{proof}
+
+So far for the semantic version of the First Incompleteness Theorem only the result that the relation $\mathit{Gdl}$ is arithmetically defined by $\mathsf{Gdl}$ was utilized. In fact $\mathit{Gdl}$ is also defined in $\mathsf{PA}$ by $\mathsf{Gdl}$. By using this fact without the semantic assumption that \PA is sound, we show that '$\mathsf{PA}$ does not prove $\mathsf{G}$' if \PA is consistent. By additionally assuming that \PA is $\omega$-consistent, we obtain the result that '\PA does not prove $\lnot \mathsf{G}$'. 
+
+\begin{thm} \label{thm:PA_Consistent}
+If \PA is consistent, $\mathsf{PA} \nvdash \mathsf{G}$.
+\end{thm}
+
+\begin{proof}
+For a contradiction suppose that $\mathsf{G}$ is $\mathsf{PA}$-provable. Then
+\[ \mathsf{PA} \vdash \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U}) \] 
+and there exists a s.\,g.\,n.\@ $n$ that codes for the proof of $\exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})$. Then $\mathit{Gdl}(n,\upl \mathsf{U} \upr )$ holds since $\mathit{sub}(\upl \mathsf{U} \upr)$ is the g.\,n.\@ of $\exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})$. In fact $\mathit{Gdl}$ is defined in \PA by $\mathsf{Gdl}$ so \[\mathsf{PA} \vdash \mathsf{Gdl}(\overline{n}, \overline{\upl \mathsf{U} \upr}).\]
+
+Since $\mathsf{PA \vdash G}$ and by the Completeness and Soundness Theorem,
+\[ \mathsf{PA} \vDash \mathsf{G} \Leftrightarrow \mathsf{PA} \vDash  \exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U}) 
+\Leftrightarrow \mathsf{PA} \vDash \mathsf{U}[\overline{\upl\mathsf{U} \upr }/v_1] \Leftrightarrow \mathsf{PA} \vdash  \forall v_0  \lnot \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ]. \] Hence $\mathsf{PA} \vdash \forall v_0 \lnot \mathsf{Gdl}[\overline{\upl\mathsf{ U }\upr}/v_1]$ and since the universal quantification entails every instance, for $n\in \mathbb{N}$, \[\mathsf{PA} \vdash  \lnot \mathsf{Gdl}(\overline{n}, \overline{\upl \mathsf{U} \upr}). \] This contradicts to \PA being consistent.
+\end{proof}
+
+Last theorem deduces the following corollary:
+\begin{cor} \label{cor:PAconsistent}
+If \PA is consistent, then \PA is $\omega$-incomplete.
+\end{cor}
+
+\begin{proof}
+Suppose \PA is consistent. Then by \cref{thm:PA_Consistent}, $\mathsf{PA} \nvdash \mathsf{G}$, i.\,e.\@ \[\mathsf{PA} \nvdash  \forall v_0  \lnot \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ].\] Since $\mathsf{G}$ is unprovable, no number is the s.\,g.\,n.\@ of  a proof of $\mathsf{G}$. Equivalently, no number is the s.\,g.\,n.\@ of a proof of  $\exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})$. Then, for every $n \in \mathbb{N}$, $\mathit{Gdl}(n, \upl \mathsf{U} \upr )$ does not hold. Since $\mathit{Gdl}$ is defined in \PA by $\mathsf{Gdl}$, 
+\[ \text{for every }n \in \mathbb{N}, \mathsf{PA} \vdash \mathsf{Gdl} [\overline{n}, \overline{\upl \mathsf{U} \upr}/v_0, v_1]. \] Thus \PA is $\omega$-incomplete.
+\end{proof}
+
+Instead of arithmetical soundness, we now require $\omega$-consistency to show that $\mathsf{PA} \nvdash \mathsf{G}$.
+\begin{thm}\label{thm:PAdoesnotprovenotG}
+If \PA is $\omega$-consistent, then $\mathsf{PA} \nvdash \lnot \mathsf{G}$.
+\end{thm}
+
+\begin{proof}
+For a contradiction suppose that $\mathsf{\lnot G}$ is provable in $\mathsf{PA}$ and \PA is $\omega$-consistent. That is equivalent to 
+\[ \mathsf{PA} \vdash \exists v_0 \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ]   \] because $\lnot \mathsf{G} \equiv \lnot \forall v_0  \lnot \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ] \equiv \lnot \lnot \exists v_0 \lnot  \lnot  \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ] \equiv \exists v_0 \mathsf{Gdl}[\overline{\upl \mathsf{U} \upr }/v_1 ]  $ holds. \Cref{prop:omegaconsistent} infers that \PA is consistent since \PA is $\omega$-consistent. Then $\mathsf{G}$ is not provable because $\mathsf{\lnot G}$ is provable and \PA is consistent. So for every natural number $n$, $n$ is not a s.\,g.\,n.\@ for a $\mathsf{PA}$-proof of $\mathsf{G}$. Equivalently, for every natural number $n$, $n$ is not the s.\,g.\,n.\@ of a $\mathsf{PA}$-proof of $\exists v_1 (v_1 = \overline{\upl \mathsf{U} \upr} \wedge\mathsf{ U})$. Thus 
+for each natural number $n$, $\mathit{Gdl}(n, \upl \mathsf{U}\upr)$ does not hold. Since $\mathit{Gdl}$ is defined in \PA by $\mathsf{Gdl}$,
+\[\text{for every }n\in \mathbb{N}\text{, }\mathsf{PA} \vdash \lnot \mathsf{Gdl}[\overline{n}, \overline{\upl \mathsf{U}\upr}/v_0,v_1].
+\]
+However, this contradicts to \PA being $\omega$-consistent. As a result $\lnot \mathsf{G}$ is unprovable, i.\,e.\@ $\mathsf{PA \nvdash G}$.
+\end{proof}
+
+On the basis of \Cref{thm:PA_Consistent} and \Cref{thm:PAdoesnotprovenotG} we formulate the syntactic version of the First Incompleteness Theorem for \PA. 
+
+\begin{thm}[Syntactic Version of G\"odel's First Incompleteness Theorem for $\mathsf{PA}$] \label{thm:synfirst}
+If \PA is consistent, then for the $\Pi_1$-sentence $\mathsf{G}$, $\mathsf{PA} \nvdash \mathsf{G}$ and if \PA is $\omega$-consistent $\mathsf{PA} \nvdash \mathsf{\lnot G}$. So $T$ is negation incomplete if \PA is $\omega$-consistent.
+\end{thm}
+
+Again, we are going to state a generalized version of \Cref{thm:synfirst} which can be proven similar to $\mathsf{PA}$. 
+
+\begin{thm}[Generalized Syntactic Version of G\"odel's First Theorem] \label{thm:gensynfirst}
+If $T=(\mathcal{L}_A, \Sigma)$ is a consistent, p.\,r.\@ axiomatized theory which extends $\mathsf{Q}$, then for a $\Pi_1$-sentence $\mathsf{G}_T$ such that $T \nvdash \mathsf{G}_T$ and if $T$ is $\omega$-consistent $T \nvdash \lnot \mathsf{G}_T$. As a result $T$ is negation incomplete if $T$ is $\omega$-consistent.
+\end{thm}
+
+Craig's Theorem and latter infer the following.
+\begin{cor}
+For any arithmetical recursively axiomatized theory $T= (\mathcal{L}_A, \Sigma)$ which is $\omega$-consistent and extends $\mathsf{Q}$, $T$~cannot prove all true sentences of arithmetic, i.\,e.\@ $C_\vdash(T)\neq\mathit{Th}(\mathcal{N})$.
+\end{cor}

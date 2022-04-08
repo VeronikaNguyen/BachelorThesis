@@ -1,0 +1,561 @@
+\chapter{Peano Arithmetic}\label{peano}
+
+This chapter describes some standard effectively axiomatizable theories of arithmetic. In particular the so-called first-order Peano Arithmetic $\mathsf{PA}$ and the important subtheory, the Robinson Arithmetic $\mathsf{Q}$ are depicted. Firstly, we define the notion of arithmetically definability. Secondly, we outline the arithmetical hierarchy, e.\,g.\@ $\Delta_0$-, $\Sigma_n$- and $\Pi_n$-formulas for $n \ge 0$, and show that every p.\,r.\@ function can be arithmetically defined by a $\Sigma_1$-formula. Thirdly, we introduce the notion of definability in an arithmetical theory $T = (\mathcal{L}_A, \Sigma)$, and lastly show that every p.\,r.\@ function can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula. 
+
+In this chapter we fix the language of arithmetic $\mathcal{L}_A = \mathcal{L}(\sigma)$ with signature $\sigma = ($--$;2,2,1;\lbrace 0 \rbrace)$. (We mainly reference the work of Smith \cite{Smith2009}.)
+
+\section{Arithmetical Definability}
+Recall that the arithmetic is defined by $\mathcal{N}=(\mathbb{N}; +, \cdot, S; 0)$. In the following we introduce the notion of arithmetical definability and show that every p.\,r.\@ function is arithmetically defined by a $\Sigma_1$-formula.
+
+\begin{dfn}
+\begin{enumerate}
+\item Let $\varphi(x_0, \ldots, x_{n-1})$ be an $\mathcal{L}_A$-formula. An $n$-ary relation $R \subseteq \mathbb{N}^n$ is \textit{arithmetically defined by $\varphi(x_0, \ldots, x_{n-1})$} if for all $m_0, \ldots, m_{n-1} \in \mathbb{N}$,
+\[(m_0, \ldots, m_{n-1}) \in R \Leftrightarrow \mathcal{N} \vDash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]. \]
+\item An $n$-ary relation $R \subseteq \mathbb{N}^n$ is \textit{arithmetically definable} if there exists an $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_{n-1})$ such that $R$ is arithmetically defined by $\varphi(x_0, \ldots, x_{n-1})$. 
+
+\end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+\begin{enumerate}
+\item Let $\varphi(x_0, \ldots, x_{n})$ be an $\mathcal{L}_A$-formula. An $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is \textit{arithmetically defined by $\varphi(x_0, \ldots, x_{n})$} if for all $m_0, \ldots, m_{n-1}, c \in \mathbb{N}$,
+\[f(m_0, \ldots, m_{n-1})=c \Leftrightarrow \mathcal{N} \vDash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{c}/x_0, \ldots, x_{n-1}, x_{n}]. \]
+\item An $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is \textit{arithmetically definable} if there exists an $\mathcal{L}_A$-formula such that $f$ is arithmetically defined by $\varphi(x_0, \ldots, x_{n})$. 
+\end{enumerate}
+\end{dfn}
+
+The arithmetical definability of relations correspond to the arithmetical definability of the respective characteristic functions.
+\begin{lem}\label{lem:arithdef}
+The $n$-ary relation $R \subseteq \mathbb{N}^n$ is arithmetically definable if and only if the characteristic function $c_R$ of $R$ is arithmetically definable.
+\end{lem}
+
+\begin{proof}
+It suffices to show the following two statements. Then the theorem immediately follows.
+\begin{enumerate}
+\item If the $n$-ary relation $R \subseteq \mathbb{N}^n$ is arithmetically defined by the $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_{n-1})$, then the characteristic function $c_R$ of $R$ is arithmetically defined by the $\mathcal{L}_A$-formula \[\delta(x_0, \ldots, x_{n}) \deffeq ( \varphi(x_0, \ldots, x_{n-1}) \wedge x_{n} = \overline{0} ) \vee  ( \lnot \varphi(x_0, \ldots, x_{n-1}) \wedge x_{n}= \overline{1}) .\]
+\item If the characteristic function $c_R$ of an $n$-ary relation $R\subseteq \mathbb{N}^n$ is arithmetically defined by the $\mathcal{L}_A$-formula $\psi(x_0, \ldots,x_{n})$, then $R$ is arithmetically defined by the $\mathcal{L}_A$-formula \[ \psi[\overline{0}/x_{n}]. \]  
+\end{enumerate} 
+
+For a proof of (i), suppose the $n$-ary relation $R \subseteq \mathbb{N}^n$ is arithmetically defined by $\varphi(x_0, \ldots, x_{n-1})$. If $c_R(m_0, \ldots, m_{n-1}) = 0$, then $(m_0, \ldots, m_{n-1}) \in R$. So \[\mathcal{N} \vDash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \] since $R$ is arithmetically defined by $\varphi(x_0, \ldots, x_{n-1})$. Evidently, $\mathcal{N} \vDash \overline{0} = \overline{0}$ and 
+hence \[ \mathcal{N} \vDash (\varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{0}) \vee (\lnot \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{1}), \]i.\,e.\@ 
+\[ \mathcal{N} \vDash \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots, x_n]. \]
+
+If $c_R(m_0, \ldots, m_{n-1}) \neq 0$, then $(m_0, \ldots, m_{n-1}) \notin R$. So \[\mathcal{N} \nvDash  \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]. \] Hence \[\mathcal{N} \nvDash (\varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{0} )\] and since $\mathcal{N} \nvDash \overline{0} = \overline{1}$, \[ \mathcal{N} \nvDash (\lnot \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{1}). \] Thus \[\mathcal{N} \nvDash  (\varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{0}) \vee (\lnot \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{1}),\]
+i.\,e.\@ 
+\[ \mathcal{N} \nvDash \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots, x_n]. \]
+Analogously, the remaining cases $c_R(m_0, \ldots, m_{n-1}) = 1$ and $c_R(m_0, \ldots, m_{n-1}) \neq 1$ can be shown.
+\\
+
+For a proof of (ii), suppose that the characteristic function $c_R$ of an $n$-ary relation $R\subseteq \mathbb{N}^n$ is arithmetically defined by the $\mathcal{L}_A$-formula $\psi(x_0, \ldots,x_{n})$. Then the following holds
+\begin{align*}
+(m_0, \ldots, m_{n-1}) \in R & \Leftrightarrow c_R(m_0,\ldots, m_{n-1}) = 0  \\
+& \Leftrightarrow \mathcal{N} \vDash \psi[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0} / x_0, \ldots, x_{n-1}, x_{n}].
+\end{align*} 
+As a result $R$ is arithmetically defined by the $\mathcal{L}_A$-formula $\psi[\overline{0}/x_{n}]$.
+\end{proof}
+
+The less-than-or-equal relation $\le$ is arithmetically definable. Throughout this thesis we employ the following abbreviations:
+\begin{itemize}
+\item Let $t_1, t_2$ be $\mathcal{L}_A$-terms. The \textit{less-or-equal relation} $\le$ is an abbreviation for \[t_1 \le t_2 \deffeq \exists x(x + t_1 = t_2)\] where $x$ is the alphabetically first variable which does not occur in $t_1$ and $t_2$. 
+\item Let $\varphi(x)$ be an $\mathcal{L}_A$-formula and $t$ an $\mathcal{L}_A$-term. The \textit{bounded existential quantifier} $(\exists x \le t)$ is an abbreviation for \[(\exists x \le t)  \varphi(x) \deffeq \exists x (x \le t \wedge \varphi(x)).\] We extend this notion for multiple variables, i.\,e.\@ $(\exists x_0, \ldots, x_n \le t)$ is an abbreviation for \[(\exists x_0, \ldots, x_n \le t)  \varphi(x_0, \ldots, x_n) \deffeq \exists x_0 \ldots \exists x_n (x_0 \le t \wedge \ldots \wedge x_n \le t \wedge \varphi(x_0, \ldots, x_n)).\]
+\item Let $\varphi(x)$ be an $\mathcal{L}_A$-formula and $t$ an $\mathcal{L}_A$-term. The \textit{bounded universal quantifier} $(\forall x \le t)$ is an abbreviation for \[ (\forall x \le t)  \varphi(x) \deffeq \forall x (x \le t \rightarrow \varphi(x)).\]We extend this notion for multiple variables, i.\,e.\@ $(\forall x_0, \ldots, x_n \le t)$ is an abbreviation for \[(\forall x_0, \ldots, x_n \le t)  \varphi(x_0, \ldots, x_n) \deffeq \forall x_0 \ldots \forall x_n (x_0 \le t \wedge \ldots \wedge x_n \le t \rightarrow \varphi(x_0, \ldots, x_n)). \]
+\item The \textit{uniqueness quantifier} $\exists ! x $ is an abbreviation for \[\exists ! x  \varphi(x) \deffeq \exists x(\varphi(x) \wedge  \forall y  (\varphi[y/x] \rightarrow y = x))\] where $y$ is the first variable which does not occur freely in $\varphi$. 
+\end{itemize}
+
+In the following we introduce the notion of $\Delta_0$-, $\Sigma_n$- and $\Pi_n$-formulas for $n \ge 0$.    
+
+\begin{dfn}
+An $\mathcal{L}_A$-formula is a \textit{$\Delta_0$-formula} if every (existential or universal) quantifier is a bounded (existential or universal) quantifier.
+\end{dfn}
+
+\begin{dfn}
+\textit{$\Sigma_n$-formulas }and \textit{$\Pi_n$-formulas} are inductively defined as follows:
+\begin{enumerate}
+\item If $\varphi$ is a $\Delta_0$-formula, then $\varphi$ is a $\Sigma_0$-formula and a $\Pi_0$-formula. 
+\item If $\psi$ is a $\Pi_n$-formula $(n\ge 0)$, then $\varphi \equiv \exists x_1 \ldots \exists x_m \psi$ $(m \ge 0)$ is a $\Sigma_{n+1}$-formula.
+\item If $\psi$ is a $\Sigma_n$-formula $(n\ge 0)$, then $\varphi \equiv \forall x_1 \ldots \forall x_m \psi$ $(m \ge 0)$ is a $\Pi_{n+1}$-formula.
+\end{enumerate}
+\end{dfn}
+
+
+A $\Sigma_1$-formula $\varphi$ is of the form 
+\[ \exists x_1 \ldots \exists x_m \psi \]
+where $\psi$ is a $\Delta_0$-formula, and a $\Pi_1$-formula $\varphi$ is of the form
+\[ \forall x_1 \ldots \forall x_m \psi \]
+where $\psi$ is a $\Delta_0$-formula. 
+
+We extend latter definitions and call an $\mathcal{L}_A$-formula $\varphi$ a $\Delta_0$- ($\Sigma_n$-, $\Pi_n$-)\textit{formula} if $\varphi$ is equivalent to a $\Delta_0$- ($\Sigma_n$-, $\Pi_n$-)formula by our definition. Moreover, we call an $\mathcal{L}_A$-sentence $\sigma$ a $\Delta_0$- ($\Sigma_n$-, $\Pi_n$-)sentence if $\sigma$ is a $\Delta_0$- ($\Sigma_n$-, $\Pi_n$-)formula. We denote the class of all $\Delta_0$- ($\Sigma_n$-, $\Pi_n$-)formulas with $\Delta_0$ ($\Sigma_n$, $\Pi_n$) and observe that 
+\[ \Sigma_0 \subset \Sigma_1 \subset \Sigma_2 \ldots \]
+and 
+\[ \Pi_0 \subset \Pi_1 \subset \Pi_2 \ldots. \]This hierarchy is called the \textit{arithmetical hierarchy}. One can easily see that the following properties hold for the arithmetical hierarchy:
+\begin{enumerate}
+\item $\varphi \in \Sigma_n \Leftrightarrow \lnot \varphi \in \Pi_n$.
+\item $\Delta_0 \subset \Sigma_1 \cap \Pi_1$.
+\item $\Sigma_n \cup \Pi_n \subset \Sigma_{n+1} \cap \Pi_{n+1}$.
+\end{enumerate}
+
+In this thesis we only require $\Delta_0$, $\Sigma_1$ and $\Pi_1$, and therefore limit ourselves to the closure properties of those classes. Furthermore, we observe that the following holds:
+\begin{itemize}
+\item The class $\Delta_0$ is closed under bounded quantifiers and every connective.
+\item The class $\Sigma_1$ is closed under the existential quantifier and closed under the connectives $\vee$ and $\wedge$ (but not under the universal quantifier and the negation).
+\item The class $\Pi_1$ is closed under the universal quantifier and the connectives $\vee$ and $\wedge$ (but not under the existential quantifier and the negation).
+\end{itemize}
+
+In the following we show that p.\,r.\@ functions are arithmetically definable. For this reason we introduce G\"odel's $\beta$-function and an auxiliary remainder function $\mathit{rm}$.
+
+\begin{dfn}
+Let $\mathit{rm}: \mathbb{N}^2 \rightarrow \mathbb{N}$ be defined by
+\[\mathit{rm}(c, d) = l \text{ with } 0 \le l < d \text{ where there exists }x \in \mathbb{N} \text{ such that }x \cdot d + l = c,\]
+i.\,e.\@ $\mathit{rm}(c,d)$ returns the remainder of $c$ divided by $d$.
+\end{dfn}
+
+\begin{dfn}
+Let the function $\beta: \mathbb{N}^3 \rightarrow \mathbb{N}$ be defined by 
+\[\beta(c,d,i) \defeq rm(c, d (i+1)+1),\]
+i.\,e.\@ $\beta(c,d,i)$ returns the remainder of $c$ divided by $d(i+1)+1$.
+\end{dfn}
+
+We assume that the reader is familiar with the Chinese Remainder Theorem of elementary number theory, as follows.
+
+\begin{thm}[Chinese Remainder Theorem]
+Let $m_0,m_1, \ldots, m_n$ $(n \ge 0)$ be a sequence of natural numbers where $m_i, m_j$ $(0 \le i < j \le n)$ are pairwise relatively prime. Then for every sequence of natural numbers $k_0, k_1, \ldots, k_n$ with $0 \le k_i < m_i$ for $0 \le i \le  n$, there exists $c \in \mathbb{N}$ such that $k_i = \mathit{rm}(c,m_i)$.
+\end{thm}
+
+The $\beta$-function encodes every sequence of natural numbers, i.\,e.\@ for every sequence of natural numbers $k_0, \ldots, k_n$ ($n \ge 0$), there exist numbers $c, d \in \mathbb{N}$ such that $\beta(c,d,i) = k_i$ for all $0 \le i \le n$. 
+\begin{thm}
+For every sequence of natural numbers $k_0, k_1, \ldots, k_n$, there exist $c,d \in \mathbb{N}$ such that $\beta(c,d,i) = k_i$ for all $0 \le i \le n$.
+\end{thm}
+\begin{proof}
+Let $u \defeq max \lbrace n +1, k_0,k_1, \ldots, k_n \rbrace$, $d \defeq u!$ and $m_i \defeq d (i+1)+1$ for $0 \le i \le n$. We claim that $m_i, m_j$ for $0 \le i < j \le n$ are pairwise prime. 
+
+Suppose otherwise. Then for some prime $p$ and some $a, b$ such that $1 \le a < b \le n+1$, $p$ divides both $da+1$ and $db+1$. Hence $p$ divides $(db+1) - (da+1) = d(b-a)$ but $(b-a)$ is a factor of $d$, since $d$ is by definition $u!$ with $u > (b-a)$. Therefore, $p$ divides $d$ without remainder. However, this contradicts to $p$ dividing $da+1$ or $db+1$.
+
+Since $m_i = d(i+1)+1$ are pairwise prime and $k_i < m_i$, the Chinese Remainder Theorem infers that there exists $c \in \mathbb{N}$ such that $\mathit{rm}(c,d(i+1)+1) = k_i$ for all $0 \le i \le n$, i.\,e.\@ $\beta(c,d,i) = k_i$ for all $0 \le i \le n$.    
+\end{proof}
+
+In fact, G\"odel's $\beta$-function can be arithmetically defined by a $\Delta_0$-formula.
+
+\begin{dfn}
+Let $\mathit{Beta}$ be an abbreviation for the following $\mathcal{L}_A$-formula: \[ \mathit{Beta}(v_0,v_1,v_2,v_3)\deffeq ( \exists v_4 \le v_0 ) (v_0 = ( S(v_1 \cdot S(v_2)) \cdot v_4 ) + v_3 \wedge v_3 \le (v_1 \cdot S(v_2))).\]
+\end{dfn}
+Since $\mathit{Beta}$ only contains bounded quantification, $\mathit{Beta}$ is a $\Delta_0$-formula.
+
+\begin{lem}
+G\"odel's $\beta$-function is arithmetically defined by $\mathit{Beta}(v_0, v_1, v_2, v_3)$.
+\end{lem}
+\begin{proof}
+For $c,d,i,m \in \mathbb{N}$, we want to show:
+\begin{align*}
+\beta(c,d,i) = m & \Leftrightarrow
+\mathcal{N} \vDash {Beta}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3] \\
+& \Leftrightarrow  \mathcal{N} \vDash (\exists v_4 \le \overline{c})(\overline{c}=S(\overline{d}\cdot S (\overline{i})) \cdot v_4 ) + \overline{m} \wedge \overline{m} \le (\overline{d} \cdot S (\overline{i})).
+\end{align*}
+Let $c,d,i,m \in \mathbb{N}$. Then the following holds:
+\begin{align*}
+\beta(c,d,i) = m & \Leftrightarrow \mathit{rm}(c,d(i+1)+1)=m \text{ with }0 \le m < d(i+1)+1\\
+& \Leftrightarrow \mathit{rm}(c,S(d \cdot S(i)) = m \text{ with }0 \le m \le d \cdot S(i)\\
+& \Leftrightarrow \exists x \in \mathbb{N}: x \cdot S(d \cdot S(i))+m = c \text{ with }0 \le m \le d \cdot S(i)\\
+& \Leftrightarrow \exists x \in \mathbb{N}: x \cdot S(d \cdot S(i))+m = c \text{ with }0 \le m \le d \cdot S(i) \text{ and } x \le c \\
+& \Leftrightarrow  \mathcal{N} \vDash (\exists v_4 \le \overline{c})(\overline{c}=S(\overline{d}\cdot S (\overline{i})) \cdot v_4 ) + \overline{m} \wedge \overline{m} \le (\overline{d} \cdot S (\overline{i})).
+\end{align*}
+\end{proof}
+
+For the following proof we summarize the recent results:
+\begin{enumerate}
+\item Firstly, for every sequence of natural numbers $k_0, k_1, \ldots,k_n$, there exist $c, d \in \mathbb{N}$ s.\,t.\@ $\beta(c,d,i) = k_i$ for all $0 \le i \le n$.
+\item Secondly, G\"odels $\beta$-function is arithmetically defined by the $\Delta_0$-formula \\ $\mathit{Beta}(v_0, v_1, v_2, v_3)$.
+\end{enumerate}
+
+
+\begin{thm}\label{thm:arithmeticallydefined}
+Every p.\,r.\@ function can be arithmetically defined by a $\Sigma_1$-formula.
+\end{thm}
+\begin{proof}
+By showing the following three statements, the theorem immediately follows.
+
+\begin{enumerate}[label=\Alph*]
+\item The basic primitive recursive functions can be arithmetically defined by $\Sigma_1$-formulas.
+\item Let $g : \mathbb{N}^m \rightarrow \mathbb{N}$ and $h_0, \ldots, h_{m-1} : \mathbb{N}^n \rightarrow \mathbb{N}$ be $m$-ary and $n$-ary functions, respectively. Let the $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ be the composition of $g$ and $h_0, \ldots, h_{m-1}$. If $g$ and $h_0, \ldots, h_{m-1}$ can be defined in $T$ by $\Sigma_1$-formulas, then $f$ can be arithmetically defined by a $\Sigma_1$-formula as well.
+\item Let $g : \mathbb{N}^n \rightarrow \mathbb{N}$ and $h : \mathbb{N}^{n+2} \rightarrow \mathbb{N}$ be $n$-ary and $(n+2)$-ary functions, respectively. Let the $(n+1)$-ary function $f$ be the primitive recursion of $g$ and $h$. If $g$ and $h$ can be arithmetically defined by $\Sigma_1$-formulas, then $f$ can be arithmetically defined by a $\Sigma_1$-formula as well.
+\end{enumerate}
+
+For a proof of (A), consider the following three cases:
+\begin{enumerate}
+\item The $m$-ary zero function $C^m: \mathbb{N}^m \rightarrow \mathbb{N}$ ($m \ge 0$) with $C^m(\overrightarrow{x}) = 0$ is arithmetically defined by \[C(v_0, \ldots, v_{m}) \deffeq v_{m} = \overline{0}.\] 
+\item The $1$-ary successor function $S^1: \mathbb{N} \rightarrow \mathbb{N}$ with $S^1(x) = x + 1$ is arithmetically defined by the formula \[S(v_0)=v_1.\]
+\item The $n$-ary projection function $P_i^n:\mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1, 0 \le i \le n-1)$ with $P_i^n(x_0,\ldots, x_{n-1}) = x_i $ is arithmetically defined by the formula \[v_0 = v_0  \wedge  v_{1} = v_{1}  \wedge  \ldots  \wedge  v_{i} = v_{n}  \wedge  \ldots  \wedge  v_{n-1} = v_{n-1}.\]
+\end{enumerate}
+The basic primitive recursive functions are defined by $\Delta_0$-formulas and hence defined by $\Sigma_1$-formulas.
+\\
+
+For a proof of (B), let the $m$-ary function $g$ and the $n$-ary functions $h_0, \ldots, h_{m-1}$ be arithmetically defined by the $\Sigma_1$-formulas $G(v_{n+1}, \ldots, v_{n+m+1})$ and $H_0(v_0, \ldots, v_{n}), \ldots,H_{m-1}(v_0, \ldots, v_{n})$, respectively. The $n$-ary function $f$,  which is the composition of $g$ and $h_0, \ldots, h_{m-1}$ is defined by
+\[f(\overrightarrow{x}) = g(h_0(\overrightarrow{x}), \ldots, h_{m-1}(\overrightarrow{x})).\] Then the function $f$ can be arithmetically defined by 
+\begin{align*}
+F(v_{n+1},\ldots, v_{n+m+1}) \deffeq & \exists x_{0} \ldots \exists x_{m-1}  (H_0 [x_0/v_{n}] \wedge \ldots \wedge H_{m-1} [x_{m-1}/v_{n}] \\
+&  \wedge  G[x_0, \ldots,  x_{m-1}/v_{n+1}, \ldots, v_{n+m}])
+\end{align*}
+where $x_0, \ldots, x_{m-1}$ are alphabetically the first $n$ variables which do not occur free in $H_0, \ldots, H_{m-1}$ and $G$. Since $H_0, \ldots, H_{m-1}$ and $G$ are $\Sigma_1$-formulas, the respective substitutions $H_0 [x_0/v_{n}], \ldots ,H_{m-1} [x_{m-1}/v_{n}], G[x_0, \ldots,  x_{m-1}/v_{n+1}, \ldots, v_{n+m}]$ are also $\Sigma_1$-formulas. Thus by the above closure properties under connectives and the existential quantifier $F(v_{n+1},\ldots, v_{n+m+1})$ is a $\Sigma_1$-formula.
+\\
+
+For a proof of (C), let the $n$-ary function $g$ and the $(n+2)$-ary function $h$ be arithmetically defined by the $\Sigma_1$-formulas $G(v_0, \ldots, v_{n})$ and $H(v_0, \ldots, v_{n+2})$, respectively. The $(n+1)$-ary function $f$ which is the primitive recursion of $g$ and $h$ is inductively defined by 
+\begin{align*}
+&f(\overrightarrow{x}, 0) = g(\overrightarrow{x}), \\
+& f(\overrightarrow{x}, y+1) = h( \overrightarrow{x}, y, f(\overrightarrow{x},y)). 
+\end{align*}
+Fix $\overrightarrow{x} \in \mathbb{N}^n$ and $y,z\in \mathbb{N}$ with $f(\overrightarrow{x}, y) = z$. Then there exists a sequence of numbers $k_0, k_1, \ldots, k_y$ such that $k_0 = g(x_0, \ldots, x_{n-1})$ and if  $0\le u<y$, then $k_{u+1} = h(x_0, \ldots, x_{n-1}, u, k_u)$ and $k_y = z$.  Using the $\beta$-function, there exists $c, d \in \mathbb{N}$ such that $\beta(c,d,0) = g(x_0, \ldots, x_{n-1})$ and if $0 \le u < y$, then \sloppy$\beta(c,d,S(u))= h(x_0, \ldots, x_{n-1},u, \beta(c,d,u))$ and $\beta(c,d,y) = z$. So the function $f$ can be arithmetically defined by
+\begin{align*}
+F(v_0,\ldots, v_{n+1}) \deffeq &\exists x_0 \exists x_1 \lbrace \exists x_2  (\mathit{Beta}[x_0,x_1,\overline{0},x_2/v_0,v_1,v_2,v_3] \wedge G[x_2/v_{n}] ) \\
+&\wedge ( \forall x_3 \le v_{n} )  ( x_3 \neq v_{n} \rightarrow \\
+& \exists x_4 \exists x_5  \lbrace ( \mathit{Beta}[x_0,x_1,x_3,x_4/v_0,v_1,v_2,v_3] \\
+& \wedge \mathit{Beta}[x_0,x_1,S(x_3),x_5/v_0,v_1,v_2,v_3]) \\
+& \wedge H[ x_3, x_4, x_5 / v_{n}, v_{n+1}, v_{n+2}] \rbrace ) \\
+& \wedge \mathit{Beta}[x_0,x_1,v_{n},v_{n+1}/v_0,v_1,v_2,v_3]\rbrace. 
+\end{align*}
+(The variables $x_0$ and $x_1$ take over the role of $c$ and $d$. Moreover, the first line coincides with $\beta(c,d,0) = g(x_0, \ldots, x_{n-1})$, the second to the fifth line with $\beta(c,d,S(u))= h(x_0, \ldots, x_{n-1},u, \beta(c,d,u))$ for $0 \le u < y$, and the last line with $\beta(c,d,y) = z$.)
+
+Since $\exists x_4 \exists x_5 \lbrace \ldots \rbrace$ is a $\Sigma_1$-formula, and unpacking the abbreviation of $\rightarrow$, $\lnot x_3 \neq v_{n+1} \vee \exists x_4 \exists x_5 \lbrace \ldots \rbrace$ is a $\Sigma_1$-formula as well. By the closure properties of $\Sigma_1$, $F(v_0,\ldots, v_{n+1})$ is therefore a $\Sigma_1$-formula.
+\end{proof}
+
+Since the characteristic function $c_R$ of a p.\,r.\@ relation $R \subseteq \mathbb{N}^n$ $(n\ge 1)$ can be arithmetically defined by a $\Sigma_1$-formula $\psi(x_0, \ldots, x_n)$, the relation $R$ can also be arithmetically defined by the $\Sigma_1$-formula $\psi[\overline{0}/x_n]$ (see proof of \Cref{lem:arithdef}). As a result every p.\,r.\@ function and moreover every p.\,r.\@ relation can be arithmetically defined by a $\Sigma_1$-formula.
+
+
+\section{Robinson Arithmetic $\mathsf{Q}$}
+We aim to find an arithmetical effectively axiomatized theory $T=(\mathcal{L}_A, \Sigma)$ which is negation-complete and consistent such that $C_\vdash(T) =Th(\mathcal{N})$. As a first approach, we introduce the finitely axiomatized theory, the so-called Robinson Arithmetic $\mathsf{Q}$ but we will soon show that $\mathsf{Q}$ is incomplete. 
+\begin{dfn}
+\textit{Robinson Arithmetic} is the arithmetical theory $\mathsf{Q} \defeq (\mathcal{L}_A,\Sigma)$ where $\Sigma$ contains the following axioms:
+\begin{enumerate}[label=({Q\arabic*})]
+\item $\forall v_0 (\overline{0} \neq S (v_0))$.
+\item $\forall v_0 \forall v_1  ( S(v_0) = S(v_1) \rightarrow v_0 = v_1)$.
+\item $\forall v_0  ( v_0 \neq \overline{0} \rightarrow \exists v_1  (v_0 = S(v_1)))$.
+\item $\forall v_0  ( v_0 + \overline{0} = v_0)$.
+\item $\forall v_0 \forall v_1 (v_0 + S(v_1) = S(v_0+v_1))$.
+\item $\forall v_0 ( v_0 \cdot \overline{0} = \overline{0})$.
+\item $\forall v_0 \forall v_1 ( v_0 \cdot S (v_1) = (v_0 \cdot v_1 ) + v_0) $.
+\end{enumerate}
+\end{dfn} 
+
+The \textit{induction principle} is a proof technique which is used to prove that a property $P(n)$ holds for every natural number $n$. This principle requires two cases to be proved. Firstly, the \textit{base case}, requires that the property $P$ holds for the number $0$. Secondly, the \textit{induction step}, requires that if the property $P$ holds for a natural number $n$, then it holds for the next natural number $n+1$. In case both requirements are met, the property $P$ holds for every natural number. Due to the lack of the induction principle in the axioms of Robinson arithmetic, we can show without much effort that $\mathsf{Q}$ is incomplete. For instance, $\mathsf{Q}$ cannot decide the sentence $\sigma \deffeq \forall v_0 (\overline{0} + v_0 = v_0 )$, i.\,e.\@ $\mathsf{Q} \nvdash \sigma$ and $\mathsf{Q} \nvdash \lnot \sigma$.
+\begin{thm}
+$\mathsf{Q}$ is incomplete.
+\end{thm}
+\begin{proof}
+Consider the $\mathcal{L}_A$-sentence $\sigma \deffeq \forall v_0 (0 + v_0 = v_0 )$. Then one can easily show that $\mathcal{N} \vDash \mathsf{Q}$ and $\mathcal{N} \vDash \sigma$. We aim to construct an $\mathcal{L}_A$-structure $\mathcal{N^*}\defeq (\mathbb{N} \cup \lbrace a, b \rbrace; +, \cdot, S; \lbrace 0 \rbrace)$ where $a, b \notin \mathbb{N}$ and $a \neq b$ such that $\mathcal{N^*} \nvDash \sigma$. The function $S^{\mathcal{N}^*}$ is defined by $S^{\mathcal{N}^*}(n)= n + 1$ for every $n \in \mathbb{N}$, $S^{\mathcal{N}^*}(a)= a$ and $S^{\mathcal{N}^*}(b)=b$. Furthermore, the functions $+^{\mathcal{N}^*}$ and $\cdot^{\mathcal{N}^*}$ are defined as follows, for $n,m \in \mathbb{N}$:
+\begin{center}
+\def\arraystretch{1.2}
+\begin{tabular}{ | c | c | c | c | } 
+\hline
+$+^{\mathcal{N}^*}$& $a$ & $b$ & $n$\\ 
+\hline
+$a$ & $b$ & $a$ & $a$ \\ 
+\hline
+$b$ & $b$ & $a$ & $b$ \\ 
+\hline
+$m$ & $b$ & $a$ & $m+n$\\
+\hline
+\end{tabular}
+\quad
+\begin{tabular}{ | c | c | c | c | c | c |} 
+\hline
+$\cdot^{\mathcal{N}^*}$& $a$ & $b$ & $n \neq 0$ & $0$ \\ 
+\hline
+$a$ & $b$ & $b$ & $b$ & $0$\\ 
+\hline
+$b$ & $a$ & $a$ & $a$ & $0$ \\ 
+\hline
+$m$ & $a$ & $b$ & $m \cdot n$ & $0$\\
+\hline
+\end{tabular}
+\end{center}
+By definition of $+^{\mathcal{N}^*}$, $\mathcal{N}^* \vDash 0 + a \neq a$ holds and hence implies $\mathcal{N}^* \nvDash \sigma$. Again, one can easily check that $\mathcal{N}^* \vDash \mathsf{Q}$. As a result $\mathsf{Q} \nvDash \sigma$, and thus by the Completeness Theorem $\mathsf{Q} \nvdash \sigma$.
+
+Conversely, $\mathcal{N} \nvDash \lnot \sigma$ and $\mathcal{N}^* \vDash \lnot \sigma$ since $\mathcal{N} \vDash \sigma$ and $\mathcal{N}^* \nvDash \sigma$ hold. As a result $\mathsf{Q} \nvDash \lnot \sigma$ and thus by the Completeness Theorem $\mathsf{Q} \nvdash \lnot \sigma$. To conclude, $\mathsf{Q}$ is incomplete, i.\,e. $\mathsf{Q} \nvdash \sigma$, and $\mathsf{Q} \nvdash \lnot \sigma$.
+\end{proof}
+
+
+Note, that Robinson Arithmetic was studied by Raphael M. Robinson in 1952 long after G\"odelian incompleteness was discovered. Despite Robinson Arithmetic being incomplete, $\mathsf{Q}$ has some interesting properties. Firstly, Robinson Arithmetic decides every $\Delta_0$-sentence, i.\,e.\@ $\mathsf{Q} \vdash \sigma$ or $\mathsf{Q} \vdash \lnot \sigma$. Secondly, $\mathsf{Q}$ correctly decides every $\Delta_0$-sentence $\sigma$, i.\,e.\@ $\mathsf{Q} \vdash \sigma$ if and only if $\mathcal{N} \vDash \sigma$. Thirdly, $\mathsf{Q}$ proves every true $\Sigma_1$-sentence $\sigma$ in $\mathcal{N}$, i.\,e.\@ if $\mathcal{N}\vDash \sigma$, then $\mathsf{Q}\vdash \sigma$. 
+
+\begin{lem}
+$\mathsf{Q}$ decides every $\Delta_0$-sentence, i.\,e.\@ for every $\Delta_0$-sentence $\sigma$, $\mathsf{Q} \vdash \sigma$ or $\mathsf{Q} \vdash \lnot \sigma$.
+\end{lem}
+
+\begin{lem}
+For every $\Delta_0$-sentence $\sigma$, $\mathsf{Q} \vdash \sigma$ if and only if $\mathcal{N} \vDash \sigma$.
+\end{lem}
+
+\begin{lem}\label{lem:sigma1complete}
+For every $\Sigma_1$-sentence $\sigma$, if $\mathcal{N}\vDash \sigma$, then $\mathsf{Q}\vdash \sigma$.
+\end{lem}
+
+The lemmas can be proven by induction over the structure of formulas. (A proof of those can be found in the book of Smith \Cite{Smith2009}, p.71-83.)
+
+\section{Definability in Arithmetical Theories}
+
+We already introduced arithmetical definability by now, in the following we are going to depict definability in arithmetical theories $T = (\mathcal{L}_A, \Sigma)$. Moreover, we show that every p.\,r.\@ function is defined in $\mathsf{Q}$ by a $\Sigma_1$-formula. Recall that an arithmetical theory $T = (\mathcal{L}_A, \Sigma)$ is a consistent theory with the language of arithmetic $\mathcal{L}(T) = \mathcal{L}_A$.
+
+\begin{dfn}
+\begin{enumerate}
+\item Let $\varphi(x_0, \ldots, x_{n-1})$ be an $\mathcal{L}_A$-formula and $T = (\mathcal{L}_A, \Sigma)$ an arithmetical theory. An $n$-ary relation $R \subseteq \mathbb{N}^n$ is \textit{defined in $T$ by $\varphi(x_0, \ldots, x_{n-1})$} if for all $m_0, \ldots, m_{n-1} \in \mathbb{N}$,
+\begin{enumerate}[label=({\arabic*})]
+\item if $(m_0, \ldots, m_{n-1}) \in R$, then $T \vdash \varphi[\overline{m_0},\ldots, \overline{m_{n-1}}/x_0,\ldots, x_{n-1}]$,
+\item if $(m_0, \ldots, m_{n-1}) \notin R$, then $T \vdash \lnot \varphi[\overline{m_0},\ldots, \overline{m_{n-1}}/x_0,\ldots, x_{n-1}]$.
+\end{enumerate}
+\item Let $T=(\mathcal{L}_A, \Sigma)$ be an arithmetical theory. An $n$-ary relation $R \subseteq \mathbb{N}^n$ is \textit{definable in $T$} if there exists an $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_{n-1})$ such that $R$ is defined in $T$ by $\varphi(x_0, \ldots, x_{n-1})$. 
+\end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+\begin{enumerate}
+\item Let $\varphi(x_0, \ldots, x_{n})$ be an $\mathcal{L}_A$-formula and $T = ( \mathcal{L}_A, \Sigma)$ an arithmetical theory. An $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is \textit{defined in $T$ by $\varphi(x_0, \ldots, x_{n})$} if for all $m_0, \ldots, m_{n-1}, c \in \mathbb{N}$,
+\begin{enumerate}[label=({\arabic*})]
+\item if $f(m_0, \ldots, m_{n-1})= c$, then $T \vdash \varphi[\overline{m_0},\ldots, \overline{m_{n-1}}, \overline{c}/x_0,\ldots, x_{n-1}, x_{n}]$,
+\item $T \vdash \exists ! x_n \varphi [\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$. (This is called the \textit{uniqueness condition}).
+\end{enumerate}
+\item Let $T=(\mathcal{L}_A, \Sigma)$ be an arithmetical theory. An $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is \textit{definable in $T$} if there exists an $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_{n})$ such that $f$ is defined in $T$ by $\varphi(x_0, \ldots, x_{n})$. 
+\end{enumerate}
+\end{dfn}
+
+Recall that a theory $T=(\mathcal{L}_A, \Sigma)$ is an extension of $\mathsf{Q}$, if $\mathsf{Q} \vdash \varphi$, then $T \vdash \varphi$ for every $\mathcal{L}_A$-formula $\varphi$.
+\begin{lem}\label{lem:Tdefinable}
+For any arithmetical theory $T = ( \mathcal{L}_A, \Sigma)$ which extends $\mathsf{Q}$ suppose that if the $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ is defined in $T$ by an $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_n)$, then for all $m_0, \ldots, m_{n-1}, c \in \mathbb{N}$ the following holds. \[\text{If } f(m_0, \ldots, m_{n-1}) \neq c\text{, then }T \vdash \lnot \varphi[\overline{m_0},\ldots, \overline{m_{n-1}}, \overline{c}/x_0,\ldots, x_{n-1}, x_{n}]. \]
+\end{lem}
+\begin{proof}
+Fix any $m_0,\ldots, m_{n-1}, c \in \mathbb{N}$ with $f(m_0,\ldots, m_{n-1}) \neq c$. Then there exists a natural number $b \neq c$ with $f(m_0,\ldots, m_{n-1}) = b$. Since $f$ is defined in $T$ by $\varphi(x_0, \ldots, x_n)$, $T \vdash \varphi[\overline{m_0},\ldots, \overline{m_{n-1}}, \overline{b}/x_0,\ldots, x_{n-1}, x_{n}]$ follows. Latter and the uniqueness condition $T \vdash \exists ! x_n \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$ infer that \[T \nvdash \varphi [\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{c}/x_0, \ldots, x_{n-1},x_n].\] Since $\mathsf{Q}$ and therefore every consistent extension $T$ of $\mathsf{Q}$ decides a $\Delta_0$-sentence,
+\[T \vdash \lnot \varphi [\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{c}/x_0, \ldots, x_{n-1},x_n].\]
+\end{proof}
+
+
+%Additionally, if $f(m_0, \ldots, m_{n-1}) = c$, then $T \vdash \forall x ( \varphi(\overline{m_0}, \ldots, \overline{m_{n-1}}, x) \leftrightarrow x = \overline{c})$.
+Definability in an arithmetical theory $T$ (which extends $\mathsf{Q}$) of relations correspond to definability in $T$ of the respective characteristic functions.
+
+\begin{lem}\label{lem:aridef}
+Let $T=(\mathcal{L}_A, \Sigma)$ be an arithmetical theory which extends $\mathsf{Q}$. An $n$-ary relation $R \subseteq \mathbb{N}^n$ is definable in $T$ if and only if the characteristic function $c_R$ of $R$ is definable in $T$.
+\end{lem}
+\begin{proof}
+It suffices to show the following two statements. Then the theorem immediately follows.
+\begin{enumerate}
+\item If the $n$-ary relation $R \subseteq \mathbb{N}^n$ is defined in $T$ by the $\mathcal{L}_A$-formula $\varphi(x_0, \ldots, x_{n-1})$, then the characteristic function $c_R$ of $R$ is defined in $T$ by the $\mathcal{L}_A$-formula \[\delta(x_0, \ldots, x_{n}) \deffeq ( \varphi(x_0, \ldots, x_{n-1}) \wedge x_{n} = \overline{0} ) \vee  ( \lnot \varphi(x_0, \ldots, x_{n-1}) \wedge x_{n}= \overline{1}) .\]
+\item If the characteristic function $c_R$ of an $n$-ary relation $R\subseteq \mathbb{N}^n$ is defined in $T$ by the $\mathcal{L}_A$-formula $\psi(x_0, \ldots,x_{n})$, then $R$ is defined in $T$ by the $\mathcal{L}_A$-formula \[ \psi[\overline{0}/x_{n}]. \]  
+\end{enumerate} 
+
+For a proof of (i), suppose the $n$-ary relation $R \subseteq \mathbb{N}^n$ is defined in $T$ by $\varphi(x_0, \ldots, x_{n-1})$. 
+
+
+If $c_R(m_0, \ldots, m_{n-1}) = 0$, then by definition $(m_0, \ldots, m_{n-1}) \in R$. Since $R$ is defined in $T$ by $\varphi(x_0, \ldots, x_{n-1})$, it follows that $T \vdash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$. Due to the Soundness Theorem, $T \vDash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$ and since $T \vDash \overline{0} = \overline{0}$,
+\begin{align}
+& T \vDash (\varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{0}) \nonumber \vee\\
+ &(\lnot  \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \overline{0} = \overline{1}) \nonumber \\
+\Leftrightarrow & T \vDash \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots, x_{n-1} ,x_n] \nonumber \\
+\Leftrightarrow & T \vdash \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots, x_{n-1} ,x_n]\label{eq:arithm1}
+\end{align}
+where the last equivalence holds due to the Soundness and Completeness Theorem.
+
+It remains to show (still with the assumption $c_R(m_0, \ldots, m_{n-1}) = 0$), 
+\begin{align*}
+&T \vdash \exists ! x_n  \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}/ x_0 \ldots, x_{n-1}] \\
+ \Leftrightarrow & T \vdash  \exists x_n ( \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \\
+ & \forall y (\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n] \rightarrow y = x_n)) \\
+ \Leftrightarrow & T \vDash  \exists x_n ( \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}] \wedge \\
+ & \forall y (\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n] \rightarrow y = x_n)) 
+\end{align*}
+where $y$ is the first variable which does not occur free in $\delta$.
+Therefore, we want to show that \[V_B^\mathcal{M}(\exists ! x_n  \delta[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]) = 1\] for any model $\mathcal{M}$ of $T$ and the valuation $B$ of the empty set. Fix any model $\mathcal{M}$ of $T$, i.\,e.\@ $\mathcal{M} \vDash T$ and $B': \lbrace x_n \rbrace \rightarrow M$ a valuation of $\lbrace x_n \rbrace$ defined by $B'(x_n) = \overline{0}^\mathcal{M}$ (which evidently coincides with the valuation $B$ of the empty set). Then we are done if we show that \[V_{B'}^\mathcal{M}(\forall y (\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n] \rightarrow y = x_n))=1\] since $V_{B'}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]) =1 $ holds by \Cref{eq:arithm1}. In order to show latter, let $B'': \lbrace x_n, y \rbrace \rightarrow M $ be a valuation of $\lbrace x_n, y \rbrace$ with $B''(x_n) =\overline{0}^\mathcal{M}$ (which coincides with $B'$ on $\lbrace x_n \rbrace$). Recall that the consistent theory $T$ extends $\mathsf{Q}$ and therefore by the axioms (Q1) and (Q3) of $\mathsf{Q}$, for every natural number $n$, $T \vdash \overline{0} \neq \overline{n}$. Then $T \vDash \overline{0}\neq \overline{n}$, $T \vdash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$, the definition of $\delta \equiv (\varphi(x_0, \ldots, x_{n-1}) \wedge x_{n} = \overline{0} ) \vee  ( \lnot \varphi(x_0, \ldots, x_{n-1}) \wedge x_{n}= \overline{1})$ and $B''(x_n) =\overline{0}^\mathcal{M}$ imply that $V_{B''}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n]) = 1$ if and only if $B''(y) = \overline{0}^\mathcal{M}$. 
+
+If $B''(y) = \overline{0}^\mathcal{M}$, then $V_{B''}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n]) = 1$ and also $V_{B''}^\mathcal{M}(y = x_n)=1$. Thus 
+\[V_{B''}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n] \rightarrow y = x_n)=1. \]
+
+Else $B''(y) \neq \overline{0}^\mathcal{M}$, then $V_{B''}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n]) = 0$ and hence
+\[V_{B''}^\mathcal{M}(\delta[\overline{m_0}, \ldots, \overline{m_{n-1}},y/x_0, \ldots, x_{n-1}, x_n] \rightarrow y = x_n)=1. \]
+
+Analogously, the other case $c_R(m_0, \ldots, m_{n-1}) = 1$ along with the uniqueness condition can be shown.
+\\
+
+For a proof of (ii), suppose that the characteristic function $c_R$ of an $n$-ary relation $R\subseteq \mathbb{N}^n$ is defined in $T$ by the $\mathcal{L}_A$-formula $\psi(x_0, \ldots,x_{n})$. 
+
+If $(m_0, \ldots, m_{n-1}) \in R$, then $c_R(m_0,\ldots,m_{n-1}) = 0$. Since $c_R$ is defined in $T$ by $\psi(x_0, \ldots, x_n)$, \[T \vdash  \psi[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots,x_{n-1}, x_n]. \] 
+
+If $R(m_0, \ldots, m_{n-1})$ does not hold, then $c_R(m_0,\ldots,m_{n-1}) = 1$. By \Cref{lem:Tdefinable}, \[T \vdash  \lnot \psi[\overline{m_0}, \ldots, \overline{m_{n-1}}, \overline{0}/x_0, \ldots,x_{n-1}, x_n] \]
+since $c_R(m_0,\ldots,m_{n-1}) \neq 0$. As a result the relation $R$ is arithmetically defined by $\psi[\overline{0}/x_n]$.
+\end{proof}
+
+\section{Definability in $\mathsf{Q}$}
+We already mentioned above that the less-than-or-equal relation $\le$ is arithmetically definable. Indeed, $\le$ is definable in $\mathsf{Q}$ (by the same $\mathcal{L}_A$-formula) and therefore also definable in every arithmetical theory $T= ( \mathcal{L}_A, \Sigma)$ which extends $\mathsf{Q}$. In addition, Robinson Arithmetic can prove the following sentences about the less-than-or-equal relation.
+\begin{lem}\label{lem:ordnung}
+For Robinson Arithmetic the following holds:
+\begin{enumerate}[label=({O\arabic*})]
+\item $\mathsf{Q} \vdash \forall x ( \overline{0} \le x)$.
+\item For any $n\in \mathbb{N}$, $\mathsf{Q} \vdash \forall x ( \lbrace x = \overline{0} \vee \overline{1} \vee \ldots \vee x = \overline{n} \rbrace \rightarrow x \le \overline{n})$.
+\item For any $n\in \mathbb{N}$, $\mathsf{Q} \vdash \forall x (x \le \overline{n} \rightarrow \lbrace x = \overline{0} \vee \overline{1} \vee \ldots \vee x = \overline{n} \rbrace )$.
+\item For any $n\in \mathbb{N}$ and any $\mathcal{L}_A$-formula $\varphi(x)$, if $\mathsf{Q} \vdash \varphi[\overline{0}/x], \mathsf{Q} \vdash \varphi[\overline{1}/x], \ldots, \mathsf{Q} \vdash \varphi[\overline{n}/x]$, then $\mathsf{Q} \vdash (\forall x \le \overline{n}) \varphi(x)$.
+\item For any $n\in \mathbb{N}$, $\mathsf{Q} \vdash \forall x (x \le \overline{n} \rightarrow x \le S(\overline{n}))$.
+\item For any $n\in \mathbb{N}$, $\mathsf{Q} \vdash \forall x (\overline{n} \le x \rightarrow (\overline{n} = x \vee S(\overline{n}) \le x))$.
+\item For any $n\in \mathbb{N}$, $\mathsf{Q} \vdash \forall x (x \le \overline{n} \vee \overline{n} \le x)$. 
+\end{enumerate}
+\end{lem}
+The proof of latter lemma is left to the reader.
+
+
+Similar to arithmetical definability (see \Cref{thm:arithmeticallydefined}), we can now show that every p.\,r.\@ function can be defined in $\mathsf{Q}$. We would like to remind the reader of some relevant results:
+\begin{enumerate}
+\item We showed that G\"odel's $\beta$-function encodes every sequence of natural numbers, i.\,e.\@ for every sequence of natural numbers $k_0, \ldots, k_n$ $(n \ge 0)$, there exists numbers $c, d \in \mathbb{N}$ such that $\beta(c,d,i)=k_i$ for all $0 \le i \le n$.
+\item $\mathit{Beta}$ is an abbreviation for \[ \mathit{Beta}(v_0,v_1,v_2,v_3)\deffeq ( \exists v_4 \le v_0 ) (v_0 = ( S(v_1 \cdot S(v_2)) \cdot v_4 ) + v_3 \wedge v_3 \le (v_1 \cdot S(v_2))).\] 
+\end{enumerate} 
+
+
+However, G\"odel's $\beta$-function cannot be defined in $\mathsf{Q}$ since the uniqueness condition does not necessarily hold. For this reason we define the corresponding $\mathcal{L}_A$-formula $\mathit{\widetilde{Beta}}$ which takes the uniqueness condition into account.
+
+\begin{dfn}
+Let $\mathit{\widetilde{Beta}}$ be an abbreviation for the following $\mathcal{L}_A$-formula: \[ \mathit{\widetilde{Beta}}(v_0,v_1,v_2,v_3)\deffeq \mathit{Beta}(v_0,v_1,v_2,v_3) \wedge (\forall v_5 \le v_3)(\mathit{Beta}[v_5/v_3] \rightarrow v_5 = v_3).\]
+\end{dfn}
+Since $\mathit{Beta}$ is a $\Delta_0$-formula and by the closure properties of $\Delta_0$-formulas, (in particular, closure under connectives and the bounded universal quantifier,) $\mathit{\widetilde{Beta}}$ is a $\Delta_0$-formula as well.
+
+\begin{lem}
+G\"odel's $\beta$-function is defined in $\mathsf{Q}$ by $\mathit{\widetilde{Beta}}(v_0, v_1, v_2, v_3)$.
+\end{lem}
+\begin{proof}
+For all $c,d,i,m \in \mathbb{N}$, it suffices to show:
+\begin{enumerate}
+\item If $\beta(c,d,i) = m$, then $\mathsf{Q}\vdash \mathit{\widetilde{Beta}}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3]$.
+\item $\mathsf{Q} \vdash  \exists ! v_3  \mathit{\widetilde{Beta}}[\overline{c}, \overline{d}, \overline{i}/v_0, v_1, v_2]$.
+\end{enumerate}
+
+For a proof of (i), fix any $c,d,i,m \in \mathbb{N}$ with $\beta(c,d,i)=m$. Since $\beta$ is arithmetically defined by $\mathit{Beta}(v_0,v_1,v_2,v_3)$,
+\begin{equation}\label{eq:g1}
+\mathcal{N} \vDash \mathit{Beta}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3]
+\end{equation}
+holds. Moreover, since for all $0 \le n< m$, $\beta(c,d,i) \neq n$  (because $\beta$ is a well-defined function),
+\begin{equation}\label{eq:g2}
+\text{for all }0 \le n<m \text{, } \mathcal{N}\vDash \lnot \mathit{Beta}[\overline{c}, \overline{d}, \overline{i}, \overline{n}/v_0, v_1, v_2, v_3].
+\end{equation}
+Putting \Cref{eq:g1} and \Cref{eq:g2} together, it can be easily seen that
+\begin{align*}
+& \mathcal{N} \vDash \mathit{Beta}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3]\wedge (\forall v_5 \le \overline{m})(\mathit{Beta}[\overline{c}, \overline{d}, \overline{i},v_5/v_0, v_1,v_2,v_3] \rightarrow v_5 = \overline{m}) \\
+\Leftrightarrow & \mathcal{N} \vDash \widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3].
+\end{align*}
+Since $\mathsf{Q}$ correctly decides every $\Delta_0$-sentence, 
+\[ \mathsf{Q} \vdash \widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3] \]
+follows.
+\\
+
+For a proof of (ii), fix any $c,d,i \in \mathbb{N}$. Then there exists $m \in \mathbb{N}$ with $\beta(c,d,i) = m$. Hence by (i) $\mathsf{Q} \vdash \widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3]$ and it remains to show \begin{align*}
+&\mathsf{Q} \vdash \forall y (\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3] \rightarrow  y = \overline{m}) \\
+\Leftrightarrow &\mathsf{Q} \vDash \forall y (\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3] \rightarrow  y = \overline{m}) 
+\end{align*} where $y$ is the first variable which does not occur freely in $\widetilde{\mathit{Beta}}$. To show this, fix any model $\mathcal{M}$ of $\mathsf{Q}$ and let $B: \lbrace y \rbrace \rightarrow M$ be any valuation of $\lbrace y \rbrace$ in $\mathcal{M}$ with $B(y) = a$ (for $a \in M$ and not necessarily in $\mathbb{N}$).
+
+In case $V_B^\mathcal{M}(\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3])= 0$, then $\mathsf{Q} \vDash \forall y (\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3] \rightarrow  y = \overline{m})$ evidently holds.
+
+In case $V_B^\mathcal{M}(\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3])= 1$, then it suffices to show that $V_B^\mathcal{M}(y = \overline{m})=1$. By (O7) $\mathsf{Q} \vdash \forall y(y \le \overline{m} \vee \overline{m} \le y)$ and thus by the Soundness Theorem $\mathsf{Q} \vDash \forall y(y \le \overline{m} \vee \overline{m} \le y).$ So we have to consider two cases:
+
+If $a \le m$, then by definition of $\widetilde{\mathit{Beta}}$ and since $\mathsf{Q} \vDash \widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, \overline{m}/v_0, v_1, v_2, v_3]$, $a = m$ follows. Thus $V_B^\mathcal{M}(y = \overline{m})=1$.
+ 
+If $m \le a$, then again by definition of $\widetilde{\mathit{Beta}}$ and since $V_B^\mathcal{M}(\widetilde{\mathit{Beta}}[\overline{c}, \overline{d}, \overline{i}, y/v_0, v_1, v_2, v_3])= 1$, $m = a$ follows. Thus $V_B^\mathcal{M}(y = \overline{m})=1$.
+
+As a result we proved the uniqueness condition for $\widetilde{\mathit{Beta}}$.
+
+\end{proof}
+
+
+\begin{thm}\label{thm:arithmeticQdefined}
+Every p.\,r.\@ function can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula.
+\end{thm}
+\begin{proof}
+By showing the following three statements, the theorem immediately follows.
+
+\begin{enumerate}[label=\Alph*]
+\item The basic primitive recursive functions can be defined in $\mathsf{Q}$ by $\Sigma_1$-formulas.
+\item Let $g : \mathbb{N}^m \rightarrow \mathbb{N}$ and $h_0, \ldots, h_{m-1} : \mathbb{N}^n \rightarrow \mathbb{N}$ be $m$-ary and $n$-ary functions, respectively. Let the $n$-ary function $f: \mathbb{N}^n \rightarrow \mathbb{N}$ be the composition of $g$ and $h_0, \ldots, h_{m-1}$. If $g$ and $h_0, \ldots, h_{m-1}$ can be defined in $\mathsf{Q}$ by $\Sigma_1$-formulas, then $f$ can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula as well.
+\item Let $g : \mathbb{N}^n \rightarrow \mathbb{N}$ and $h : \mathbb{N}^{n+2} \rightarrow \mathbb{N}$ be $n$-ary and $(n+2)$-ary functions, respectively. Let the $(n+1)$-ary function $f$ be the primitive recursion of $g$ and $h$. If $g$ and $h$ can be defined in $\mathsf{Q}$ by $\Sigma_1$-formulas, then $f$ can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula as well.
+\end{enumerate}
+
+For a proof of (A), consider the following three cases:
+\begin{enumerate}
+\item The $m$-ary zero function $C^m: \mathbb{N}^m \rightarrow \mathbb{N}$ ($m \ge 0$) with $C^m(\overrightarrow{x}) = 0$ is defined in $\mathsf{Q}$ by \[C(v_0, \ldots, v_{m}) \deffeq v_{m} = \overline{0}.\] 
+\item The $1$-ary successor function $S^1: \mathbb{N} \rightarrow \mathbb{N}$ with $S^1(x) = x + 1$ is defined in $\mathsf{Q}$ by the formula \[S(v_0)=v_1.\]
+\item The $n$-ary projection function $P_i^n:\mathbb{N}^n \rightarrow \mathbb{N}$ $(n \ge 1, 0 \le i \le n-1)$ with $P_i^n(x_0,\ldots, x_{n-1}) = x_i $ is defined in $\mathsf{Q}$ by the formula \[v_0 = v_0  \wedge  v_{1} = v_{1}  \wedge  \ldots  \wedge  v_{i} = v_{n}  \wedge  \ldots  \wedge  v_{n-1} = v_{n-1}.\]
+\end{enumerate}
+(The proof that those functions are defined in $\mathsf{Q}$ by the respective formulas is more or less trivial.) The basic primitive recursive functions are defined in $\mathsf{Q}$ by $\Delta_0$-formulas and hence defined in $\mathsf{Q}$ by $\Sigma_1$-formulas.
+\\
+
+For a proof of (B), let the $m$-ary function $g$ and the $n$-ary functions $h_0, \ldots, h_{m-1}$ be defined in $\mathsf{Q}$ by the $\Sigma_1$-formulas $G(v_{n+1}, \ldots, v_{n+m+1})$ and \sloppy$H_0(v_0, \ldots, v_{n}), \ldots,$ $H_{m-1}(v_0, \ldots, v_{n})$, respectively. The $n$-ary function $f$,  which is the composition of $g$ and $h_0, \ldots, h_{m-1}$ is defined by
+\[f(\overrightarrow{x}) = g(h_0(\overrightarrow{x}), \ldots, h_{m-1}(\overrightarrow{x})).\] Then $f$ can be defined in $\mathsf{Q}$ by 
+\begin{align*}
+F(v_{n+1},\ldots, v_{n+m+1}) \deffeq & \exists x_{0} \ldots \exists x_{m-1}  (H_0 [x_0/v_{n}] \wedge \ldots \wedge H_{m-1} [x_{m-1}/v_{n}] \\
+&  \wedge  G[x_0, \ldots,  x_{m-1}/v_{n+1}, \ldots, v_{n+m}])
+\end{align*}
+where $x_0, \ldots, x_{m-1}$ are alphabetically the first $n$ variables which do not occur freely in $H_0, \ldots, H_{m-1}$ and $G$. (Again, it can be easily checked that $f$ is defined in $\mathsf{Q}$ by $F(v_{n+1},\ldots, v_{n+m+1})$.) Since $H_0, \ldots, H_{m-1}$ and $G$ are $\Sigma_1$-formulas, the respective substitutions $H_0 [x_0/v_{n}], \ldots ,H_{m-1} [x_{m-1}/v_{n}], G[x_0, \ldots,  x_{m-1}/v_{n+1}, \ldots, v_{n+m}]$ are also $\Sigma_1$-formulas. Thus by the above closure properties under connectives and the existential quantifier $F(v_{n+1},\ldots, v_{n+m+1})$ is a $\Sigma_1$-formula.
+\\
+
+For a proof of (C), let the $n$-ary function $g$ and the $(n+2)$-ary function $h$ be defined in $\mathsf{Q}$ by the $\Sigma_1$-formulas $G(v_0, \ldots, v_{n})$ and $H(v_0, \ldots, v_{n+2})$, respectively. The $(n+1)$-ary function $f$ which is the primitive recursion of $g$ and $h$ is inductively defined by 
+\begin{align*}
+&f(\overrightarrow{x}, 0) = g(\overrightarrow{x}), \\
+& f(\overrightarrow{x}, y+1) = h( \overrightarrow{x}, y, f(\overrightarrow{x},y)). 
+\end{align*}
+For $\overrightarrow{x} \in \mathbb{N}^n$ and $y,z\in \mathbb{N}$ with $f(\overrightarrow{x}, y) = z$, there exists a sequence of numbers $k_0, k_1, \ldots, k_y$ such that $k_0 = g(x_0, \ldots, x_{n-1})$ and if $0\le u<y$ then $k_{u+1} = h(x_0, \ldots, x_{n-1}, u, k_u)$ and $k_y = z$.  Using the $\beta$-function, there exist $c, d \in \mathbb{N}$ such that $\beta(c,d,0) = g(x_0, \ldots, x_{n-1})$ and if $u < y$, then $\beta(c,d,S(u))= h(x_0, \ldots, x_{n-1},u, \beta(c,d,u))$ and $\beta(c,d,y) = z$. Then it suffices to show that the function $f$ can be defined in $\mathsf{Q}$ by
+\begin{align*}
+F(v_0,\ldots, v_{n+1}) \deffeq &\exists x_0 \exists x_1 \lbrace \exists x_2  (\mathit{\widetilde{Beta}}[x_0,x_1,\overline{0},x_2/v_0,v_1,v_2,v_3] \wedge G[x_2/v_{n}] ) \\
+&\wedge ( \forall x_3 \le v_{n} )  ( x_3 \neq v_{n} \rightarrow \\
+& \exists x_4 \exists x_5  \lbrace ( \mathit{\widetilde{Beta}}[x_0,x_1,x_3,x_4/v_0,v_1,v_2,v_3] \\
+& \wedge \mathit{\widetilde{Beta}}[x_0,x_1,S(x_3),x_5/v_0,v_1,v_2,v_3]) \\
+& \wedge H[ x_3, x_4, x_5 / v_{n}, v_{n+1}, v_{n+2}] \rbrace ) \\
+& \wedge \mathit{\widetilde{Beta}}[x_0,x_1,v_{n},v_{n+1}/v_0,v_1,v_2,v_3]\rbrace. 
+\end{align*}
+To show that $f$ is defined in $\mathsf{Q}$ by $F(v_0,\ldots, v_{n+1})$, we need to show that
+\begin{enumerate}
+\item If $f(m_0, \ldots, m_n) = c$, then $\mathsf{Q} \vdash F[\overline{m_0}, \ldots, \overline{m_n},\overline{c}/v_0, \ldots, v_n,v_{n+1}]$.
+\item For all $m_0, \ldots, m_n \in \mathbb{N}$, $\mathsf{Q} \vdash \exists ! v_{n+1} F[m_0, \ldots, m_n/v_0, \ldots, v_n]$.
+\end{enumerate}
+
+For a proof of (i), suppose $f(m_0, \ldots, m_n) = c$ for fixed $m_0, \ldots, m_n,c \in \mathbb{N}$. Then evidently $\mathcal{N} \vDash F[\overline{m_0}, \ldots, \overline{m_n},\overline{c}/v_0, \ldots, v_n,v_{n+1}]$ holds. Since \sloppy $F[\overline{m_0}, \ldots, \overline{m_n},\overline{c}/v_0, \ldots, v_n,v_{n+1}]$ is a $\Sigma_1$-formula (by the same arguments as in the proof of \Cref{thm:arithmeticallydefined}) and by \Cref{lem:sigma1complete}, $\mathsf{Q} \vdash F[\overline{m_0}, \ldots, \overline{m_n},\overline{c}/v_0, \ldots, v_n,v_{n+1}]$.
+
+For a proof of (ii), suppose $f(m_0, \ldots, m_n) = c$ for fixed $m_0, \ldots, m_n,c \in \mathbb{N}$. Since the existence part follows from (i), it remains to show:
+\begin{align*}
+&\mathsf{Q} \vdash \forall y (F[\overline{m_0}, \ldots, \overline{m_n},y/v_0, \ldots, v_n,v_{n+1}] \rightarrow y = \overline{c}) \\
+\Leftrightarrow &\mathsf{Q} \vDash \forall y (F[\overline{m_0}, \ldots, \overline{m_n},y/v_0, \ldots, v_n,v_{n+1}] \rightarrow y = \overline{c})
+\end{align*}  
+where $y$ is the first variable which does not occur freely in $F$. Fix any model $\mathcal{M}$ of $\mathsf{Q}$ and let $B:\lbrace y \rbrace \rightarrow M$ be a valuation of $\lbrace y \rbrace$ in $\mathcal{M}$ with $B(y) = a \in M$. The case $V_B^\mathcal{M}( F[\overline{m_0}, \ldots, \overline{m_n},y/v_0, \ldots, v_n,v_{n+1}] ) = 0 $ is trivial, so consider $V_B^\mathcal{M}( F[\overline{m_0}, \ldots, \overline{m_n},y/v_0, \ldots, v_n,v_{n+1}] ) = 1 $. We distinguish between the following cases.
+\begin{itemize}
+\item If $m_n=0$, then
+\begin{align*}
+F[\overline{m_0}, \ldots, m_{n-1},\overline{0},y/v_0, \ldots, v_n,v_{n+1}] \equiv&\exists x_0 \exists x_1 \lbrace \exists x_2  (\mathit{\widetilde{Beta}}[x_0,x_1,\overline{0},x_2/v_0,v_1,v_2,v_3]\\
+&\wedge G[\overline{m_0}, \ldots, \overline{m_{n-1}},x_2/v_0, \ldots, v_{n-1},v_{n}] ) \\
+& \wedge \mathit{\widetilde{Beta}}[x_0,x_1,\overline{0},y/v_0,v_1,v_2,v_3]\rbrace. 
+\end{align*}  
+Note that $g(m_0, \ldots,m_{n-1}) = f(m_0, \ldots,m_{n-1},0) = c$. 
+Since $g$ and $\beta$ are defined in $\mathsf{Q}$ by $G$ and $\mathit{\widetilde{Beta}}$, respectively and since in particular the uniqueness condition holds for $\mathit{\widetilde{Beta}}$, $V_B^\mathcal{M}(y= \overline{c})$ follows.
+\item If $m_n > 0$, then 
+\begin{align*}
+F[\overline{m_0}, \ldots, m_{n-1},\overline{m_n},y] \deffeq &\exists x_0 \exists x_1 \lbrace \exists x_2  (\mathit{\widetilde{Beta}}[x_0,x_1,\overline{0},x_2/v_0,v_1,v_2,v_3] \\
+&\wedge G[\overline{m_0}, \ldots, \overline{m_{n-1}},x_2/v_0, \ldots, v_{n-1},v_{n}] ) \\
+&\wedge ( \forall x_3 \le \overline{m_n} )  ( x_3 \neq \overline{m_n} \rightarrow \\
+& \exists x_4 \exists x_5  \lbrace ( \mathit{\widetilde{Beta}}[x_0,x_1,x_3,x_4/v_0,v_1,v_2,v_3] \\
+& \wedge \mathit{\widetilde{Beta}}[x_0,x_1,S(x_3),x_5/v_0,v_1,v_2,v_3]) \\
+& \wedge H[\overline{m_0}, \ldots, \overline{m_{n-1}}, x_3, x_4, x_5 /v_0, \ldots, v_{n-1}, v_{n}, v_{n+1}, v_{n+2}] \rbrace ) \\
+& \wedge \mathit{\widetilde{Beta}}[x_0,x_1,\overline{m_{n-1}},y/v_0,v_1,v_2,v_3]\rbrace. 
+\end{align*}
+One can easily see that by the uniqueness condition of $\mathit{\widetilde{Beta}}$, $V_B^\mathcal{M}(y= \overline{c})$ follows.
+\end{itemize} 
+\end{proof}
+
+Since the characteristic function $c_R$ of a p.\,r.\@ relation $R \subseteq \mathbb{N}^n$ $(n\ge 1)$ can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula $\psi(x_0, \ldots, x_n)$, the relation $R$ can also be defined in $\mathsf{Q}$ by the $\Sigma_1$-formula $\psi[\overline{0}/x_n]$ (see proof of \Cref{lem:aridef}). As a result every p.\,r.\@ function and moreover every p.\,r.\@ relation can be defined in $\mathsf{Q}$ by a $\Sigma_1$-formula. Evidently, this holds for every consistent extension of $\mathsf{Q}$ and in particular for every arithmetical theory which extends $\mathsf{Q}$. 
+
+\begin{cor}\label{cor:captureandexpress}
+Let $T= (\mathcal{L}_A, \Sigma)$ be an arithmetical theory which extends $\mathsf{Q}$. Then any primitive recursive relation or primitive recursive function is defined in $\mathsf{Q}$ and also arithmetically defined by a $\Sigma_1$-formula. 
+\end{cor}
+
+\section{Peano Arithmetic $\mathsf{PA}$}
+To compensate for $\mathsf{Q}$'s weakness of missing the induction principle, as far as it is possible to formulate the induction principle in first-order logic, the induction principle is formalized in the induction schema. By adding the induction schema (see (PA7)) to the axioms of $\mathsf{Q}$, we obtain the theory $\mathsf{PA}$.
+\begin{dfn}
+Peano Arithmetic is the arithmetical theory $\mathsf{PA} \defeq (\mathcal{L}_A,\Sigma)$ where $\Sigma$ contains the following axioms:
+\begin{enumerate}[label=({PA\arabic*})]
+\item $\forall v_0 (\overline{0} \neq S (v_0))$.
+\item $\forall v_0 \forall v_1  ( S(v_0) = S(v_1) \rightarrow v_0 = v_1)$.
+\item $\forall v_0  ( v_0 + \overline{0} = v_0)$.
+\item $\forall v_0 \forall v_1 (v_0 + S(v_1) = S(v_0+v_1))$.
+\item $\forall v_0 ( v_0 \cdot \overline{0} = \overline{0})$.
+\item $\forall v_0 \forall v_1 ( v_0 \cdot S (v_1) = (v_0 \cdot v_1 ) + v_0) $.
+\item $ \lbrace \varphi[\overline{0}/v_0] \wedge \forall v_0  ( \varphi(v_0) \rightarrow \varphi [ S(v_0)/v_0]) \rbrace \rightarrow \forall v_0 \varphi
+(v_0) $ where $\varphi(v_0)$ is an $\mathcal{L}_A$-formula.
+\end{enumerate}
+\end{dfn} 
+
+Note that Peano arithmetic is not finitely axiomatized since there exist infinitely many formulas with free variable $v_0$ and therefore also infinitely many instances of (PA7). Nevertheless, $\mathsf{PA}$ is an effectively axiomatized theory.
+

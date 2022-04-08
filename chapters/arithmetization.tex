@@ -1,0 +1,279 @@
+\chapter{The Arithmetization of Syntax}
+
+Our goal is to construct an $\mathcal{L}_A$-sentence $\mathsf{G}$ which says about itself that it is unprovable. However, $\mathcal{L}_A$-sentences can only make statements about numbers and not theories, sentences or provability. As a solution Gödel's simple but powerful idea of assigning expressions in \PA with code numbers is introduced. This is done by fixing a scheme of numbers and matching them to the alphabet of $\mathcal{L}_A$. As a result various syntactic relations correlate with purely numerical relations which is called the \textit{arithmetization of syntax}. 
+  
+For instance, consider the syntactic relation of being a term in $\mathcal{L}_A$ and define the corresponding numerical relation $\mathit{Term}(n)$ which holds when $n$ codes a term. In the same way $\mathit{Atom}(n)$, $\mathit{Form}(n)$, $\mathit{Sent}(n)$ are defined which hold when $n$ codes an atomic formula, a formula or a sentence, respectively. By defining the numerical relation $\mathit{Prf}(m,n)$ which holds when $m$ is the code number in our scheme of a $\mathsf{PA}$-proof of the sentence with code number $n$ and showing that this relation is primitive recursive, a central result of this chapter is obtained. (In this chapter Smith \cite{Smith2009} is used as the main reference.)
+
+\section{G\"odel Numbering}
+
+Gödel numbers enable $\mathcal{L}_A$-formulas to talk indirectly about words over $\mathcal{L}_A$ (e.\,g.\@ $\mathcal{L}_A$-terms, $\mathcal{L}_A$-formulas) by talking about their G\"odel numbers.  
+
+\begin{dfn}
+Our \textit{G\"odel number scheme of $\mathcal{L}_A$} (or \textit{coding scheme of $\mathcal{L}_A$}) is defined by:
+\begin{center}
+\begin{tabular}{ c c c c c c c c c c c c c c c c c c c }
+$\lnot$ &  $\vee$ & $\exists$ & $=$ & $($ & $)$ & $0$ & $S$ & $+$ & $\cdot$ & , & $v_0$ & $v_1$ & $v_2$ & $\ldots$ \\ 
+$1$ & $3$ & $5$ & $7$ & $9$ & $11$ & $13$ & $15$ & $17$ & $19$ & $21$ & $2$ & $4$ & $6$ & $\ldots$ 
+\end{tabular}
+\end{center}
+\end{dfn}
+
+Note that by our scheme symbols of $\mathcal{L}_A$ are assigned an even number if and only if the symbols are variables. 
+
+\begin{dfn}
+Let $w$ be a word $s_0 s_1 \ldots s_n$ $(n \ge 0)$ over $\mathcal{L}_A$ where every $s_i$ is a symbol of $\mathcal{L}_A$ for $ 0 \le i \le n$. Then the \textit{G\"odel number} (\textit{g.\,n.\@}) \textit{of $w$} is calculated by firstly taking the correlated code numbers of the symbols $s_0, \ldots, s_n$ and using them as exponents for the first $n+1$ prime numbers $\pi_0, \pi_1, \ldots, \pi_n$ and secondly, multiplying the results, i.\,e.\@ \[\pi_0^{s_0} \cdot \pi_1^{s_1}\cdot \ldots \cdot \pi_n^{s_n}. \]  
+\end{dfn}
+
+For instance, the g.\,n.\@ of the symbol $\vee$ is $\pi_0^3= 2^3=8$ and the g.\,n.\@ of the numeral $S(0)$ is $\pi_0^{15} \cdot \pi_1^{9} \cdot \pi_2^{13}  \cdot \pi_3^{11} = 2^{15} \cdot 3^{9} \cdot 5^{13} \cdot 7^{11}$. If $w$ is a word over $\mathcal{L}_A$, then we denote the G\"odel number of $w$ with $\upl w \upr$. For an improper formula $\varphi$ with abbreviations and notional conventions, we also denote the G\"odel number $\upl \psi \upr$ of the equivalent proper $\mathcal{L}_A$-formula $\psi$ with $\upl \varphi \upr $. For instance, $\upl \overline{1}+\overline{0} \le \overline{2} \upr = \upl \exists v_0 +(+(S(0),0),v_0) = S(S(0)) \upr$.
+
+With a similar concept, super G\"odel numbers enable $\mathcal{L}_A$-formulas to talk indirectly about sequences of words over $\mathcal{L}_A$.
+ 
+\begin{dfn}
+Let $p$ be a sequence $w_0, w_1, \ldots, w_n$ of words over $\mathcal{L}_A$. Then the \textit{super G\"odel numbers} (\textit{s.\,g.\,n.\@}) \textit{of} $p$ is calculated by firstly coding each $w_i$ $(0 \le i \le n)$ by its G\"odel number which yields a resulting sequence of G\"odel numbers $ g_0, g_1, \ldots, g_n$, secondly, using the numbers $g_0, g_1, \ldots, g_n$ as exponents for the first $n+1$ prime numbers $\pi_0, \pi_1, \ldots, \pi_n$ and thirdly, multiplying the results, i.\,e.\@
+\[\pi_0^{g_0}\cdot \pi_1^{g_1} \cdot \ldots \cdot \pi_n^{g_n}. \]
+\end{dfn}
+
+For instance, the corresponding sequence of G\"odel numbers to the sequence $0, S(0)$ of words over $\mathcal{L}_A$ is $\pi_0^{13}, \pi_0^{15} \cdot \pi_1^{9} \cdot \pi_2^{13}  \cdot \pi_3^{11}$. Therefore, the s.\,g.\,n.\@ of $0, S(0)$ is 
+\[ \pi_0^{\pi_0^{13}} \cdot \pi_0^{\pi_0^{15} \cdot \pi_1^{9} \cdot \pi_2^{13}  \cdot \pi_3^{11} }. \]
+If $p$ is a sequence $w_0, w_1, \ldots, w_n$ of words over $\mathcal{L}_A$, then we denote the s.\,g.\,n.\@ of $p$ with $\upl p \upr$ or $\upl w_0, w_1, \ldots, w_n \upr$.
+
+\section{Primitive Recursive Syntactic Functions and Relations}
+We want to show that $\mathit{Prf}(m,n)$ which holds if $m$ is the s.\,g.\,n.\@ of a $\mathsf{PA}$-proof of the formula with g.\,n.\@ $n$ is primitive recursive since by \Cref{cor:captureandexpress} this would imply that $\mathit{Prf}(m,n)$ is arithmetically defined and defined in $\mathsf{Q}$ by a $\Sigma_1$-formula. In the following we show that certain functions are primitive recursive in order to show that $\mathit{Prf}(m,n)$ is primitive recursive. In this chapter we only consider functions $f$ with domain $\mathbb{N}^n$ $(n \ge 1)$ and codomain $\mathbb{N}$, i.\,e.\@ $f$ is of the form $f: \mathbb{N}^n \rightarrow \mathbb{N}$ $(n\ge 0)$. Furthermore, we only consider relations of the form $R\subseteq \mathbb{N}^n$ for $n \ge 1$. 
+\\
+
+We remind the reader of the following closure properties of $\mathsf{PRIM}$:
+
+\begin{itemize}
+\item $\mathsf{PRIM}$ is closed under explicit definitions.
+\item $\mathsf{PRIM}$ is closed under definition by p.\,r.\@ cases from p.\,r.\@ functions.
+\item $\mathsf{PRIM}$ is closed under logical connectives, i.\,e.\@ $\lnot, \vee, \wedge, \rightarrow, \leftrightarrow$.
+\item $\mathsf{PRIM}$ is closed under the bounded existential quantifier and the bounded universal quantifier.
+\item $\mathsf{PRIM}$ is closed under the bounded minimization operator.
+\end{itemize}
+
+Moreover, the following functions and relations are primitive recursive:
+\begin{itemize}
+\item The relations $=, <, \le, >, \ge, \neq$ over $\mathbb{N}$.
+\item The addition function $+$ and multiplication function $\cdot$ over $\mathbb{N}$.
+\item The factorial function $!(x)$ over $\mathbb{N}$. (Note that we usually write $x!$ instead of $!(x)$.)
+\item The $2$-ary relation \textit{divides relation} $\ver(x,y)$ holds if $y$ is divisible by $x$. (Note that we also use infix notation.)
+\item The $2$-ary \textit{exponentiation function} $\mathit{exp}(n,m)$ returns the product of $n$ multiplied $m$-times, i.\,e.\@ $\mathit{exp}(n,m)\defeq \underbrace{n \cdot \ldots \cdot n}_{m\text{-times}}$. (We also write $n^m$ instead of $\mathit{exp}(n,m)$.)
+\end{itemize}
+
+\begin{lem} \label{lem:num}
+The following functions and relations are primitive recursive:
+\begin{enumerate}
+\item The relation $\mathit{Prime}(n)$ holds when $n$ is a prime number.
+\item The function $\pi(n)$ returns the $(n+1)$-th prime, i.\,e.\@ $\pi_{n}$. $($We also write $\pi_n$ instead of $\pi(n)$.$)$ 
+\item The function $\mathit{exf}(n,i)$ returns the exponent of $\pi_i$ in the prime factorization of $n$.
+\item The function $\mathit{len} (n)$ returns the number of distinct prime factors of $n$.
+\item The \textit{concatenation function} $\circ (m,n)$ returns the g.\,n.\@ of the expression that results from stringing together the expression with g.\,n.\@ $m$ followed by the expression with g.\,n.\@ $n$. $($Note that for the concatenation function infix notation is also used.$)$
+\item The function $\mathit{num}(n)$ returns the g.\,n.\@ of the numeral $\overline{n}$ of $\mathcal{L}_A$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+\begin{enumerate}
+\item Since $\mathsf{PRIM}$ is closed under explicit definitions, bounded universal quantification and logical connectives, $\mathit{Prime}$ which is defined as follows
+\[ \mathit{Prime}(n) \defeeq n \neq 1 \wedge (\forall u \le n ) (\forall v \le n ) (u \cdot v = n \rightarrow (u=1 \vee v=1))\]
+is primitive recursive.
+\item The next prime after a number $k \in \mathbb{N}$ is not greater than $k!+1$ because either $k!+1$ is prime or it has a prime factor which must be greater than $k$. Let $h(k) \defeq (\mu x \le k! +1) (k < x \wedge \mathit{Prime}(x))$. Then $h$ is primitive recursive and returns the next prime after $k$. Next, let
+\begin{align*}
+& \pi(0) \defeq 2, \\
+& \pi(Sn) \defeq h(\pi(n))
+\end{align*}
+and therefore $\pi$ is primitive recursive.
+\item By the Fundamental Theorem of Arithmetic every number has a unique factorization into primes and therefore $\mathit{exf}$ is well-defined. Furthermore, no exponent in the prime factorization of $n$ can be larger than $n$ itself. Let
+\[ \mathit{exf}(n,i)  \defeq (\mu x \le n ) \lbrace ( \pi_i^x \ver n ) \wedge \lnot ( \pi_i^{x+1} \ver n) \rbrace \] and thus $\mathit{exf}$ is primitive recursive.
+\item Let $\mathit{pf(m, n)} \defeq (\mathit{Prime}(m) \wedge m \ver n )$ which holds when $m$ is a prime factor of $n$. In particular $\mathit{pf}(m,n)$ is a p.\,r.\@ relation being a conjunction of p.\,r.\@ relations. Let \[\mathit{p}(m,n) \defeq \begin{cases} 1 & \text{if }\mathit{pf}(m,n) \text{ holds}, \\ 
+0 & \text{otherwise,}\end{cases}\] which is 1 when $m$ is a prime factor of $n$ and zero otherwise. $\mathit{p}(m,n)$ is defined by p.\,r.\@ cases from p.\,r.\@ functions and hence primitive recursive. We observe that $ \mathit{len}(n) = \mathit{p}(0,n) + \mathit{p}(1,n) + \ldots + \mathit{p}(n-1, n) + \mathit{p}(n,n)$. To give a p.\,r.\@ definition of $\mathit{len}$, let 
+\begin{align*}
+&\mathit{l}(x,0) \defeq \mathit{p} (0, x), \\ 
+&\mathit{l}(x, y + 1)) \defeq \mathit{p}(S(y),x) + \mathit{l}(x,y).
+\end{align*}
+Lastly, let $\mathit{len}(n) \defeq \mathit{l}(n,n)$ and hence $\mathit{len}$ is primitive recursive.
+%\item Suppose $m$ and $n$ are G\"odel numbers with $\mathit{len}(m) = j$ and $\mathit{len}(n) = k$. Then the composition function $m \circ n$ yields the value obtained by taking the first $j + k$ primes, raising the first $j$ primes to powers that match the exponents of the $j$ primes in the prime factorization of $m$ and raising the next $k$ primes to powers that match the $k$ exponents in the prime factorization of $n$. Hence
+\begin{align*}
+     m \circ n  \defeq & (\mu x \le f(m,n) )  \lbrace \forall i < \mathit{len}(m))  (\mathit{exf}(x,i) = \mathit{exf}(m,i) ) \\ 
+    & \wedge  ( \forall i < \mathit{len}(n))  ( \mathit{exf}(x, i + \mathit{len}(m)) = \mathit{exf}(n,i) ) \rbrace. 
+\end{align*}
+In order to show that the function $\circ$ is p.\,r.\@ it suffices to show that the $\mu$ operator can be bounded by a p.\,r.\@ function $f(m,n)$. Since $\mathit{len}(m \circ n) = \mathit{len}(m) + \mathit{len}(n)$, the number of prime factors of $m \circ n$ is $\mathit{len}(m) + \mathit{len}(n)$ and the highest prime factor of $m \circ n$ is $\pi_{\mathit{len}(m)+\mathit{len}(n)}$. Moreover, the highest exponent of a prime factor of $m \circ n$ can be bounded by \[max_{1 \le i \le \mathit{len}(m), 1 \le j \le \mathit{len}(n)} \lbrace \mathit{exf}(n,i), \mathit{exf}(m,j) \rbrace \le m+n. \] Thus we can define \[f(m,n) \defeq \pi_{\mathit{len}(m)+\mathit{len}(n)}^{(\mathit{len}(m)+\mathit{len}(n))\cdot (m+n)},\]
+which is primitive recursive.
+\item The standard numeral of $S(n)$ is of the form $S$ followed by the standard numeral for $n$. Consequently, let 
+\begin{align*}
+    &\mathit{num}(0)= \upl 0 \upr =  2^{13}, \\ 
+    &num(y+1) = \upl S (\upr \circ \mathit{num}(y) \circ \upl )\upr= (2^{15} \cdot 3^{9}) \circ \mathit{num}(x) \circ 2^{11}.
+\end{align*}
+\end{enumerate} 
+\end{proof}
+
+\begin{dfn}
+\begin{enumerate}
+\item The relation $\mathit{Term}(n)$ holds when $n$ is the g.\,n.\@ of an $\mathcal{L}_A$-term. 
+\item The relation $\mathit{Form}(n)$ holds when $n$ is the g.\,n.\@ of a $\mathcal{L}_A$-formula.
+\item The relation $\mathit{Sent}(n)$ holds when $n$ is the g.\,n.\@ of a $\mathcal{L}_A$-sentence.
+\item The relation $\mathit{Prfseq}(n)$ holds if $n$ is the s.\,g.\,n.\@ of a sequence of $\mathcal{L}_A$-formulas that is $\mathsf{PA}$-proof of an $\mathcal{L}_A$-formula.
+\item The relation $\mathit{Prf}(m,n)$ holds if $m$ is the s.\,g.\,n.\@ of a $\mathsf{PA}$-proof of the sentence with g.\,n.\@ $n$.
+\end{enumerate}
+\end{dfn}
+Our goal is to show that $\mathit{Prf}$ is primitive recursive. In order to do this, we firstly proof that $\mathit{Term}$ is primitive recursive, secondly continue with $\mathit{Form}$ and thirdly $\mathit{Sent}$. Then we can show that $\mathit{Prfseq}$ and finally show that $\mathit{Prf}$ is p.\,r.
+
+We begin with showing that $\mathit{Term}$ is p.\,r.\@ and therefore introduce the auxiliary definition of a term-sequence.
+
+\begin{dfn}
+A \textit{term-sequence} of $\mathcal{L}_A$ is a sequence of $\mathcal{L}_A$-terms $ t_0, \ldots , t_n$ such that each term $t_k$ for $k \in \lbrace 0, \ldots n \rbrace $ is in one of the forms:
+\begin{enumerate}
+\item $0$,
+\item a variable $v_j$ where $0 \le j$, 
+\item $S( t_i)$ where $0 \le i < k$,
+\item $+(t_i,t_j)$ where $0 \le i,j<k$,
+\item $\cdot(t_i ,t_j)$ where $0 \le i,j<k$.
+\end{enumerate}
+\end{dfn}
+Since every term must have a constructional history, a term has to be the last expression in some term-sequence.
+
+\begin{lem}
+The following relations are primitiv recursive:
+\begin{enumerate}
+\item The relation $\mathit{Var}(n)$ holds when $n$ is the g.\,n.\@ of a variable of $\mathcal{L}_A$.
+\item The relation $\mathit{Termseq}(n)$ holds when $n$ is the s.\,g.\,n.\@ for a term-sequence of $\mathcal{L}_A$.
+\item The relation $\mathit{Term}(n)$ holds when $n$ is the g.\,n.\@ of an $\mathcal{L}_A$-term. 
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+\begin{enumerate}
+\item Recall that the symbol code for a variable in our scheme is always even, i.\,e.\@ of the form $2x+2$ with $x \in \mathbb{N}$ and hence \[\mathit{Var}(n) \defeeq (\exists x \le n ) (n = 2^{2x+2}).\]
+\item $\mathit{Termseq}(n)$ holds if $n$ is a s.\,g.\,n.\@ of $l \defeq \mathit{len}(n)$ terms. The terms can be decoded by utilizing $\mathit{exf}$ where each value of $\mathit{exf}(n,x)$ as $x$ runs from $0$ to $l$ is the code for either $0$, or a variable, or the successor, or a sum, or a product of earlier terms. $\mathit{Termseq}$ is primitive recursive because it can be defined as follows,
+\begin{align*}
+\mathit{Termseq}(n)  \defeeq & ( \forall x < \mathit{len}(n))  \lbrace \mathit{exf}(n,x) = \upl 0 \upr \vee \mathit{Var}(\mathit{exf}(n,x))  \vee \\
+& (\exists y < x )  (\mathit{exf}(n,x) = \upl S (\upr \circ \mathit{exf}(n,y) \upl ) \upr)  \vee \\
+& (\exists y, z < x ) (\mathit{exf}(n,x) = \upl +  ( \upr \circ \mathit{exf}(n,y) \circ \upl , \upr \circ \mathit{exf}(n,z) \circ \upl ) \upr )  \vee \\
+& (\exists y, z < x ) (\mathit{exf}(n,x) = \upl \cdot  ( \upr \circ \mathit{exf}(n,y) \circ \upl , \upr \circ \mathit{exf}(n,z) \circ \upl ) \upr )  .
+\end{align*} 
+\item A term has g.\,n.\@ $n$ if and only if there is a s.\,g.\,n.\@ $x$ of a term-sequence which contains as last component a term which has g.\,n.\@ $n$. Let
+\[
+\mathit{Term}(n) \defeeq ( \exists x \le f(n))(\mathit{Termseq}(x) \wedge n = \mathit{exf}(x, \mathit{len}(x)-1)).
+\]
+In order to show that the relation $\mathit{Term}(n)$ is primitive recursive it suffices to show that $x$ can be bounded by a p.\,r.\@ function $f(n)$. For a term $t$ with $\upl t \upr = n$, let $t_0, \ldots, t_k$ $(k \ge 0)$ be a term-sequence of minimal length with $t = t_k$. Then for $i \le k$ ($i \ge 0$), $t_i$ is a subword of $t_k = t$. So $\upl t_i \upr \le \upl t \upr = n$. Since the term-sequence has no repetitions and $|t| \le \upl t \upr = n$,
+\begin{align*}
+&k \le |\lbrace w : w \text{ subword of }t \rbrace | \le n^n.
+\end{align*}
+holds. Then $f(n)$ can be bounded as follows by:
+\begin{align*}
+ \upl t_0, \ldots, t_k \upr &= \pi_0^{\upl t_0 \upr} \cdot \ldots \cdot \pi_k^{\upl t_k \upr} \\
+ & \le (\pi_k^{max_{0 \le i \le k} \lbrace \upl t_i \upr \rbrace})^{k+1} \\
+ & \le (\pi_{n^n}^n)^{n^n+1}.
+\end{align*} 
+\end{enumerate}
+\end{proof}
+
+Repeating the same procedure, we introduce the auxiliary definition of a formula-sequence in order to show that $ \mathit{Form}$ and $\mathit{Sent}$ are primitive recursive.
+
+\begin{dfn}
+A \textit{formula-sequence} of $\mathcal{L}_A$ is a sequence of $\mathcal{L}_A$-formulas $\varphi_0, \varphi_1, \ldots , \varphi_n $ such that each formula $\varphi_k$ for $k \in \lbrace 0, \ldots n \rbrace $ is in one of the forms:
+\begin{enumerate}
+\item $t_0 = t_1$ where $t_0$ and $t_1$ are $\mathcal{L}_A$-terms,
+\item $\lnot \varphi_i$ where $0 \le i < k$,
+\item $(\varphi_i \vee \varphi_j)$ where $0 \le i,j < k$,
+\item $\exists x  \varphi_i$ for some variable $x$ where $0 \le i < k$.
+\end{enumerate}
+\end{dfn}
+Since every formula must have a constructional history, a formula has to be the last expression in some formula-sequence.
+
+\begin{lem}
+The following relations are primitive recursive:
+\begin{enumerate}
+\item The relation $\mathit{Formseq}(n)$ holds when $n$ is the s.\,g.\,n.\@ of a formula-sequence of $\mathcal{L}_A$.
+\item The relation $\mathit{Form}(n)$ holds when $n$ is the g.\,n.\@ of a $\mathcal{L}_A$-formula.
+\item The relation $\mathit{Sent}(n)$ holds when $n$ is the g.\,n.\@ of a $\mathcal{L}_A$-sentence.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+\begin{enumerate}
+\item $\mathit{Termseq}(n)$ holds if $n$ is a s.\,g.\,n.\@ of $l \defeq \mathit{len}(n)$ formulas. The formulas can be decoded by utilizing $\mathit{exf}$ where each value of $\mathit{exf}(n,k)$ as $z$ runs from $0$ to $l$ is the code for a formula in the formula-sequence with s.\,g.\,n.\@ $n$. $\mathit{Formseq}$ is primitive recursive since it can be defined as follows,
+\begin{align*}
+\mathit{Formseq}(n)  \defeeq & ( \forall z < \mathit{len}(n)) \lbrace  (\exists x,y < \mathit{exf}(n,z) )\\
+&   ( \mathit{Term}(x) \wedge \mathit{Term}(y) \wedge \mathit{exf}(n,z) = (x \circ \upl = \upr \circ y ) )\\
+& (\exists x < z )  (\mathit{exf}(n,z) = \upl \lnot \upr \circ \mathit{exf}(n,x))  \vee \\
+& (\exists x, y < z ) (\mathit{exf}(n,z) = \upl ( \upr \circ \mathit{exf}(n,x) \circ \upl \vee \upr \circ \mathit{exf}(n,y) \circ \upl ) \upr )   \vee \\
+& (\exists  x< z )  (\mathit{exf}(n,z) = \upl \exists \upr \circ \mathit{exf}(n,x)).\\
+\end{align*} 
+\item A formula has g.\,n.\@ $n$ if and only if there is a s.\,g.\,n.\@ $x$ which contains as last component a formula which has g.\,n.\@ $n$. Let
+\[
+\mathit{Form}(n) \deffeq ( \exists x \le f(n))(\mathit{Formseq}(x) \wedge n = \mathit{exf}(x, \mathit{len}(x)-1)).
+\]
+In order to show that the relation $\mathit{Form}(n)$ is primitive recursive it suffices to show that $x$ can be bounded by a p.\,r.\@ function $f(n)$. For a formula $\varphi$ with $\upl \varphi \upr =n$, let $\varphi_0, \ldots, \varphi_k$ be a formula-sequence of minimal length with $\varphi= \varphi_k$. Then for $i \le k$, $\varphi_i$ is a subword of $\varphi_k = \varphi$. So $\upl \varphi_i \upr \le \upl \varphi \upr = n$. Since the formula-sequence has no repetitions and
+ $|\varphi| \le \upl \varphi \upr = n$,
+\begin{align*}
+&k \le |\lbrace w : w \text{ subword of }\varphi \rbrace | \le n^n.
+\end{align*}
+holds. Then $f(n)$ can be bounded as follows by:
+\begin{align*}
+ \upl \varphi_0, \ldots, \varphi_k \upr &= \pi_0^{\upl \varphi_0 \upr} \cdot \ldots \cdot \pi_k^{\upl \varphi_k \upr} \\
+ & \le (\pi_k^{max_{0 \le i \le k} \lbrace \upl \varphi_i \upr \rbrace})^{k+1} \\
+ & \le (\pi_{n^n}^n)^{n^n+1}.
+\end{align*} 
+
+ 
+\item Define $\mathit{Bound}(c,i,n)$ to be true when $c$ numbers a variable which occurs bounded in the formula with g.\,n.\@ $n$ in the $(i+1)$-th position, as follows,
+\begin{align*}
+\mathit{Bound}(c,i,n) \defeeq & \mathit{Var}(c) \wedge \mathit{Form}(n)  \wedge \\ &(\exists x, y, z < n )  \lbrace  n = x \circ \upl \exists \upr \circ c \circ y \circ z   \wedge \\
+& \mathit{Form}(y) \wedge (len(x) \le i \wedge i \le (\mathit{len}(x) + \mathit{len}(y) + 1)) \rbrace.
+\end{align*}
+
+The middle clause ensures that the formula with g.\,n.\@ $x$ is of the form $\ldots \exists v_i \varphi \ldots$ $(i \ge 0)$ and $v_i$ is bounded. The last clause guarantees that the position $i$ occurs within the component $\exists v_i \varphi$. Evidently, $\mathit{Bound}$ is p.\,r.\@ since $\mathsf{PRIM}$ is closed under bounded quantifiers and explicit definitions. Then $\mathit{Sent}$ can be defined as 
+\begin{align*}
+\mathit{Sent}(n) \defeeq \mathit{Form}(n) \wedge ( \forall i < len(n))  (\mathit{Var}(\mathit{exf}(n,i)) \rightarrow \mathit{Bound}(\mathit{exf}(n,i), i, n))
+\end{align*} 
+and therefore $\mathit{Sent}$ is primitive recursive. The last clause ensures that every variable occurrence in the formula with g.\,n.\@ $n$ is bounded. 
+\end{enumerate}
+\end{proof} 
+ 
+\section{$\mathit{Prf}$ is primitive recursive}
+Recall that an $\mathsf{PA}$-proof is a finite sequence of formulas in which each formula is either an axiom (of $\mathsf{PA}$ or $\mathcal{S}$) or is obtained from previous formulas by a rule. 
+
+\begin{thm}\label{thm:Prfseqpr}
+$\mathit{Prfseq}(n)$ which holds if $n$ is the s.\,g.\,n.\@ of a sequence of $\mathcal{L}_A$-formulas that is a $\mathsf{PA}$-proof of an $\mathcal{L}_A$-formula, is primitive recursive.
+\end{thm}
+\begin{proof}[Proof Sketch]
+In order to show that $\mathit{Prfseq}(n)$ is primitive recursive, it suffices to show that the following relations are primitive recursive:
+\begin{enumerate}
+\item For $1 \le i \le 6$, $A_i(n)$ holds if $n$ is the g.\,n.\@ of an $\mathcal{S}$-axiom (A$i$).
+\item For $1 \in \lbrace 1, 2, 3, 5 \rbrace$, $R_i(n,c)$ holds if $c$ is the g.\,n.\@ of the formula with g.\,n.\@ $n$ which follows from the premise $n$ (R$i$). $R_4(m, n,c)$ holds if $c$ is the g.\,n.\@ of the formula with g.\,n.\@ $n$ which follows from the premises $m$ and $n$ (R$i$).
+\item For $1 \le i \le 7$, $\mathit{PA}_i(n)$ holds if $n$ is the g.\,n.\@ of an axiom of $\mathsf{PA}$ (PA$i$). 
+\end{enumerate}
+
+For (i), consider for instance (A1) $(\lnot \varphi \vee \varphi)$ where $\varphi$ is an $\mathcal{L}_A$-formula. Since $\upl \varphi \upr \le \upl \lnot \varphi \vee \varphi \upr$, the following holds
+\[A_1(n) \defeeq (\exists x \le n)(\mathit{Form}(x) \wedge n = \upl ( \lnot\upr \circ x \circ \upl \vee \upr \circ x  \circ \upl )\upr).\] 
+
+For (ii), consider for instance (R1) \(\displaystyle \frac{\psi}{(\varphi \vee \psi)}  \) where $\psi$ and $\varphi$ are $\mathcal{L}_A$-formulas. Since  $\upl \varphi \upr \le \upl  \varphi \vee \psi \upr $, the following holds
+\[ R_1(n,c) \defeeq \mathit{Form}(n) \wedge \mathit{Form}(c) \wedge (\exists x \le c) (\mathit{Form}(x) \wedge c = \upl ( \upr \circ x \circ \upl \vee \upr \circ n \circ \upl ) \upr ). \]
+
+For (iii), consider for instance (PA1) $\forall v_0 (0 \neq S (v_0))$. We can define 
+\[\mathit{PA}_1(n) \defeeq n = \upl \forall v_0 (0 \neq S (v_0) \upr \]
+or if we want to be precise by unpacking the abbreviations
+\[\mathit{PA}_1(n) \defeeq n = \upl \lnot \exists v_0 \lnot \lnot 0 = S(v_0) \upr. \]
+
+The proof of the induction schema (PA7) is going to involve the idea of coding that $\varphi$ has $v_0$ as a free variable and coding the substitution of $v_0$ for $\overline{0}$ or $S(v_0)$. This tiresome proof is left to the reader.
+\\
+
+Analogously, the remaining relations can be defined and it can be shown that they are primitive recursive. Let 
+\[ Axiom(n) \defeq A_1(n) \vee \ldots \vee A_6(n) \vee \mathit{PA}_1(n) \vee \ldots \vee \mathit{PA}_7(n) \]
+and 
+\[ Rule(n, o) \defeq R_1(n,o) \vee R_2(n,o) \vee R_3(n,o) \vee R_5(n,o). \] 
+Then $\mathit{Prfseq}$ is primitive recursive provided $A_1, \ldots, A_6, \mathit{PA}_1, \ldots, \mathit{PA}_7, R_1, \ldots, R_5$ are primitive recursive, as follows,
+\begin{align*}
+\mathit{Prfseq}(n)  \defeq & ( \forall x < \mathit{len}(n)) \, \lbrace \mathit{Axiom}(\mathit{exf}(n,x))  \vee \\
+&( \exists y, z < x )  R_4(\mathit{exf}(n,y), \mathit{exf}(n,z), \mathit{exf}(n,x)) \vee \\
+&(\exists y < k )  Rule(\mathit{exf}(n,y), \mathit{exf}(n,x))\rbrace.
+\end{align*}
+\end{proof}
+\begin{thm}\label{thm:prf}
+The relation $\mathit{Prf}(m,n)$ which holds when $m$ is the s.\,g.\,n.\@ of a $\mathsf{PA}$-proof of the sentence with g.\,n.\@ $n$, is primitive recursive.
+\end{thm}
+\begin{proof}
+The sentence $\sigma$ with g.\,n.\@ $n$ is the last component in the $\mathsf{PA}$-proof of $\sigma$ so let
+\[ \mathit{Prf}(m,n) \defeq \mathit{Prfseq}(n) \wedge ( \mathit{exf}(m, \mathit{len}(m)-1)= n ) \wedge \mathit{Sent}(n). \]
+\end{proof}

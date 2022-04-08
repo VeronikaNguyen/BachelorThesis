@@ -1,0 +1,136 @@
+\documentclass[BCOR=4mm]{scrbook}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\usepackage{fontspec}
+
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=american]{english}
+\setotherlanguage{german}
+
+\usepackage{microtype}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+%\addtokomafont{disposition}{\rmfamily} % serif%\addtokomafont{pageheadfoot}{\scshape} % small caps
+%\addtokomafont{title}{\mdseries\scshape} % normal weight, small caps
+
+\usepackage{enumitem}
+\setlist[enumerate]{label=(\roman{enumi})}
+
+\usepackage{hyperref}
+
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
+\crefname{equation}{}{}
+\crefname{enumi}{}{}
+\Crefname{thm}{Theorem}{Theorems}
+\Crefname{lem}{Lemma}{Lemmata}
+\Crefname{prop}{Proposition}{Propositions}
+
+\usepackage{needspace}
+
+\numberwithin{equation}{section}
+% Equation numbers without chapter, section
+\renewcommand{\theequation}{\arabic{equation}}
+
+%\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{dfnlem}[thm]{Definition and Lemma}
+\newtheorem{dfnthm}[thm]{Definition and Theorem}
+\theoremstyle{definition}
+\newtheorem{dfn}[thm]{Definition}
+\newtheorem{exm}[thm]{Example}
+
+
+% mine
+\usepackage{sansmath}
+\usepackage{mathtools}
+\newcommand{\defeq}{\vcentcolon=}
+\newcommand{\deffeq}{\vcentcolon \equiv}
+\newcommand{\defeeq}{\vcentcolon \Leftrightarrow}
+\newcommand{\upl}{\ulcorner}
+\newcommand{\upr}{\urcorner}
+\newcommand{\ver}{\,|\,}
+\newcommand{\PA}{$\mathsf{PA}$ }
+\usepackage{multicol}
+\usepackage{booktabs}
+\renewcommand{\theenumi}{\Alph{enumi}}
+\newenvironment{nscenter}
+ {\parskip=8pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+
+\usepackage[
+    backend=bibtex,
+    sorting=nymt,
+    doi=false,
+    eprint=false,
+    isbn=false,
+    url=false,
+]{biblatex}
+\DeclareNameAlias{sortname}{family-given}
+\addbibresource{references.bib}
+
+% https://tex.stackexchange.com/a/46879
+% use \DeclareSortingScheme for biblatex < v3.8
+\DeclareSortingTemplate{nymt}{
+    \sort{
+        \field{author}
+    }
+    \sort{
+        \field{year}
+    }
+    \sort{
+        \field[padside=left,padwidth=2,padchar=0]{month}
+        \literal{00}
+    }
+    \sort{
+        \field{sorttitle}
+    }
+}
+
+\usepackage[useregional]{datetime2}
+\DTMsavedate{date}{2019-09-30}
+\date{\DTMusedate{date}}
+
+\titlehead{\begin{german}
+    Universität Heidelberg \\
+    Institut für Informatik \\
+    Arbeitsgruppe Mathematische Logik und Theoretische Informatik
+\end{german}}
+\subject{Bachelor's Thesis}
+\title{Gödel's Incompleteness Theorems}
+\author{Veronika Nguyen}
+\publishers{Supervisor: Prof.\ Dr.\ Klaus Ambos-Spies}
+
+% \dedication{To ...}
+
+    \begin{document}
+
+    \frontmatter
+    \maketitle
+	\include{chapters/erklaerung}
+    \include{chapters/abstract}
+
+    \tableofcontents
+
+    \mainmatter
+    \include{chapters/introduction}
+    \include{chapters/peano}
+    \include{chapters/arithmetization}
+    \include{chapters/first_incomp}
+    \include{chapters/second_incomp}
+    \include{chapters/kolmogorov}
+    
+
+    \appendix
+
+	\nocite{*}
+    \printbibliography
+
+
+\end{document}

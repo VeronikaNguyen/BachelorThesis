@@ -1,0 +1,142 @@
+\chapter{Chaitin's Incompleteness Theorems}
+
+Certain variants of incompleteness results have received considerable attention, including the one by the American computer scientist Gregory Chaitin. Chaitin's results emerge from algorithmic complexity also known as Kolmogorov complexity. The Kolmogorov complexity of a string refers to the length of the shortest program which generates the string and stops. From the beginning it was known that Kolmogorov complexity is undecideable. However, Chaitin noticed that there is a number $c$ such that in any consistent arithmetical theory one cannot prove that any particular string has a Kolmogorov complexity larger than $c$. In this chapter we are going to prove this result.
+\section{Facts from Computability Theory}
+We remind the reader of important facts from computability theory. 
+\begin{thm}[Existence of Standard Enumerations of the Partial Recursive Functions]
+There is a partial recursive function $\varphi: \mathbb{N}^2 \rightarrow \mathbb{N}$ such that the following holds:
+\begin{enumerate}
+\item For any partial recursive function $\psi: \mathbb{N} \rightarrow \mathbb{N}$, there is a number $e$ such that $\psi = \varphi_e$ $($where $\varphi_e = \lambda x. \varphi(e,x)$ is the $e$-th branch of $\varphi$. We call $e$ the index of $\varphi$ and $\varphi$ a standard enumeration$)$. 
+\end{enumerate}
+\end{thm}
+
+In the following we fix such a $\varphi$.
+\\
+
+The following theorem follows from the well-known $s$-$m$-$n$-Theorem. 
+\begin{thm}[Translation Functions]\label{thm:translationfunction}
+For any partial recursive function $\psi(e,x)$ there is a primitive recursive function $f$ such that for all $e \ge 0$, $\psi_e = \varphi_{f(e)}$. $($The function $f$ is called a translation function.$)$
+\end{thm}
+
+
+\begin{thm}[Recursion Theorem]
+For any total recursive function $f: \mathbb{N} \rightarrow \mathbb{N}$ there is an index $e$ such that $\varphi_{f(e)} = \varphi_e$.
+\end{thm}
+
+\section{Kolmogorov Complexity}
+Kolmogorov complexity measures the complexity of finite objects from a descriptive point of view. Therefore temporal or spatial properties of algorithms which return the desired object, can be ignored, rather the shortest length of such an algorithm is important. For instance, consider the following binary strings:
+\begin{align*}
+010101010101010101010101010101010101010101010101010101010101010101 \\
+100011111011010110001110000000100110111111101111101010000000000000
+\end{align*}
+The first string can be simply described by a sequence of $33$ couples of $01$. Although the second one seems random, it is the beginning of the binary expansion of the decimal part of $\sqrt{2}$. Hence both of the strings have a simple description. Intuitively, complexity of a string $x$ is low if there is a simple rule that describes it. Therefore Kolmogorov complexity of $x$ can be defined as the minimum length of a program that prints $x$ as output and stops. 
+Based on Berry's paradox, a conceptually simpler proof of the First Incompleteness Theorem was given by Chaitin. Berry's paradox depicts the expression 'the smallest positive integer not definable in under eleven words' whereas this expression defines that integer in under eleven words. To formalize Berry's pradox, Chaitin uses the notion of Kolmogorov complexity. In the following we depict Kolmogorov complexity on the natural numbers. (For further reading, we recommend the book of Li and Vitanyi \Cite{Li2008}.)
+
+Then the Kolmogorov complexity of natural numbers w.\,r.\,t.\@ $\varphi$ is defined as follows.
+\begin{dfn}
+The \textit{Kolmogorov complexity} $K(x)$ of $x \in \mathbb{N}$ is the least index $e$ such that $\varphi_e(0) = x$:\[K(x) = \mu e (\varphi_e(0) = x ).\]
+\end{dfn}
+Intuitively, the index $e$ can be viewed as the length of the description. The smaller it is, the less is the length of the description of $\varphi_e(0)$.
+
+\begin{prop}\label{prop:fact}
+The following facts hold for $K$.
+\begin{enumerate}
+\item $K$ is total.
+\item For any $e\in \mathbb{N}$, $\lbrace x : K(x) \le e \rbrace$ is finite.
+\item There is no recursive function $f$ which satisfies the inequality $K(f(m)) > m$ for all $m \in \mathbb{N}$.
+\item $K$ is not recursive but $C \defeq \lbrace (e,x): K(x) \le e \rbrace$ is r.\,e. 
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item  This holds since for any fixed $x$, there exists a constant function $\psi(y) = x$ for all $y$ (which is in particular a partial recursive function) and since $\varphi$ is a standard enumeration there exists an index $e$ such that $\varphi_e=\psi$. Thus $\varphi_e(0) = x$.
+\item For any $e\in \mathbb{N}$, $\lbrace \varphi_0(0), \varphi_1(0), \ldots, \varphi_e(0) \rbrace$ is finite and hence $\lbrace x : K(x) \le e \rbrace$ is finite.
+\item Assume there is such a recursive function $f$ satisfying $K(f(m)) > m$ for all $m \in \mathbb{N}$. Then by \Cref{thm:translationfunction} for the (partial) recursive function $\psi(e,x) = f(e)$ there exists a primitive recursive translation function $g$ such that for all $e\ge 0$, $\psi_e = \varphi_{g(e)}$. By the Recursion Theorem there exists an index $e$ such that $\varphi_{g(e)} = \varphi_e=f(e)$. Hence $K(f(e)) \le e$ which is a contradiction.
+\item For a contradiction assume that $K$ is recursive. Then $f(x) = \mu  y  (K(y) > x )$ which satisfies $K(f(x)) > x$ for all $x$, would be recursive.  This is a contradiction to (iii).
+\\
+
+To show that $C \defeq \lbrace (e,x): K(x) \le e \rbrace$ is r.\,e.\@ we utilize the Church-Turing Thesis and instead prove that $C$ is enumerable. There is an algorithm $\mathfrak{A}$ which enumerates $C$, as follows.
+\begin{enumerate}
+\item[1.] Set $t=0$.
+\item[2.] For all $k \le t$.
+\begin{enumerate}
+\item[2.1] Run $\varphi_k(0)$ $t$ time-steps. If $\varphi_k(0)$ stops then output $\varphi_k(0)$.
+\end{enumerate} 
+\item[3.] $t=t+1$.
+\item[4.] Go to 2.
+\end{enumerate}
+\end{enumerate}
+\end{proof}
+
+We already showed that primitive recursive relations are arithmetically defined and defined in $\mathsf{PA}$ by a $\Sigma_1$-formula. In the following we depict r.\,e.\@ relations regarding their definability properties.
+
+\begin{lem}[Definability-Lemma] \label{lem:definlemma}
+For any r.\,e.\@ relation $R \subseteq \mathbb{N}^n$, there exists a $\Sigma_1$-formula $\varphi(x_0, \ldots, x_{n-1})$ such that
+\begin{enumerate}
+\item $(m_0, \ldots, m_{n-1}) \in R \Leftrightarrow \mathsf{PA}\vdash \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$,
+\item $(m_0, \ldots, m_{n-1}) \notin R \Rightarrow \mathcal{N}\vDash \lnot \varphi[\overline{m_0}, \ldots, \overline{m_{n-1}}/x_0, \ldots, x_{n-1}]$.
+\end{enumerate} 
+\end{lem}
+Latter lemma can be proven analogously to the definability results in \Cref{peano}.
+\\
+
+By \Cref{prop:fact}(iv) and \Cref{lem:definlemma} there is a $\Sigma_1$-formula $\kappa$ for the recursive enumerable relation $C$ such that the following holds.
+
+
+\begin{dfn}\label{dfn:kappa}
+Let $\kappa(v_0,v_1)$ be a $\Sigma_1$-formula such that for any $n,e \in \mathbb{N}$,
+\begin{enumerate}
+\item $K(n) \le e\Leftrightarrow\mathsf{PA} \vdash \kappa[\overline{n}, \overline{e}/v_0,v_1]$ and
+\item  $K(n) > e \Rightarrow \mathcal{N} \vDash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1].$
+\end{enumerate}
+\end{dfn}
+
+\begin{thm}[Chaitin's Incompleteness Theorem \cite{Salehi2018}] \label{thm:ChaitinIncomp}
+Let $T=(\mathcal{L}_A, \Sigma)$ be an arithmetical recursively axiomatized theory which extends $\mathsf{PA}$. Then there exists a constant $c_T \in \mathbb{N}$ such that for any $e \geq c_T$ and any $n \in \mathbb{N}$, $T \nvdash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1]$.
+\end{thm}
+\begin{proof}
+For a contradiction assume that $T= (\mathcal{L}_A, \Sigma)$ is an arithmetical theory which extends $\mathsf{PA}$ such that $\Sigma$ is recursive and 
+\begin{equation}\label{eq:chait1}
+\text{for all }e \in \mathbb{N}\text{, there exists an }n \in \mathbb{N}\text{ such that } T \vdash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1].
+\end{equation}
+Since $T$ is recursive, the set of $T$-provable sentences is r.\,e. So, in particular,
+\[ \lbrace (n,e) : T \vdash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1] \rbrace \]
+is r.\,e. By \Cref{eq:chait1} it follows that there is a computable function $f$ such that, for any $e \in \mathbb{N}$, 
+\[ T \vdash \lnot \kappa[\overline{f(e)}, \overline{e}/v_0,v_1]. \]
+On the other hand, \[T\vdash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1] \Rightarrow K(n) > e.\]
+(Namely, if not, then $T \vdash \lnot \kappa[\overline{n}, \overline{e}/v_0,v_1]$ for some $n, e$ such that $K(n) \le e$. So since $\mathsf{PA} \sqsubseteq T$, $T \vdash \kappa[\overline{n}, \overline{e}/v_0,v_1]$, hence $T$ is inconsistent contradicting to the assumption.) So $K(f(e)) >e$ for all $e$, contradicting to \Cref{prop:fact}(iii).
+\end{proof}
+
+\begin{cor}
+Let $T=(\mathcal{L}_A, \Sigma)$ be an arithmetical recursively axiomatized theory which extends $\mathsf{PA}$. Then $T \neq \mathit{Th}(\mathcal{N})$.
+\end{cor}
+\begin{proof}
+By \Cref{prop:fact}(ii) fix $n$ such that $K(n)> c_T$. Then by \Cref{dfn:kappa}(ii), $\mathcal{N} \vDash \lnot \kappa[\overline{n}, \overline{c_T}/v_0,v_1]$ but $T \nvDash \lnot \kappa[\overline{n}, \overline{c_T}]$ by \Cref{thm:ChaitinIncomp}.
+\end{proof}
+
+%for any given $m \in \mathbb{N}$ there exists some $e \geq m$ and some $n \in \mathbb{N}$ such that $T \vdash \mathsf{K(\overline{n}) > \overline{e}}$. Claim that if $T \vdash \mathsf{K(\overline{n}) > \overline{e}}$ for a consistent $T \supseteq \mathsf{Q}$, then $K(n) > e$. Since otherwise, if $K(n) \le e$, the true $\Sigma_1$-sentence $\mathsf{K(\overline{n}) \le \overline{e}}$ would be provable in $\mathsf{Q}$, and hence in $T$, i.\,e.\@ $T \vdash \mathsf{K(\overline{n}) \le \overline{e}}$, contradicting to the consistency of $T$. For given $m$, some $e \geq m$ and $n$ such that $T \vdash \mathsf{K(\overline{n})> \overline{e}}$ can be found by an algorithmic proof search in $T$. By intial assumption it is guranteed to find suitable $e$ and $n$ for any $m$, and thus this infers that $K(n) > e$ for suitable $e$ and $n$. Let $f(m)$ refer to the $n$'s depending on $m$. Then $K(f(m)) > e \geq m$ holds, contradicting to \Cref{lem:uncomputabilitycomplexity}.
+
+%
+%\begin{lem}
+%For every $a$, there exists $b \le a +1 $ sucht that $a+1 \le K(b)$.
+%\end{lem}
+%
+%\begin{dfn}
+%A number $x$ is random if and only if $x \le K(x)$.
+%\end{dfn}
+%
+%\begin{thm}
+%There exists $e \in \mathbb{N}$ sucht that
+%\begin{enumerate}
+%\item $T \vdash \mathsf{Con}_T \rightarrow \forall x ( \lnot \mathsf{Prove}_T(\upl e < K(x) \upr ))$,
+%\item $T \vdash \omega - \mathsf{Con}_T \rightarrow \forall x (e < K(x) \rightarrow \lnot \mathsf{Prove}_T(\upl K(x) \le e \upr )).$
+%\end{enumerate}
+%\end{thm}
+%
+%\begin{lem}
+%$T \vdash \mathsf{\forall x \exists y \le x + 1 (x+1 \le K(y)).}$
+%\end{lem}
+%
+%\begin{proof}
+
+%\end{proof}
